@@ -11,7 +11,6 @@ export default [
     plugins: {
       'react-compiler': pluginReactCompiler,
     },
-    ignores: ['dist', '.eslint.config.js'],
     settings: {
       react: {
         version: 'detect',
@@ -30,5 +29,11 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-react': 'off',
     },
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+  },
+  {
+    ignores: ['dist', '.eslint.config.js', 'vite.config.ts'],
   },
 ];
