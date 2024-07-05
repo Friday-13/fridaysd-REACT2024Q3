@@ -5,6 +5,7 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  f('Hello');
 
   return (
     <>
@@ -30,6 +31,10 @@ function App() {
       </p>
     </>
   )
+}
+
+function f(x: string) {
+  console.log(x);
 }
 
 export default App
