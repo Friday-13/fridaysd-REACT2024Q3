@@ -9,9 +9,16 @@ function constructRequest(endpoint: string, query?: string) {
   return url;
 }
 
-export default async function getPeople(search: string) {
+export interface person {
+  name: string;
+  birth_year: string;
+  gender: string;
+  eye_color: string;
+}
+
+export async function getPeople(search: string) {
   const request = constructRequest('people/', search);
   const answer = await fetch(request.href);
   const data = await answer.json();
-  return data.results;
+  return data.results as Array<person>;
 }
