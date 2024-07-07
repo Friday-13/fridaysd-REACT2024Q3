@@ -6,6 +6,7 @@ import { getPeople, person } from '../../services/api';
 export default class Search extends Component<ComponentProps<'div'>> {
   state = {
     searchResults: [],
+    hasError: false,
   };
 
   setResults(results: Array<person>) {
@@ -14,13 +15,21 @@ export default class Search extends Component<ComponentProps<'div'>> {
     });
   }
 
+  setHasError() {
+    this.setState({
+      hasError: true,
+    });
+  }
+
   async applySearchQuery(query: string) {
-    console.log(query);
     const people = await getPeople(query);
     this.setResults(people);
   }
 
   render() {
+    if (this.state.hasError) {
+      throw new Error('The Emperor Will Show You The True Nature Of The Force...');
+    }
     return (
       <>
         <h1> Star Wars Characters </h1>
@@ -37,6 +46,13 @@ export default class Search extends Component<ComponentProps<'div'>> {
         <section>
           <SeachResults searchResults={this.state.searchResults} />
         </section>
+        <button
+          onClick={() => {
+            this.setHasError();
+          }}
+        >
+          Throw Error
+        </button>
       </>
     );
   }
