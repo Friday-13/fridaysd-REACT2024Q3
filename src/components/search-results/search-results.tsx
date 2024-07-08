@@ -3,10 +3,14 @@ import { person } from '../../services/api';
 
 interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults: Array<person>;
+  isLoading: boolean;
 }
 
 export default class SeachResults extends Component<SearchResultsProps> {
   render() {
+    if (this.props.isLoading) {
+      return <div className="loader"></div>;
+    }
     return (
       <ul>
         {this.props.searchResults.map((result, index) => (

@@ -7,6 +7,7 @@ export default class Search extends Component<ComponentProps<'div'>> {
   state = {
     searchResults: [],
     hasError: false,
+    isLoading: false,
   };
 
   setResults(results: Array<person>) {
@@ -21,8 +22,17 @@ export default class Search extends Component<ComponentProps<'div'>> {
     });
   }
 
+  setIsLoading(status: boolean) {
+    this.setState({
+      isLoading: status,
+    });
+  }
+
   async applySearchQuery(query: string) {
+    this.setIsLoading(true);
     const people = await getPeople(query);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    this.setIsLoading(false);
     this.setResults(people);
   }
 
@@ -44,7 +54,7 @@ export default class Search extends Component<ComponentProps<'div'>> {
           ></SearchInput>
         </section>
         <section>
-          <SeachResults searchResults={this.state.searchResults} />
+          <SeachResults searchResults={this.state.searchResults} isLoading={this.state.isLoading} />
         </section>
         <button
           onClick={() => {
