@@ -1,5 +1,6 @@
 import { Component, ComponentProps, FormEvent } from 'react';
 import QueryStorge from '../../services/query-storage';
+import styles from './search-input.module.scss';
 
 interface SearchInputProps extends ComponentProps<'div'> {
   label?: {
@@ -25,7 +26,7 @@ export default class SearchInput extends Component<SearchInputProps> {
 
   render() {
     return (
-      <>
+      <div className={styles.searchInput}>
         <label htmlFor={this.props.input?.name}>{this.props.label?.content}</label>
         <input
           type="search"
@@ -41,7 +42,7 @@ export default class SearchInput extends Component<SearchInputProps> {
         >
           {this.props.button?.content}
         </button>
-      </>
+      </div>
     );
   }
 }

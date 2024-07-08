@@ -1,0 +1,15 @@
+.search-results {
+  width: 50vw;
+  list-style: none;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 2px solid white;
+  border-radius: 20px;
+
+  &__result {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
