@@ -1,5 +1,4 @@
 import { Component, ComponentProps, FormEvent } from 'react';
-import QueryStorge from '../../services/query-storage';
 import styles from './search-input.module.scss';
 
 interface SearchInputProps extends ComponentProps<'div'> {
@@ -8,6 +7,7 @@ interface SearchInputProps extends ComponentProps<'div'> {
   };
   input?: {
     name: string;
+    initialValue: string;
   };
   button?: ComponentProps<'button'>;
   searchCallback: (query: string) => void;
@@ -32,12 +32,11 @@ export default class SearchInput extends Component<SearchInputProps> {
           type="search"
           name={this.props.input?.name}
           onChange={this.handleQueryChange}
-          defaultValue={QueryStorge.getQuery()}
+          defaultValue={this.props.input?.initialValue}
         />
         <button
           onClick={() => {
             this.props.searchCallback(this.state.query);
-            QueryStorge.saveQuery(this.state.query);
           }}
         >
           {this.props.button?.content}

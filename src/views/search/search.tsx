@@ -2,6 +2,7 @@ import { Component, ComponentProps } from 'react';
 import SearchInput from '../../components/search-input/search-input';
 import SeachResults from '../../components/search-results/search-results';
 import { getPeople, person } from '../../services/api';
+import QueryStorge from '../../services/query-storage';
 
 export default class Search extends Component<ComponentProps<'div'>> {
   state = {
@@ -29,11 +30,17 @@ export default class Search extends Component<ComponentProps<'div'>> {
   }
 
   async applySearchQuery(query: string) {
+    QueryStorge.saveQuery(query);
     this.setIsLoading(true);
     const people = await getPeople(query);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     this.setIsLoading(false);
     this.setResults(people);
+  }
+
+  componentDidMount() {
+    const initialQuery = QueryStorge.getQuery();
+    this.applySearchQuery(initialQuery);
   }
 
   render() {
@@ -46,7 +53,7 @@ export default class Search extends Component<ComponentProps<'div'>> {
         <section>
           <SearchInput
             label={{ content: 'Input' }}
-            input={{ name: 'search-string' }}
+            input={{ name: 'search-string', initialValue: QueryStorge.getQuery() }}
             button={{
               content: 'Search',
             }}
