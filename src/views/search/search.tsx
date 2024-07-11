@@ -1,6 +1,6 @@
 import { Component, ComponentProps } from 'react';
 import SearchInput from '../../components/search-input/search-input';
-import SeachResults from '../../components/search-results/search-results';
+import SearchResults from '../../components/search-results/search-results';
 import { getPeople, person } from '../../services/api';
 import QueryStorge from '../../services/query-storage';
 
@@ -61,7 +61,7 @@ export default class Search extends Component<ComponentProps<'div'>> {
           ></SearchInput>
         </section>
         <section>
-          <SeachResults searchResults={this.state.searchResults} isLoading={this.state.isLoading} />
+          <SearchResults searchResults={this.state.searchResults} isLoading={this.state.isLoading} />
         </section>
         <button
           onClick={() => {
