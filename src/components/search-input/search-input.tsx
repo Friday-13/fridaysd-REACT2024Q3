@@ -14,7 +14,7 @@ interface SearchInputProps extends ComponentProps<'div'> {
 }
 
 export default function SearchInput(props: SearchInputProps) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState<string>('');
 
   const handleQueryChange = (newValue: FormEvent<HTMLInputElement>) => {
     setQuery(newValue.currentTarget.value);
