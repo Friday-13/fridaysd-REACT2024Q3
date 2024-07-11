@@ -1,76 +1,56 @@
-import { Component, ComponentProps } from 'react';
+import { useEffect, useState } from 'react';
 import SearchInput from '../../components/search-input/search-input';
 import SearchResults from '../../components/search-results/search-results';
 import { getPeople, person } from '../../services/api';
 import QueryStorge from '../../services/query-storage';
 
-export default class Search extends Component<ComponentProps<'div'>> {
-  state = {
-    searchResults: [],
-    hasError: false,
-    isLoading: false,
-  };
+export default function Search() {
+  const [searchResults, setSearchResults] = useState<Array<person>>([]);
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  setResults(results: Array<person>) {
-    this.setState({
-      searchResults: results,
-    });
+  if (hasError) {
+    throw new Error('The Emperor Will Show You The True Nature Of The Force...');
   }
 
-  setHasError() {
-    this.setState({
-      hasError: true,
-    });
-  }
-
-  setIsLoading(status: boolean) {
-    this.setState({
-      isLoading: status,
-    });
-  }
-
-  async applySearchQuery(query: string) {
+  async function applySearchQuery(query: string) {
     QueryStorge.saveQuery(query);
-    this.setIsLoading(true);
+    setIsLoading(true);
     const people = await getPeople(query);
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    this.setIsLoading(false);
-    this.setResults(people);
+    setIsLoading(false);
+    setSearchResults(people);
   }
 
-  componentDidMount() {
+  useEffect(() => {
+    // TODO: check if it's correct variant
     const initialQuery = QueryStorge.getQuery();
-    this.applySearchQuery(initialQuery);
-  }
+    applySearchQuery(initialQuery);
+  }, []);
 
-  render() {
-    if (this.state.hasError) {
-      throw new Error('The Emperor Will Show You The True Nature Of The Force...');
-    }
-    return (
-      <>
-        <h1> Star Wars Characters </h1>
-        <section>
-          <SearchInput
-            label={{ content: 'Input' }}
-            input={{ name: 'search-string', initialValue: QueryStorge.getQuery() }}
-            button={{
-              content: 'Search',
-            }}
-            searchCallback={this.applySearchQuery.bind(this)}
-          ></SearchInput>
-        </section>
-        <section>
-          <SearchResults searchResults={this.state.searchResults} isLoading={this.state.isLoading} />
-        </section>
-        <button
-          onClick={() => {
-            this.setHasError();
+  return (
+    <>
+      <h1> Star Wars Characters </h1>
+      <section>
+        <SearchInput
+          label={{ content: 'Input' }}
+          input={{ name: 'search-string', initialValue: QueryStorge.getQuery() }}
+          button={{
+            content: 'Search',
           }}
-        >
-          Throw Error
-        </button>
-      </>
-    );
-  }
+          searchCallback={applySearchQuery}
+        ></SearchInput>
+      </section>
+      <section>
+        <SearchResults searchResults={searchResults} isLoading={isLoading} />
+      </section>
+      <button
+        onClick={() => {
+          setHasError(true);
+        }}
+      >
+        Throw Error
+      </button>
+    </>
+  );
 }
