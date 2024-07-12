@@ -1,4 +1,4 @@
-import { ComponentProps, FormEvent, useState } from 'react';
+import { ComponentProps, FormEvent } from 'react';
 import styles from './search-input.module.scss';
 
 interface SearchInputProps extends ComponentProps<'div'> {
@@ -10,14 +10,13 @@ interface SearchInputProps extends ComponentProps<'div'> {
     initialValue: string;
   };
   button?: ComponentProps<'button'>;
-  searchCallback: (query: string) => void;
+  searchCallback: () => void;
+  inputChangeCallback: (newQuery: string) => void;
 }
 
 export default function SearchInput(props: SearchInputProps) {
-  const [query, setQuery] = useState<string>('');
-
   const handleQueryChange = (newValue: FormEvent<HTMLInputElement>) => {
-    setQuery(newValue.currentTarget.value);
+    props.inputChangeCallback(newValue.currentTarget.value);
   };
 
   return (
@@ -29,13 +28,7 @@ export default function SearchInput(props: SearchInputProps) {
         onChange={handleQueryChange}
         defaultValue={props.input?.initialValue}
       />
-      <button
-        onClick={() => {
-          props.searchCallback(query);
-        }}
-      >
-        {props.button?.content}
-      </button>
+      <button onClick={props.searchCallback}>{props.button?.content}</button>
     </div>
   );
 }
