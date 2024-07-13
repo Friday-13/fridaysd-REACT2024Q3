@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import SearchInput from '../../components/search-input/search-input';
 import SearchResults from '../../components/search-results/search-results';
-import { getPeople, person } from '../../services/api';
+import { getPeople, IResponse, person, TPeopleResponse } from '../../services/api';
 import useLocalStorage from '../../hooks/use-local-storage';
 import { useSearchParams } from 'react-router-dom';
 
 export default function Search() {
-  const [searchResults, setSearchResults] = useState<Array<person>>([]);
+  const [searchResults, setSearchResults] = useState<TPeopleResponse | undefined>(undefined);
   const [hasError, setHasError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [query, setQuery, saveQuery] = useLocalStorage('query');
@@ -19,10 +19,10 @@ export default function Search() {
   async function applySearchQuery() {
     setIsLoading(true);
     saveQuery(query);
-    const response = await getPeople(query, 1);
+    const response = await getPeople(query, 8);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsLoading(false);
-    setSearchResults(response.results);
+    setSearchResults(response);
     setSearchParams(response.currentUrl.searchParams);
   }
 

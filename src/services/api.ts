@@ -31,6 +31,8 @@ export interface IResponse<T> {
   results: T;
 }
 
+export type TPeopleResponse = IResponse<Array<person>>;
+
 export async function getPeople(search?: string, pageNumber?: number) {
   const params = [];
   if (search) {
@@ -51,7 +53,7 @@ export async function getPeople(search?: string, pageNumber?: number) {
   const request = constructRequest('people/', params);
   const answer = await fetch(request.href);
   const data = await answer.json();
-  const response: IResponse<Array<person>> = {
+  const response: TPeopleResponse = {
     currentUrl: request,
     results: data.results as Array<person>,
     next: data.next,
