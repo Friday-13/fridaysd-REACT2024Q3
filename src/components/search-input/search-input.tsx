@@ -18,16 +18,10 @@ export default function SearchInput(props: SearchInputProps) {
   const handleQueryChange = (newValue: FormEvent<HTMLInputElement>) => {
     props.inputChangeCallback(newValue.currentTarget.value);
   };
-
   return (
     <div className={styles.searchInput}>
       <label htmlFor={props.input?.name}>{props.label?.content}</label>
-      <input
-        type="search"
-        name={props.input?.name}
-        onChange={handleQueryChange}
-        defaultValue={props.input?.initialValue}
-      />
+      <input type="search" name={props.input?.name} onChange={handleQueryChange} value={props.input?.initialValue} />
       <button onClick={props.searchCallback}>{props.button?.content}</button>
     </div>
   );

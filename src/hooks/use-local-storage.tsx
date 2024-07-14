@@ -6,7 +6,6 @@ function useLocalStorage(key: string): [string, Dispatch<SetStateAction<string>>
   };
 
   const getData = (): string => {
-    console.log('getting data');
     if (isDataExist()) {
       return localStorage.getItem(key) as string;
     }
