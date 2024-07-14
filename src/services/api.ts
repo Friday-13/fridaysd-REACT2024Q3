@@ -26,6 +26,7 @@ export interface IPerson {
   mass: string;
   hair_color: string;
   skin_color: string;
+  url: string;
 }
 
 export interface IResponse<T> {
@@ -56,13 +57,19 @@ export async function getPeople(search?: string, pageNumber?: number) {
   const request = constructRequest('people/', params);
   const answer = await fetch(request.href);
   const data = await answer.json();
-  const response: IResponse<Array<IPerson>> = {
+  const rawResponse: IResponse<Array<IPerson>> = {
     currentUrl: request,
     results: data.results as Array<IPerson>,
     next: data.next,
     previous: data.previous,
     count: data.count,
   };
+  const response = rawResponse;
+  response.results = response.results.map((person) => {
+    const urlParts = person.url.split('/');
+    person.id = urlParts[urlParts.length - 2];
+    return person;
+  });
   return response;
 }
 

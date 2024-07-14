@@ -4,6 +4,7 @@ import SearchResults from '../../components/search-results/search-results';
 import { getPeople, IPerson } from '../../services/api';
 import useLocalStorage from '../../hooks/use-local-storage';
 import { Outlet, useSearchParams } from 'react-router-dom';
+import styles from './search.module.scss';
 
 export default function Search() {
   const [searchResults, setSearchResults] = useState<Array<IPerson>>([]);
@@ -62,17 +63,19 @@ export default function Search() {
           inputChangeCallback={inputChanged}
         ></SearchInput>
       </section>
-      <section>
+      <section className={styles.resultsWrapper}>
         <SearchResults searchResults={searchResults} isLoading={isLoading} />
+        <Outlet></Outlet>
       </section>
-      <Outlet></Outlet>
-      <button
-        onClick={() => {
-          setHasError(true);
-        }}
-      >
-        Throw Error
-      </button>
+      <section>
+        <button
+          onClick={() => {
+            setHasError(true);
+          }}
+        >
+          Throw Error
+        </button>
+      </section>
     </>
   );
 }

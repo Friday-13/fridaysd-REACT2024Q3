@@ -1,15 +1,23 @@
 .search-results {
-  width: 50vw;
+  width: 40vw;
   list-style: none;
   padding: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
   border: 2px solid white;
   border-radius: 20px;
+  height: 60vh;
+  overflow-y: hidden;
+
+  &__list {
+    overflow-y: scroll;
+    max-height: 50vh;
+    scrollbar-width: thin;
+  }
 
   &__result {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    cursor: pointer;
+    margin-bottom: 20px;
   }
 }
