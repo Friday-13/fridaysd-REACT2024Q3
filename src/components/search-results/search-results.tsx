@@ -1,10 +1,10 @@
 import { ComponentProps } from 'react';
-import { person } from '../../services/api';
+import { IPerson } from '../../services/api';
 import Loader from '../loader/loader';
 import styles from './search-results.module.scss';
 
 interface SearchResultsProps extends ComponentProps<'div'> {
-  searchResults: Array<person>;
+  searchResults: Array<IPerson>;
   isLoading: boolean;
 }
 

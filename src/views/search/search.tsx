@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import SearchInput from '../../components/search-input/search-input';
 import SearchResults from '../../components/search-results/search-results';
-import { getPeople, person } from '../../services/api';
+import { getPeople, IPerson } from '../../services/api';
 import useLocalStorage from '../../hooks/use-local-storage';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 
 export default function Search() {
-  const [searchResults, setSearchResults] = useState<Array<person>>([]);
+  const [searchResults, setSearchResults] = useState<Array<IPerson>>([]);
   const [hasError, setHasError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [query, setQuery, saveQuery] = useLocalStorage('query');
@@ -65,6 +65,7 @@ export default function Search() {
       <section>
         <SearchResults searchResults={searchResults} isLoading={isLoading} />
       </section>
+      <Outlet></Outlet>
       <button
         onClick={() => {
           setHasError(true);
