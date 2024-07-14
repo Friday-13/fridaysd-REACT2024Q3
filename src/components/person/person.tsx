@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getPerson, IPerson } from '../../services/api';
 import Loader from '../loader/loader';
 import styles from './person.module.scss';
@@ -8,6 +8,7 @@ function Person() {
   const params = useParams();
   const [person, setPerson] = useState<IPerson | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   async function getPersonInfo() {
     const id = params['personId'];
@@ -34,6 +35,14 @@ function Person() {
 
   return (
     <div className={styles.person}>
+      <div
+        className={styles.close}
+        onClick={() => {
+          navigate('/');
+        }}
+      >
+        <img src="/src/assets/xmark.svg" alt="" />
+      </div>
       <h2>{person?.name}</h2>
       <ul>
         <li>{person.gender}</li>
