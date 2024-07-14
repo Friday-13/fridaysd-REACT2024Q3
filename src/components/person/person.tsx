@@ -45,10 +45,13 @@ function Person() {
       </div>
       <h2>{person?.name}</h2>
       <ul>
-        <li>{person.gender}</li>
-        <li>{person.mass}</li>
-        <li>{person.height}</li>
-        <li>{person.birth_year}</li>
+        <li>Gender: {person.gender}</li>
+        <li>Mass: {person.mass}</li>
+        <li>Height: {person.height}</li>
+        <li>Birth Year: {person.birth_year}</li>
+        <li>Eye color: {person.eye_color}</li>
+        <li>Hair color: {person.hair_color}</li>
+        <li>Skin color: {person.skin_color}</li>
       </ul>
     </div>
   );

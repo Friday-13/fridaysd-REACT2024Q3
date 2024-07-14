@@ -6,10 +6,13 @@
   border-radius: 20px;
   height: 60vh;
   overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   &__list {
     overflow-y: scroll;
-    max-height: 50vh;
+    height: 50vh;
     scrollbar-width: thin;
   }
 

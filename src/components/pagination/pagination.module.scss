@@ -1,0 +1,20 @@
+.pagination {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+
+  &__button {
+    height: 30px;
+    width: 30px;
+    border: 1px solid white;
+    text-align: center;
+    vertical-align: bottom;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &_current-page {
+      opacity: 20%;
+      cursor: default;
+    }
+  }
+}

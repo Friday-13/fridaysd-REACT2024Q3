@@ -37,6 +37,8 @@ export interface IResponse<T> {
   results: T;
 }
 
+export type TPeopleReponse = IResponse<Array<IPerson>>;
+
 export async function getPeople(search?: string, pageNumber?: number) {
   const params = [];
   if (search) {

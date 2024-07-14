@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import SearchInput from '../../components/search-input/search-input';
 import SearchResults from '../../components/search-results/search-results';
-import { getPeople, IPerson } from '../../services/api';
+import { getPeople, TPeopleReponse } from '../../services/api';
 import useLocalStorage from '../../hooks/use-local-storage';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import styles from './search.module.scss';
 
 export default function Search() {
-  const [searchResults, setSearchResults] = useState<Array<IPerson>>([]);
+  const [searchResults, setSearchResults] = useState<TPeopleReponse | undefined>(undefined);
   const [hasError, setHasError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [query, setQuery, saveQuery] = useLocalStorage('query');
@@ -22,7 +22,7 @@ export default function Search() {
     const response = await getPeople(newQuery, page);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsLoading(false);
-    setSearchResults(response.results);
+    setSearchResults(response);
   }
 
   useEffect(() => {
