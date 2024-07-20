@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import SearchInput from '../../components/search-input/search-input';
 import SearchResults from '../../components/search-results/search-results';
 import { getPeople, TPeopleReponse } from '../../services/api';
@@ -42,24 +42,28 @@ export default function Search() {
     setQuery(newValue);
   };
 
+  const searchCallback = (event: FormEvent) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget as HTMLFormElement);
+    const query = formData.get('search-string') as string;
+    saveQuery(query);
+    if (query !== '') {
+      setSearchParams(`search=${query}`);
+      return;
+    }
+    setSearchParams();
+  };
+
   return (
     <>
       <h1> Star Wars Characters </h1>
       <section>
         <SearchInput
-          label={{ content: 'Input' }}
-          input={{ name: 'search-string', initialValue: query }}
-          button={{
-            content: 'Search',
-          }}
-          searchCallback={() => {
-            saveQuery(query);
-            if (query !== '') {
-              setSearchParams(`search=${query}`);
-              return;
-            }
-            setSearchParams();
-          }}
+          labelContent={'Input'}
+          inputName={'search-string'}
+          inputInitialValue={query}
+          buttonContent={'Search'}
+          searchCallback={searchCallback}
           inputChangeCallback={inputChanged}
         ></SearchInput>
       </section>
