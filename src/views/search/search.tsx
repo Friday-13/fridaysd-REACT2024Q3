@@ -60,7 +60,7 @@ export default function Search() {
           buttonContent={'Search'}
           searchCallback={searchCallback}
           inputChangeCallback={inputChanged}
-        ></SearchInput>
+        />
       </section>
       <SearchResultsSection searchResults={searchResults} isLoading={isLoading} />
       <ThrowErrorSection />
