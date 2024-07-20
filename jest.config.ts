@@ -7,8 +7,9 @@ export default {
   },
   rootDir: 'src',
   moduleNameMapper: {
-    '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__mocks__/fileMock.js',
+    '\\.(gif|ttf|eot|png)$': '<rootDir>/test/__mocks__/fileMock.js',
     '\\.(css|scss)$': 'identity-obj-proxy',
+    '\\.(svg)$': 'identity-obj-proxy',
     '^@assets/(.*)$': '<rootDir>/assets/$1',
     '^@views/(.*)$': '<rootDir>/views/$1',
     '^@hooks/(.*)$': '<rootDir>/hooks/$1',
