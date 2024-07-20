@@ -5,7 +5,7 @@ import styles from './search-results.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import Pagination from '../pagination/pagination';
 
-interface SearchResultsProps extends ComponentProps<'div'> {
+export interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults?: TPeopleReponse;
   isLoading: boolean;
 }

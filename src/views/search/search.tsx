@@ -1,21 +1,16 @@
 import { FormEvent, useEffect, useState } from 'react';
 import SearchInput from '../../components/search-input/search-input';
-import SearchResults from '../../components/search-results/search-results';
 import { getPeople, TPeopleReponse } from '../../services/api';
 import useLocalStorage from '../../hooks/use-local-storage';
-import { Outlet, useSearchParams } from 'react-router-dom';
-import styles from './search.module.scss';
+import { useSearchParams } from 'react-router-dom';
+import SearchResultsSection from './sections/search-results-section';
+import ThrowErrorSection from './sections/throw-error-section';
 
 export default function Search() {
   const [searchResults, setSearchResults] = useState<TPeopleReponse | undefined>(undefined);
-  const [hasError, setHasError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [query, setQuery, saveQuery] = useLocalStorage('query');
   const [searchParams, setSearchParams] = useSearchParams();
-
-  if (hasError) {
-    throw new Error('The Emperor Will Show You The True Nature Of The Force...');
-  }
 
   async function applySearchQuery(newQuery?: string, page?: number) {
     setIsLoading(true);
@@ -67,19 +62,8 @@ export default function Search() {
           inputChangeCallback={inputChanged}
         ></SearchInput>
       </section>
-      <section className={styles.resultsWrapper}>
-        <SearchResults searchResults={searchResults} isLoading={isLoading} />
-        <Outlet></Outlet>
-      </section>
-      <section>
-        <button
-          onClick={() => {
-            setHasError(true);
-          }}
-        >
-          Throw Error
-        </button>
-      </section>
+      <SearchResultsSection searchResults={searchResults} isLoading={isLoading} />
+      <ThrowErrorSection />
     </>
   );
 }
