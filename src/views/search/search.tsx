@@ -1,25 +1,28 @@
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import SearchInput from '../../components/search-input/search-input';
 import useLocalStorage from '../../hooks/use-local-storage';
 import { useSearchParams } from 'react-router-dom';
 import SearchResultsSection from './sections/search-results-section';
 import ThrowErrorSection from './sections/throw-error-section';
+import getPageNumber from '../../utils/parse-url/get-page-number';
+import getSearchQuery from '../../utils/parse-url/get-search-query';
 
 export default function Search() {
-  const [query, setQuery, saveQuery] = useLocalStorage('query');
   const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState<number | undefined>(getPageNumber(searchParams));
+  const [query, setQuery, saveQuery] = useLocalStorage('query', getSearchQuery(searchParams));
 
   useEffect(() => {
-    const searchQueryURL = searchParams.get('searchQuery') || undefined;
+    const searchQueryURL = getSearchQuery(searchParams);
+    const pageURL = getPageNumber(searchParams);
     if (searchParams.toString() === '') {
       setSearchParams(`searchQuery=${query}`);
       return;
     }
-    console.log(searchQueryURL);
-    console.log(query);
     if (query !== searchQueryURL) {
       console.log(`set: ${searchQueryURL || ''}`);
       setQuery(searchQueryURL || '');
+      setPage(pageURL);
     }
   }, []);
 
@@ -48,7 +51,7 @@ export default function Search() {
           searchCallback={searchCallback}
         />
       </section>
-      <SearchResultsSection query={query} />
+      <SearchResultsSection query={query} page={page} />
       <ThrowErrorSection />
     </>
   );

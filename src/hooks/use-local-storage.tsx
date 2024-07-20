@@ -1,6 +1,9 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
-function useLocalStorage(key: string): [string, Dispatch<SetStateAction<string>>, (data: string) => void] {
+function useLocalStorage(
+  key: string,
+  initialValue?: string
+): [string, Dispatch<SetStateAction<string>>, (data: string) => void] {
   const isDataExist = () => {
     return Boolean(localStorage.getItem(key));
   };
@@ -17,7 +20,7 @@ function useLocalStorage(key: string): [string, Dispatch<SetStateAction<string>>
     localStorage.setItem(key, preparedData);
   };
 
-  const [data, setData] = useState<string>(getData);
+  const [data, setData] = useState<string>(initialValue || getData);
 
   return [data, setData, saveData];
 }
