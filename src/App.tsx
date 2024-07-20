@@ -1,6 +1,6 @@
 import Search from './views/search/search';
 import ErrorBoundary from '@components/error-boundarie/error-boundarie';
-import { createBrowserRouter, RouteObject, RouterProvider} from 'react-router-dom';
+import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
 import Error from './views/error/error';
 import Person from './components/person/person';
 
@@ -11,7 +11,7 @@ const searchChildren: Array<RouteObject> = [
   },
 ];
 
-const searchRoute: RouteObject = { path: '/', Component: Search, children: searchChildren };
+const searchRoute: RouteObject = { path: '/', element: <Search />, children: searchChildren };
 const errorRoute: RouteObject = { path: '*', element: <Error code="404" message="Page not found" /> };
 
 const router = createBrowserRouter([searchRoute, errorRoute]);
