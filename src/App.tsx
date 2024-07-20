@@ -6,22 +6,23 @@ import Person from './components/person/person';
 
 const searchChildren: Array<RouteObject> = [
   {
-    path: ':perssonId',
+    path: 'person/:id',
     Component: Person,
   },
 ];
 
-const searchRoute: RouteObject = { path: '/', element: <Search />, children: searchChildren };
+const searchRoute: RouteObject = {
+  path: '/',
+  element: <Search />,
+  children: searchChildren,
+  errorElement: <ErrorBoundary />,
+};
 const errorRoute: RouteObject = { path: '*', element: <Error code="404" message="Page not found" /> };
 
 const router = createBrowserRouter([searchRoute, errorRoute]);
 
 function App() {
-  return (
-    <ErrorBoundary>
-      <RouterProvider router={router} />
-    </ErrorBoundary>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

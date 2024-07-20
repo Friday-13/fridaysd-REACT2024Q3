@@ -20,7 +20,6 @@ export default function Search() {
       return;
     }
     if (query !== searchQueryURL) {
-      console.log(`set: ${searchQueryURL || ''}`);
       setQuery(searchQueryURL || '');
       setPage(pageURL);
     }

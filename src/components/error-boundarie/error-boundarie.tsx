@@ -1,32 +1,13 @@
-import { Component, ComponentProps, ErrorInfo } from 'react';
+import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
 
-class ErrorBoundary extends Component<ComponentProps<'div'>> {
-  state = {
-    error: null,
-    errorMessage: null,
-  };
-
-  static getDerivedStateFromError(error: Error) {
-    return { error: error };
-  }
-
-  componentDidCatch(error: Error, message: ErrorInfo) {
-    this.setState({
-      error: error,
-      errorMesage: message,
-    });
-  }
-
-  render() {
-    if (this.state.error) {
-      return (
-        <>
-          <h1>No, I Am Your Father.</h1>
-        </>
-      );
-    }
-    return this.props.children;
-  }
+function ErrorBoundary() {
+  const error = useRouteError();
+  isRouteErrorResponse(error);
+  return (
+    <>
+      <h1>No, I Am Your Father.</h1>
+    </>
+  );
 }
 
 export default ErrorBoundary;

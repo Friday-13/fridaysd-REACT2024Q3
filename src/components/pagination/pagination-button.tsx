@@ -7,12 +7,16 @@ type TPaginationButton = {
 };
 
 function PaginationButton(props: TPaginationButton) {
-  const setSearchParams = useSearchParams()[1];
+  const [searchParams, setSearchParams] = useSearchParams();
   return (
     <div
       className={styles.paginationButton}
-      onClick={() => {
-        setSearchParams(`page=${props.value}`);
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const newParams = searchParams;
+        newParams.set('page', props.value);
+        setSearchParams(newParams.toString());
       }}
     >
       {props.value}

@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getPerson, IPerson } from '../../services/api';
 import Loader from '../loader/loader';
 import styles from './person.module.scss';
+import closeIcon from '@assets/xmark.svg';
 
 function Person() {
   const params = useParams();
   const [person, setPerson] = useState<IPerson | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
   async function getPersonInfo() {
-    const id = params['personId'];
+    const id = params['id'];
     if (id !== null) {
       setIsLoading(true);
       const personInfo: IPerson = await getPerson(Number(id));
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       setIsLoading(false);
       setPerson(personInfo);
     }
@@ -27,21 +29,21 @@ function Person() {
 
   if (person === undefined || isLoading) {
     return (
-      <section>
+      <div className={[styles.person, styles.resultsFrame].join(' ')}>
         <Loader />
-      </section>
+      </div>
     );
   }
 
   return (
-    <div className={styles.person}>
+    <div className={[styles.person, styles.resultsFrame].join(' ')}>
       <div
         className={styles.close}
         onClick={() => {
-          navigate('/');
+          navigate(`/${location.search}`);
         }}
       >
-        <img src="/src/assets/xmark.svg" alt="" />
+        <img src={closeIcon} alt="close" />
       </div>
       <h2>{person?.name}</h2>
       <ul>
