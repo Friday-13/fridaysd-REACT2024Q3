@@ -1,45 +1,41 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import SearchInput from '../../components/search-input/search-input';
-import SearchResults from '../../components/search-results/search-results';
-import { getPeople, TPeopleReponse } from '../../services/api';
 import useLocalStorage from '../../hooks/use-local-storage';
-import { Outlet, useSearchParams } from 'react-router-dom';
-import styles from './search.module.scss';
+import { useSearchParams } from 'react-router-dom';
+import SearchResultsSection from './sections/search-results-section';
+import ThrowErrorSection from './sections/throw-error-section';
+import getPageNumber from '../../utils/parse-url/get-page-number';
+import getSearchQuery from '../../utils/parse-url/get-search-query';
 
 export default function Search() {
-  const [searchResults, setSearchResults] = useState<TPeopleReponse | undefined>(undefined);
-  const [hasError, setHasError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [query, setQuery, saveQuery] = useLocalStorage('query');
   const [searchParams, setSearchParams] = useSearchParams();
-
-  if (hasError) {
-    throw new Error('The Emperor Will Show You The True Nature Of The Force...');
-  }
-
-  async function applySearchQuery(newQuery?: string, page?: number) {
-    setIsLoading(true);
-    const response = await getPeople(newQuery, page);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsLoading(false);
-    setSearchResults(response);
-  }
+  const [page, setPage] = useState<number | undefined>(getPageNumber(searchParams));
+  const [query, setQuery, saveQuery] = useLocalStorage('query', getSearchQuery(searchParams));
 
   useEffect(() => {
-    const searchQuery = searchParams.get('search') || undefined;
-    const pageNumber = Number(searchParams.get('page')) || undefined;
+    const searchQueryURL = getSearchQuery(searchParams);
+    const pageURL = getPageNumber(searchParams);
     if (searchParams.toString() === '') {
-      setSearchParams(`search=${query}`);
+      setSearchParams(`searchQuery=${query}`);
       return;
     }
-    if (query !== searchQuery) {
-      setQuery(searchQuery || '');
+    if (query !== searchQueryURL) {
+      setQuery(searchQueryURL || '');
+      setPage(pageURL);
     }
-    applySearchQuery(searchQuery, pageNumber);
-  }, [searchParams]);
+  }, []);
 
-  const inputChanged = (newValue: string) => {
-    setQuery(newValue);
+  const searchCallback = (event: FormEvent) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget as HTMLFormElement);
+    const newQuery = formData.get('search-string') as string;
+    saveQuery(newQuery);
+    setQuery(newQuery);
+    if (newQuery !== '') {
+      setSearchParams(`searchQuery=${newQuery}`);
+      return;
+    }
+    setSearchParams();
   };
 
   return (
@@ -47,35 +43,15 @@ export default function Search() {
       <h1> Star Wars Characters </h1>
       <section>
         <SearchInput
-          label={{ content: 'Input' }}
-          input={{ name: 'search-string', initialValue: query }}
-          button={{
-            content: 'Search',
-          }}
-          searchCallback={() => {
-            saveQuery(query);
-            if (query !== '') {
-              setSearchParams(`search=${query}`);
-              return;
-            }
-            setSearchParams();
-          }}
-          inputChangeCallback={inputChanged}
-        ></SearchInput>
+          labelContent={'Input'}
+          inputName={'search-string'}
+          inputInitialValue={query}
+          buttonContent={'Search'}
+          searchCallback={searchCallback}
+        />
       </section>
-      <section className={styles.resultsWrapper}>
-        <SearchResults searchResults={searchResults} isLoading={isLoading} />
-        <Outlet></Outlet>
-      </section>
-      <section>
-        <button
-          onClick={() => {
-            setHasError(true);
-          }}
-        >
-          Throw Error
-        </button>
-      </section>
+      <SearchResultsSection query={query} page={page} />
+      <ThrowErrorSection />
     </>
   );
 }

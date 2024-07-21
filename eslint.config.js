@@ -34,6 +34,6 @@ export default [
     files: ['**/*.ts', '**/*.tsx'],
   },
   {
-    ignores: ['dist', '.eslint.config.js', 'vite.config.ts'],
+    ignores: ['dist', '.eslint.config.js', 'vite.config.ts', 'src/test/__mocks__/*'],
   },
 ];

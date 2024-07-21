@@ -2,15 +2,16 @@ import { ComponentProps } from 'react';
 import { TPeopleReponse } from '../../services/api';
 import Loader from '../loader/loader';
 import styles from './search-results.module.scss';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Pagination from '../pagination/pagination';
 
-interface SearchResultsProps extends ComponentProps<'div'> {
+export interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults?: TPeopleReponse;
   isLoading: boolean;
 }
 
 function getPage(url: string | null) {
+  console.log(url);
   if (url) {
     const page = new URL(url).searchParams.get('page');
     if (page) {
@@ -36,9 +37,14 @@ function getTotalPages(response: TPeopleReponse) {
 export default function SearchResults(props: SearchResultsProps) {
   const navigate = useNavigate();
   const params = useParams();
+  const location = useLocation();
 
   if (props.isLoading) {
-    return <Loader />;
+    return (
+      <div className={[styles.searchResults, styles.resultsFrame].join(' ')}>
+        <Loader />
+      </div>
+    );
   }
 
   if (!props.searchResults || props.searchResults.results.length === 0) {
@@ -50,23 +56,31 @@ export default function SearchResults(props: SearchResultsProps) {
   const totalPages = getTotalPages(props.searchResults);
 
   function sectionClick() {
-    if (params['personId'] !== undefined) {
-      navigate('/');
+    if (params['id'] !== undefined) {
+      navigate(`/${location.search}`);
     }
   }
   return (
-    <div className={styles.searchResults} onClick={sectionClick}>
+    <div
+      className={[styles.searchResults, styles.resultsFrame].join(' ')}
+      onClick={(e) => {
+        e.preventDefault;
+        sectionClick();
+      }}
+    >
       <h2>Search results</h2>
       <ul className={styles.searchResultsList}>
         {props.searchResults.results.map((result, index) => (
           <li
             key={index}
             className={styles.searchResultsResult}
-            onClick={() => {
-              navigate(`/${result.id}`);
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              navigate(`/person/${result.id}${location.search}`);
             }}
           >
-            <div>Name: {result.name}</div>
+            <div>name: {result.name}</div>
             <div>Gender: {result.gender}</div>
             <div>Birth year: {result.birth_year}</div>
           </li>

@@ -1,28 +1,35 @@
-import { ComponentProps, FormEvent } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import styles from './search-input.module.scss';
 
-interface SearchInputProps extends ComponentProps<'div'> {
-  label?: {
-    content: string;
-  };
-  input?: {
-    name: string;
-    initialValue: string;
-  };
-  button?: ComponentProps<'button'>;
-  searchCallback: () => void;
-  inputChangeCallback: (newQuery: string) => void;
+interface SearchInputProps {
+  labelContent?: string;
+  inputName?: string;
+  inputInitialValue?: string;
+  buttonContent?: string;
+  searchCallback: (event: FormEvent) => void;
+  inputChangeCallback?: (newQuery: string) => void;
 }
 
 export default function SearchInput(props: SearchInputProps) {
+  const [searchString, setSearchString] = useState(props.inputInitialValue);
+
   const handleQueryChange = (newValue: FormEvent<HTMLInputElement>) => {
-    props.inputChangeCallback(newValue.currentTarget.value);
+    if (props.inputChangeCallback) {
+      props.inputChangeCallback(newValue.currentTarget.value);
+    } else {
+      setSearchString(newValue.currentTarget.value);
+    }
   };
+
+  useEffect(() => {
+    setSearchString(props.inputInitialValue);
+  }, [props.inputInitialValue]);
+
   return (
-    <div className={styles.searchInput}>
-      <label htmlFor={props.input?.name}>{props.label?.content}</label>
-      <input type="search" name={props.input?.name} onChange={handleQueryChange} value={props.input?.initialValue} />
-      <button onClick={props.searchCallback}>{props.button?.content}</button>
-    </div>
+    <form className={styles.searchInput} onSubmit={props.searchCallback}>
+      <label htmlFor={props.inputName}>{props.labelContent}</label>
+      <input type="search" name={props.inputName} onChange={handleQueryChange} value={searchString} />
+      <input type="submit" value={props.buttonContent} />
+    </form>
   );
 }
