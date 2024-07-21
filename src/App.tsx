@@ -3,6 +3,8 @@ import ErrorBoundary from '@components/error-boundarie/error-boundarie';
 import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
 import Error from './views/error/error';
 import Person from './components/person/person';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 const searchChildren: Array<RouteObject> = [
   {
@@ -22,7 +24,11 @@ const errorRoute: RouteObject = { path: '*', element: <Error code="404" message=
 const router = createBrowserRouter([searchRoute, errorRoute]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
 
 export default App;

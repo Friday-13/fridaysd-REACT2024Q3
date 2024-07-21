@@ -1,9 +1,11 @@
-import { ComponentProps } from 'react';
+import { ComponentProps, useEffect } from 'react';
 import { TPeopleReponse } from '../../services/api';
 import Loader from '../loader/loader';
 import styles from './search-results.module.scss';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Pagination from '../pagination/pagination';
+import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
+import { addPerson } from '../../utils/slices/people-slice';
 
 export interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults?: TPeopleReponse;
@@ -11,7 +13,6 @@ export interface SearchResultsProps extends ComponentProps<'div'> {
 }
 
 function getPage(url: string | null) {
-  console.log(url);
   if (url) {
     const page = new URL(url).searchParams.get('page');
     if (page) {
@@ -38,6 +39,12 @@ export default function SearchResults(props: SearchResultsProps) {
   const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
+  const selectedPeople = useAppSelector((state) => state.people);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    console.log(selectedPeople);
+  }, [selectedPeople]);
 
   if (props.isLoading) {
     return (
@@ -60,6 +67,7 @@ export default function SearchResults(props: SearchResultsProps) {
       navigate(`/${location.search}`);
     }
   }
+
   return (
     <div
       className={[styles.searchResults, styles.resultsFrame].join(' ')}
@@ -77,7 +85,8 @@ export default function SearchResults(props: SearchResultsProps) {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              navigate(`/person/${result.id}${location.search}`);
+              dispatch(addPerson(result));
+              navigate(`s/person/${result.id}${location.search}`);
             }}
           >
             <div>name: {result.name}</div>
