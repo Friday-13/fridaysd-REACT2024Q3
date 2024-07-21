@@ -1,11 +1,10 @@
-import { ComponentProps, useEffect } from 'react';
+import { ComponentProps } from 'react';
 import { TPeopleReponse } from '../../services/api';
 import Loader from '../loader/loader';
 import styles from './search-results.module.scss';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Pagination from '../pagination/pagination';
-import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
-import { selectedPeople, togglePerson } from '../../utils/slices/people-slice';
+import PersonInList from '@components/person-in-list/person-in-list';
 
 export interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults?: TPeopleReponse;
@@ -39,12 +38,6 @@ export default function SearchResults(props: SearchResultsProps) {
   const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
-  const selected = useAppSelector(selectedPeople);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
 
   if (props.isLoading) {
     return (
@@ -77,24 +70,11 @@ export default function SearchResults(props: SearchResultsProps) {
       }}
     >
       <h2>Search results</h2>
-      <ul className={styles.searchResultsList}>
+      <div className={styles.searchResultsList}>
         {props.searchResults.results.map((result, index) => (
-          <li
-            key={index}
-            className={styles.searchResultsResult}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              dispatch(togglePerson(result));
-              navigate(`/person/${result.id}${location.search}`);
-            }}
-          >
-            <div>name: {result.name}</div>
-            <div>Gender: {result.gender}</div>
-            <div>Birth year: {result.birth_year}</div>
-          </li>
+          <PersonInList person={result} key={index} />
         ))}
-      </ul>
+      </div>
       <Pagination nextPage={nextPage} prevPage={prevPage} totalPages={totalPages} />
     </div>
   );
