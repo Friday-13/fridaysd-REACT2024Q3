@@ -3,6 +3,8 @@ import { render } from '@testing-library/react';
 import { IPerson, TPeopleReponse } from '@services/api';
 import apiResponse from '../../people.json';
 import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../../store';
 
 function getSearchResults(): TPeopleReponse {
   const searchResults: TPeopleReponse = {
@@ -25,7 +27,9 @@ test('Renders the search results component: loading', async () => {
   const searchResults = getSearchResults();
   render(
     <MemoryRouter>
-      <SearchResults searchResults={searchResults} isLoading={true} />
+      <Provider store={store}>
+        <SearchResults searchResults={searchResults} isLoading={true} />
+      </Provider>
     </MemoryRouter>
   );
   expect(true).toBeTruthy();
@@ -37,7 +41,9 @@ test('Renders the search results component: with content', async () => {
   searchResults.next = new URL('https://swapi.dev/api/people/?page=4').toString();
   render(
     <MemoryRouter>
-      <SearchResults searchResults={searchResults} isLoading={false} />
+      <Provider store={store}>
+        <SearchResults searchResults={searchResults} isLoading={false} />
+      </Provider>
     </MemoryRouter>
   );
   expect(true).toBeTruthy();
@@ -49,7 +55,9 @@ test('Renders the search results component: last page', async () => {
   searchResults.next = null;
   render(
     <MemoryRouter>
-      <SearchResults searchResults={searchResults} isLoading={false} />
+      <Provider store={store}>
+        <SearchResults searchResults={searchResults} isLoading={false} />
+      </Provider>
     </MemoryRouter>
   );
   expect(true).toBeTruthy();
@@ -61,7 +69,9 @@ test('Renders the search results component: only one page', async () => {
   searchResults.previous = null;
   render(
     <MemoryRouter>
-      <SearchResults searchResults={searchResults} isLoading={false} />
+      <Provider store={store}>
+        <SearchResults searchResults={searchResults} isLoading={false} />
+      </Provider>
     </MemoryRouter>
   );
   expect(true).toBeTruthy();
