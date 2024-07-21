@@ -5,7 +5,7 @@ import styles from './search-results.module.scss';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Pagination from '../pagination/pagination';
 import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
-import { addPerson } from '../../utils/slices/people-slice';
+import { selectedPeople, togglePerson } from '../../utils/slices/people-slice';
 
 export interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults?: TPeopleReponse;
@@ -39,12 +39,12 @@ export default function SearchResults(props: SearchResultsProps) {
   const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
-  const selectedPeople = useAppSelector((state) => state.people);
+  const selected = useAppSelector(selectedPeople);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log(selectedPeople);
-  }, [selectedPeople]);
+    console.log(selected);
+  }, [selected]);
 
   if (props.isLoading) {
     return (
@@ -85,8 +85,8 @@ export default function SearchResults(props: SearchResultsProps) {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              dispatch(addPerson(result));
-              navigate(`s/person/${result.id}${location.search}`);
+              dispatch(togglePerson(result));
+              navigate(`/person/${result.id}${location.search}`);
             }}
           >
             <div>name: {result.name}</div>
