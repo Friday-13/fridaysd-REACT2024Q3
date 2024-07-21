@@ -11,6 +11,7 @@ export interface SearchResultsProps extends ComponentProps<'div'> {
 }
 
 function getPage(url: string | null) {
+  console.log(url);
   if (url) {
     const page = new URL(url).searchParams.get('page');
     if (page) {

@@ -4,7 +4,7 @@ import { IPerson, TPeopleReponse } from '@services/api';
 import apiResponse from '../../people.json';
 import { MemoryRouter } from 'react-router-dom';
 
-test('Renders the main page', async () => {
+function getSearchResults(): TPeopleReponse {
   const searchResults: TPeopleReponse = {
     results: apiResponse.results.map((person, id) => {
       const modifiedPerson: IPerson = {
@@ -18,14 +18,50 @@ test('Renders the main page', async () => {
     previous: apiResponse.previous,
     next: apiResponse.next,
   };
-  // const mockUsedNavigate = jest.fn();
-  // jest.mock('react-router-dom', () => ({
-  //   ...jest.requireActual('react-router-dom'),
-  //   useNavigate: () => mockUsedNavigate,
-  // }));
+  return searchResults;
+}
+
+test('Renders the search results component: loading', async () => {
+  const searchResults = getSearchResults();
   render(
     <MemoryRouter>
       <SearchResults searchResults={searchResults} isLoading={true} />
+    </MemoryRouter>
+  );
+  expect(true).toBeTruthy();
+});
+
+test('Renders the search results component: with content', async () => {
+  const searchResults = getSearchResults();
+  searchResults.previous = new URL('https://swapi.dev/api/people/?page=2').toString();
+  searchResults.next = new URL('https://swapi.dev/api/people/?page=4').toString();
+  render(
+    <MemoryRouter>
+      <SearchResults searchResults={searchResults} isLoading={false} />
+    </MemoryRouter>
+  );
+  expect(true).toBeTruthy();
+});
+
+test('Renders the search results component: last page', async () => {
+  const searchResults = getSearchResults();
+  searchResults.previous = new URL('https://swapi.dev/api/people/?page=2').toString();
+  searchResults.next = null;
+  render(
+    <MemoryRouter>
+      <SearchResults searchResults={searchResults} isLoading={false} />
+    </MemoryRouter>
+  );
+  expect(true).toBeTruthy();
+});
+
+test('Renders the search results component: only one page', async () => {
+  const searchResults = getSearchResults();
+  searchResults.next = null;
+  searchResults.previous = null;
+  render(
+    <MemoryRouter>
+      <SearchResults searchResults={searchResults} isLoading={false} />
     </MemoryRouter>
   );
   expect(true).toBeTruthy();
