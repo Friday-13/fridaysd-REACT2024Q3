@@ -1,0 +1,29 @@
+.search-results {
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__list {
+    overflow-y: scroll;
+    height: 50vh;
+    scrollbar-width: thin;
+  }
+
+  &__result {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+}
+
+.results-frame {
+  height: 60vh;
+  width: 40vw;
+  list-style: none;
+  padding: 40px;
+  border: 2px solid white;
+  border-radius: 20px;
+}
