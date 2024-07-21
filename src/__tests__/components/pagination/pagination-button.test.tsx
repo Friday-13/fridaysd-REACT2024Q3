@@ -1,17 +1,19 @@
 import PaginationButton from '@components/pagination/pagination-button';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { store } from '../../../store';
 
-test('pagination button rendering', () => {
-  render(
-    <MemoryRouter>
-      <Provider store={store}>
-        <PaginationButton isCurrent={true} value={'2'} />
-      </Provider>
-    </MemoryRouter>
-  );
-  expect(true).toBeTruthy();
+describe('pagination button', () => {
+  test('rendering', () => {
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <PaginationButton isCurrent={true} value={'page value'} />
+        </Provider>
+      </MemoryRouter>
+    );
+    expect(screen.queryByText(/page value/i)).toBeInTheDocument();
+  });
 });

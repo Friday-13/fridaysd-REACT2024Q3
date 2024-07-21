@@ -25,7 +25,7 @@ function SelectedPeopleManager() {
           dispatch(clear());
         }}
       >
-        Clear selected
+        Unselect all
       </DropDownItem>
       <DropDownItem
         onClick={(e) => {
