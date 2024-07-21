@@ -6,6 +6,7 @@ import SearchResultsSection from './sections/search-results-section';
 import ThrowErrorSection from './sections/throw-error-section';
 import getPageNumber from '../../utils/parse-url/get-page-number';
 import getSearchQuery from '../../utils/parse-url/get-search-query';
+import SelectedPeopleManager from '@components/selected-people-manager/selected-people-manager';
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -51,6 +52,9 @@ export default function Search() {
         />
       </section>
       <SearchResultsSection query={query} page={page} />
+      <section>
+        <SelectedPeopleManager />
+      </section>
       <ThrowErrorSection />
     </>
   );

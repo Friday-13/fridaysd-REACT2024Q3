@@ -1,0 +1,27 @@
+.drop-down-menu {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #1a1a1a;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #646cff;
+  }
+
+  li {
+    display: block;
+    width: 100%;
+    text-align: center;
+    list-style: none;
+    border: 1px solid transparent;
+    border-radius: 8px;
+  }
+
+  li:hover {
+    border-color: #646cff;
+  }
+}
