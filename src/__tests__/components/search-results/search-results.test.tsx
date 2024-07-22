@@ -1,5 +1,5 @@
 import SearchResults from '@components/search-results/search-results';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { IPerson, TPeopleReponse } from '@services/api';
 import apiResponse from '../../people.json';
 import { MemoryRouter } from 'react-router-dom';
@@ -32,7 +32,7 @@ test('Renders the search results component: loading', async () => {
       </Provider>
     </MemoryRouter>
   );
-  expect(true).toBeTruthy();
+  expect(screen.queryByText(/luke/i)).toBeNull();
 });
 
 test('Renders the search results component: with content', async () => {
@@ -46,7 +46,7 @@ test('Renders the search results component: with content', async () => {
       </Provider>
     </MemoryRouter>
   );
-  expect(true).toBeTruthy();
+  expect(screen.queryByText(/luke/i)).toBeInTheDocument();
 });
 
 test('Renders the search results component: last page', async () => {
@@ -60,7 +60,7 @@ test('Renders the search results component: last page', async () => {
       </Provider>
     </MemoryRouter>
   );
-  expect(true).toBeTruthy();
+  expect(screen.queryByText(/Obi-Wan Kenobi/i)).toBeInTheDocument();
 });
 
 test('Renders the search results component: only one page', async () => {
@@ -74,5 +74,5 @@ test('Renders the search results component: only one page', async () => {
       </Provider>
     </MemoryRouter>
   );
-  expect(true).toBeTruthy();
+  expect(screen.queryByText(/luke/i)).toBeInTheDocument();
 });
