@@ -1,33 +1,27 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getPerson, IPerson } from '../../services/api';
+import { IPerson } from '../../services/api';
 import Loader from '../loader/loader';
 import styles from './person.module.scss';
 import closeIcon from '@assets/xmark.svg';
+import { useGetPersonByIdQuery } from '@services/swapi';
 
 function Person() {
   const params = useParams();
   const [person, setPerson] = useState<IPerson | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const location = useLocation();
-
-  async function getPersonInfo() {
-    const id = params['id'];
-    if (id !== null) {
-      setIsLoading(true);
-      const personInfo: IPerson = await getPerson(Number(id));
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      setIsLoading(false);
-      setPerson(personInfo);
-    }
-  }
+  const { data, error, isPersonLoading } = useGetPersonByIdQuery(params['id'] as string); // TODO: fix as string approach
 
   useEffect(() => {
-    getPersonInfo();
-  }, [params]);
+    setPerson(data);
+  }, [data]);
 
-  if (person === undefined || isLoading) {
+  useEffect(() => {
+    console.error(error);
+  }, [error]);
+
+  if (person === undefined || isPersonLoading) {
     return (
       <div className={[styles.person, styles.resultsFrame].join(' ')}>
         <Loader />
