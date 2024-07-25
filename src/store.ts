@@ -7,7 +7,7 @@ export const store = configureStore({
     people: peopleReducer,
     [swApi.reducerPath]: swApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(pokemonApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(swApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
