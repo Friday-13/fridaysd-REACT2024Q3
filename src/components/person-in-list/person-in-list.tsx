@@ -1,4 +1,4 @@
-import { IPerson } from '@services/api';
+import { IPerson } from '@services/api-types';
 import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
 import { isPersonInState, selectedPeopleSelector, togglePerson } from '../../utils/slices/people-slice';
 import styles from './person-in-list.module.scss';

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPerson } from '@services/api';
+import { IPerson } from '@services/api-types';
 import { RootState } from '../../store';
 import isIdEqual from '../person/compare-person';
 

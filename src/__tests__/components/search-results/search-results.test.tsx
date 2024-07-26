@@ -1,6 +1,6 @@
 import SearchResults from '@components/search-results/search-results';
 import { render, screen } from '@testing-library/react';
-import { IPerson, TPeopleReponse } from '@services/api';
+import { TPeopleReponse } from '@services/api-types';
 import apiResponse from '../../people.json';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -8,13 +8,7 @@ import { store } from '../../../store';
 
 function getSearchResults(): TPeopleReponse {
   const searchResults: TPeopleReponse = {
-    results: apiResponse.results.map((person, id) => {
-      const modifiedPerson: IPerson = {
-        ...person,
-        id: `${id + 1}`,
-      };
-      return modifiedPerson;
-    }),
+    results: apiResponse.results,
     count: apiResponse.count,
     currentUrl: new URL('https://swapi.dev/api/'),
     previous: apiResponse.previous,
@@ -28,7 +22,7 @@ test('Renders the search results component: loading', async () => {
   render(
     <MemoryRouter>
       <Provider store={store}>
-        <SearchResults searchResults={searchResults} isLoading={true} />
+        <SearchResults searchResults={searchResults} isLoading={true} setPageCallback={() => {}} />
       </Provider>
     </MemoryRouter>
   );
@@ -42,7 +36,7 @@ test('Renders the search results component: with content', async () => {
   render(
     <MemoryRouter>
       <Provider store={store}>
-        <SearchResults searchResults={searchResults} isLoading={false} />
+        <SearchResults searchResults={searchResults} isLoading={false} setPageCallback={() => {}} />
       </Provider>
     </MemoryRouter>
   );
@@ -56,7 +50,7 @@ test('Renders the search results component: last page', async () => {
   render(
     <MemoryRouter>
       <Provider store={store}>
-        <SearchResults searchResults={searchResults} isLoading={false} />
+        <SearchResults searchResults={searchResults} isLoading={false} setPageCallback={() => {}} />
       </Provider>
     </MemoryRouter>
   );
@@ -70,7 +64,7 @@ test('Renders the search results component: only one page', async () => {
   render(
     <MemoryRouter>
       <Provider store={store}>
-        <SearchResults searchResults={searchResults} isLoading={false} />
+        <SearchResults searchResults={searchResults} isLoading={false} setPageCallback={() => {}} />
       </Provider>
     </MemoryRouter>
   );

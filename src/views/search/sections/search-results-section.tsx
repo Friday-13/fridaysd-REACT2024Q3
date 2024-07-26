@@ -8,11 +8,11 @@ export default function SearchResultsSection(props: {
   page?: number;
   setPageCallback: (value: number) => void;
 }) {
-  const { data, isLoading } = useGetPeopleQuery({ name: props.query, page: props.page });
+  const { data, isLoading, isFetching } = useGetPeopleQuery({ name: props.query, page: props.page });
 
   return (
     <section className={styles.resultsWrapper}>
-      <SearchResults searchResults={data} isLoading={isLoading} setPageCallback={props.setPageCallback} />
+      <SearchResults searchResults={data} isLoading={isLoading || isFetching} setPageCallback={props.setPageCallback} />
       <Outlet />
     </section>
   );

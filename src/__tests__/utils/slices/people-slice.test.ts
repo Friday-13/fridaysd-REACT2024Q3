@@ -1,4 +1,4 @@
-import { IPerson } from '@services/api';
+import { IPerson } from '@services/api-types';
 import reducer, { addPerson, clear, removePerson, togglePerson } from '../../../utils/slices/people-slice';
 import apiResponse from '../../people.json';
 
@@ -11,7 +11,6 @@ describe('reducers', () => {
   it('should handle add person', () => {
     const person: IPerson = {
       ...apiResponse.results[1],
-      id: '1',
     };
     const newState = reducer(initialState, addPerson(person));
     expect(newState).toEqual([person]);
@@ -20,7 +19,6 @@ describe('reducers', () => {
   it('should handle remove person', () => {
     const person: IPerson = {
       ...apiResponse.results[1],
-      id: '1',
     };
     const newState = reducer([person], removePerson(person));
     expect(newState).toEqual([]);
@@ -29,7 +27,6 @@ describe('reducers', () => {
   it('should handle toggle existed person', () => {
     const person: IPerson = {
       ...apiResponse.results[3],
-      id: '3',
     };
     const newState = reducer([person], togglePerson(person));
     expect(newState).toEqual([]);
@@ -38,7 +35,6 @@ describe('reducers', () => {
   it('should handle toggle unexisted person', () => {
     const person: IPerson = {
       ...apiResponse.results[3],
-      id: '3',
     };
     const newState = reducer([], togglePerson(person));
     expect(newState).toEqual([person]);

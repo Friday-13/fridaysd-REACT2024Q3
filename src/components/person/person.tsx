@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { IPerson } from '../../services/api';
+import { IPerson } from '../../services/api-types';
 import Loader from '../loader/loader';
 import styles from './person.module.scss';
 import closeIcon from '@assets/xmark.svg';
@@ -11,7 +11,7 @@ function Person() {
   const [person, setPerson] = useState<IPerson | undefined>(undefined);
   const navigate = useNavigate();
   const location = useLocation();
-  const { data, error, isPersonLoading } = useGetPersonByIdQuery(params['id'] as string); // TODO: fix as string approach
+  const { data, error, isLoading, isFetching } = useGetPersonByIdQuery(params['id'] as string); // TODO: fix as string approach
 
   useEffect(() => {
     setPerson(data);
@@ -23,7 +23,7 @@ function Person() {
     }
   }, [error]);
 
-  if (person === undefined || isPersonLoading) {
+  if (person === undefined || isLoading || isFetching) {
     return (
       <div className={[styles.person, styles.resultsFrame].join(' ')}>
         <Loader />

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IPerson, TPeopleReponse } from '@services/api';
+import { IPerson, TPeopleReponse } from '@services/api-types';
 
 export interface IPeopleSearchParams {
   name?: string;
