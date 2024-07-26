@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IPerson } from '@services/api';
+import { IPerson, TPeopleReponse } from '@services/api';
 
 export interface IPeopleSearchParams {
   name?: string;
@@ -15,7 +15,7 @@ export const swApi = createApi({
     getPersonById: builder.query<IPerson, string>({
       query: (personId) => `people/${personId}`,
     }),
-    getPeople: builder.query<Array<IPerson>, IPeopleSearchParams>({
+    getPeople: builder.query<TPeopleReponse, IPeopleSearchParams>({
       query: ({ name, page }) => {
         const params = new URLSearchParams();
         if (name) {

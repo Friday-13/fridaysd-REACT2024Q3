@@ -19,8 +19,8 @@ const searchRoute: RouteObject = {
   children: searchChildren,
   errorElement: <ErrorBoundary />,
 };
-const errorRoute: RouteObject = { path: '*', element: <Error code="404" message="Page not found" /> };
 
+const errorRoute: RouteObject = { path: '*', element: <Error code="404" message="Page not found" /> };
 const router = createBrowserRouter([searchRoute, errorRoute]);
 
 function App() {

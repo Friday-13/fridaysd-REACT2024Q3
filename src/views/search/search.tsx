@@ -32,11 +32,17 @@ export default function Search() {
     const newQuery = formData.get('search-string') as string;
     saveQuery(newQuery);
     setQuery(newQuery);
+    setPage(1);
     if (newQuery !== '') {
       setSearchParams(`searchQuery=${newQuery}`);
       return;
     }
     setSearchParams();
+  };
+
+  const setPageCallback = (newValue: number) => {
+    setSearchParams(`searchQuery=${query}&page=${newValue}`);
+    setPage(newValue);
   };
 
   return (
@@ -51,7 +57,7 @@ export default function Search() {
           searchCallback={searchCallback}
         />
       </section>
-      <SearchResultsSection query={query} page={page} />
+      <SearchResultsSection query={query} page={page} setPageCallback={setPageCallback} />
       <section>
         <SelectedPeopleManager />
       </section>

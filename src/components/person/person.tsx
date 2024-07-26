@@ -18,7 +18,9 @@ function Person() {
   }, [data]);
 
   useEffect(() => {
-    console.error(error);
+    if (error) {
+      console.error(error);
+    }
   }, [error]);
 
   if (person === undefined || isPersonLoading) {

@@ -9,6 +9,7 @@ import PersonInList from '@components/person-in-list/person-in-list';
 export interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults?: TPeopleReponse;
   isLoading: boolean;
+  setPageCallback: (value: number) => void;
 }
 
 function getPage(url: string | null) {
@@ -75,7 +76,12 @@ export default function SearchResults(props: SearchResultsProps) {
           <PersonInList person={result} key={index} />
         ))}
       </div>
-      <Pagination nextPage={nextPage} prevPage={prevPage} totalPages={totalPages} />
+      <Pagination
+        setPageCallback={props.setPageCallback}
+        nextPage={nextPage}
+        prevPage={prevPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 }

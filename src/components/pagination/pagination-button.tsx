@@ -1,22 +1,19 @@
-import { useSearchParams } from 'react-router-dom';
 import styles from './pagination.module.scss';
 
 type TPaginationButton = {
   isCurrent: boolean;
-  value: string;
+  value: number;
+  setPageCallback: (value: number) => void;
 };
 
 function PaginationButton(props: TPaginationButton) {
-  const [searchParams, setSearchParams] = useSearchParams();
   return (
     <div
       className={styles.paginationButton}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        const newParams = searchParams;
-        newParams.set('page', props.value);
-        setSearchParams(newParams.toString());
+        props.setPageCallback(props.value);
       }}
     >
       {props.value}
