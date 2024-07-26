@@ -17,7 +17,6 @@ function constructRequest(endpoint: string, params?: Array<TSearchParam>) {
 }
 
 export interface IPerson {
-  id: string;
   name: string;
   birth_year: string;
   gender: string;

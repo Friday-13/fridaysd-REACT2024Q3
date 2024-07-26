@@ -34,7 +34,8 @@ export default function PersonInList(props: { person: IPerson }) {
           e.stopPropagation();
           e.preventDefault();
           e.stopPropagation();
-          navigate(`/person/${props.person.id}${location.search}`);
+          const id = props.person.url.split('/').slice(-2, -1);
+          navigate(`/person/${id}${location.search}`);
         }}
       >
         <div>name: {props.person.name}</div>
