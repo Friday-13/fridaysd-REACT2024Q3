@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import DropDownMenu from '@components/drop-down-menu/drop-down-menu';
 import DropDownItem from '@components/drop-down-menu/drop-down-item';
 import { selectedPeopleSelector } from '../../store';
+import DownloadFile from '@utils/download-file/download-file';
 
 function SelectedPeopleManager() {
   const selectedPeople = useAppSelector(selectedPeopleSelector);
-  const [isVisible, setIsVisible] = useState<boolean>(selectedPeople.length > 0);
+  const [isVisible, setIsVisible] = useState<boolean>(selectedPeople.people.length > 0);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -19,7 +20,7 @@ function SelectedPeopleManager() {
   }
 
   return (
-    <DropDownMenu menuTitle={`Number of selected ${selectedPeople.length}`}>
+    <DropDownMenu menuTitle={`Number of selected ${selectedPeople.people.length}`}>
       <DropDownItem
         onClick={(e) => {
           e.stopPropagation();
@@ -34,7 +35,7 @@ function SelectedPeopleManager() {
           console.log('Downloading...');
         }}
       >
-        Download selected
+        <DownloadFile fileName={`${selectedPeople.people.length}_people`}>Download selected</DownloadFile>
       </DropDownItem>
     </DropDownMenu>
   );
