@@ -5,6 +5,7 @@ import { setIsPeopleLoading } from '@utils/slices/is-loading-slice';
 import { useDispatch } from 'react-redux';
 import styles from '../search.module.scss';
 import { useEffect } from 'react';
+import { setCurrentPageResults } from '@utils/slices/current-page-slice';
 
 export default function SearchResultsSection(props: {
   query: string;
@@ -16,6 +17,9 @@ export default function SearchResultsSection(props: {
 
   useEffect(() => {
     dispatch(setIsPeopleLoading(isLoading || isFetching));
+    if (!(isLoading || isFetching)) {
+      dispatch(setCurrentPageResults(data.results));
+    }
   }, [isLoading, isFetching]);
 
   return (
