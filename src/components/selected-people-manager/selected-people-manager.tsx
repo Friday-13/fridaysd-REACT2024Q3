@@ -4,15 +4,18 @@ import { useEffect, useState } from 'react';
 import DropDownMenu from '@components/drop-down-menu/drop-down-menu';
 import DropDownItem from '@components/drop-down-menu/drop-down-item';
 import { selectedPeopleSelector } from '../../store';
-import DownloadFile from '@utils/download-file/download-file';
+import generateSelectedPeopleFile from '@utils/download-file/generate-file';
+import DownloadFile from '@components/download-file/download-file';
 
 function SelectedPeopleManager() {
   const selectedPeople = useAppSelector(selectedPeopleSelector);
   const [isVisible, setIsVisible] = useState<boolean>(selectedPeople.people.length > 0);
+  const [csvContent, setCsvContent] = useState<string>(generateSelectedPeopleFile(selectedPeople.people));
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     setIsVisible(selectedPeople.people.length > 0);
+    setCsvContent(generateSelectedPeopleFile(selectedPeople.people));
   }, [selectedPeople]);
 
   if (!isVisible) {
@@ -35,7 +38,9 @@ function SelectedPeopleManager() {
           console.log('Downloading...');
         }}
       >
-        <DownloadFile fileName={`${selectedPeople.people.length}_people`}>Download selected</DownloadFile>
+        <DownloadFile fileName={`${selectedPeople.people.length}_people`} fileContent={csvContent}>
+          Download selected
+        </DownloadFile>
       </DropDownItem>
     </DropDownMenu>
   );
