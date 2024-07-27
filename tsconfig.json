@@ -33,6 +33,7 @@
     "paths": {
       "@assets/*": ["./src/assets/*"],
       "@views/*": ["./src/views/*"],
+      "@utils/*": ["./src/utils/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@services/*": ["./src/services/*"],
       "@components/*": ["./src/components/*"]

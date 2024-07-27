@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPerson } from '@services/api-types';
-import { RootState } from '../../store';
 import isIdEqual from '../person/compare-person';
 
 const initialState = Array<IPerson>;
@@ -42,7 +41,4 @@ export const peopleSlice = createSlice({
 });
 
 export const { addPerson, removePerson, togglePerson, clear } = peopleSlice.actions;
-
-export const selectedPeopleSelector = (state: RootState) => state.people;
-
 export default peopleSlice.reducer;

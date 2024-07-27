@@ -1,8 +1,9 @@
 import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
-import { clear, selectedPeopleSelector } from '../../utils/slices/people-slice';
+import { clear } from '../../utils/slices/people-slice';
 import { useEffect, useState } from 'react';
 import DropDownMenu from '@components/drop-down-menu/drop-down-menu';
 import DropDownItem from '@components/drop-down-menu/drop-down-item';
+import { selectedPeopleSelector } from '../../store';
 
 function SelectedPeopleManager() {
   const selectedPeople = useAppSelector(selectedPeopleSelector);

@@ -1,9 +1,10 @@
 import { IPerson } from '@services/api-types';
 import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
-import { isPersonInState, selectedPeopleSelector, togglePerson } from '../../utils/slices/people-slice';
+import { isPersonInState, togglePerson } from '../../utils/slices/people-slice';
 import styles from './person-in-list.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { selectedPeopleSelector } from '../../store';
 
 export default function PersonInList(props: { person: IPerson }) {
   const navigate = useNavigate();
