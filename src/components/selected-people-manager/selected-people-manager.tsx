@@ -11,7 +11,7 @@ function SelectedPeopleManager() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setIsVisible(selectedPeople.length > 0);
+    setIsVisible(selectedPeople.people.length > 0);
   }, [selectedPeople]);
 
   if (!isVisible) {
