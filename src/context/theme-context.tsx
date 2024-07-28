@@ -26,3 +26,12 @@ export function ThemeProvider(props: PropsWithChildren) {
 
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{props.children}</ThemeContext.Provider>;
 }
+
+export function getThemedClassName(context: IThemeContext, styles: Array<string>) {
+  let className = '';
+  className = styles.join(' ');
+  if (context.theme === 'dark') {
+    className += ' dark';
+  }
+  return className;
+}

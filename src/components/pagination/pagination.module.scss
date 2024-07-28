@@ -13,8 +13,12 @@
     cursor: pointer;
 
     &_current-page {
-      opacity: 20%;
+      opacity: 0.2;
       cursor: default;
+    }
+
+    &.dark {
+      background-color: red;
     }
   }
 }

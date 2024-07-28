@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { getThemedClassName, ThemeContext } from '../../context/theme-context';
 import styles from './pagination.module.scss';
 
 type TPaginationButton = {
@@ -7,9 +9,10 @@ type TPaginationButton = {
 };
 
 function PaginationButton(props: TPaginationButton) {
+  const theme = useContext(ThemeContext);
   return (
     <div
-      className={styles.paginationButton}
+      className={getThemedClassName(theme, [styles.paginationButton])}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
