@@ -5,6 +5,7 @@ import Error from './views/error/error';
 import Person from './components/person/person';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { ThemeProvider } from './context/theme-context';
 
 const searchChildren: Array<RouteObject> = [
   {
@@ -26,7 +27,9 @@ const router = createBrowserRouter([searchRoute, errorRoute]);
 function App() {
   return (
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   );
 }
