@@ -12,6 +12,7 @@ export default {
     '\\.(css|scss)$': 'identity-obj-proxy',
     '\\.(svg)$': 'identity-obj-proxy',
     '^@assets/(.*)$': '<rootDir>/assets/$1',
+    '^@utils/(.*)$': '<rootDir>/utils/$1',
     '^@views/(.*)$': '<rootDir>/views/$1',
     '^@hooks/(.*)$': '<rootDir>/hooks/$1',
     '^@services/(.*)$': '<rootDir>/services/$1',

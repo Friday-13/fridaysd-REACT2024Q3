@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPerson } from '@services/api-types';
 import isUrlEqual from '../person/compare-person';
 
-type TSelectedPeopleState = {
+export type TSelectedPeopleState = {
   people: Array<IPerson>;
 };
 
