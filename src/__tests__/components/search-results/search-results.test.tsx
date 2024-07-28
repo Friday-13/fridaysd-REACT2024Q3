@@ -4,7 +4,9 @@ import { TPeopleReponse } from '@services/api-types';
 import apiResponse from '../../people.json';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from '../../../store';
+import configureStore from 'redux-mock-store';
+
+const mockStore = configureStore([]);
 
 function getSearchResults(): TPeopleReponse {
   const searchResults: TPeopleReponse = {
@@ -19,24 +21,32 @@ function getSearchResults(): TPeopleReponse {
 
 test('Renders the search results component: loading', async () => {
   const searchResults = getSearchResults();
+  const store = mockStore({
+    isPeopleLoading: { value: true },
+    people: { people: [] },
+  });
   render(
     <MemoryRouter>
       <Provider store={store}>
-        <SearchResults searchResults={searchResults} isLoading={true} setPageCallback={() => {}} />
+        <SearchResults searchResults={searchResults} setPageCallback={() => {}} />
       </Provider>
     </MemoryRouter>
   );
   expect(screen.queryByText(/luke/i)).toBeNull();
 });
 
-test('Renders the search results component: with content', async () => {
+test('Renders the search results component: with content', () => {
   const searchResults = getSearchResults();
+  const store = mockStore({
+    isPeopleLoading: { value: false },
+    people: { people: searchResults.results.slice(0, 5) },
+  });
   searchResults.previous = new URL('https://swapi.dev/api/people/?page=2').toString();
   searchResults.next = new URL('https://swapi.dev/api/people/?page=4').toString();
   render(
     <MemoryRouter>
       <Provider store={store}>
-        <SearchResults searchResults={searchResults} isLoading={false} setPageCallback={() => {}} />
+        <SearchResults searchResults={searchResults} setPageCallback={() => {}} />
       </Provider>
     </MemoryRouter>
   );
@@ -45,12 +55,16 @@ test('Renders the search results component: with content', async () => {
 
 test('Renders the search results component: last page', async () => {
   const searchResults = getSearchResults();
+  const store = mockStore({
+    isPeopleLoading: { value: false },
+    people: { people: searchResults.results.slice(0, 5) },
+  });
   searchResults.previous = new URL('https://swapi.dev/api/people/?page=2').toString();
   searchResults.next = null;
   render(
     <MemoryRouter>
       <Provider store={store}>
-        <SearchResults searchResults={searchResults} isLoading={false} setPageCallback={() => {}} />
+        <SearchResults searchResults={searchResults} setPageCallback={() => {}} />
       </Provider>
     </MemoryRouter>
   );
@@ -59,12 +73,16 @@ test('Renders the search results component: last page', async () => {
 
 test('Renders the search results component: only one page', async () => {
   const searchResults = getSearchResults();
+  const store = mockStore({
+    isPeopleLoading: { value: false },
+    people: { people: searchResults.results.slice(0, 5) },
+  });
   searchResults.next = null;
   searchResults.previous = null;
   render(
     <MemoryRouter>
       <Provider store={store}>
-        <SearchResults searchResults={searchResults} isLoading={false} setPageCallback={() => {}} />
+        <SearchResults searchResults={searchResults} setPageCallback={() => {}} />
       </Provider>
     </MemoryRouter>
   );
