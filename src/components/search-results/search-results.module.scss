@@ -1,3 +1,5 @@
+@use '../../theme';
+
 .search-results {
   overflow-y: hidden;
   display: flex;
@@ -6,16 +8,8 @@
 
   &__list {
     overflow-y: scroll;
-    height: 50vh;
+    height: 45vh;
     scrollbar-width: thin;
-  }
-
-  &__result {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    cursor: pointer;
-    margin-bottom: 20px;
   }
 }
 
@@ -24,6 +18,10 @@
   width: 40vw;
   list-style: none;
   padding: 40px;
-  border: 2px solid white;
+  border: 2px solid theme.$light-primary1-color;
   border-radius: 20px;
+
+  &.dark {
+    border-color: theme.$dark-primary1-color;
+  }
 }

@@ -1,17 +1,20 @@
 import { ComponentProps } from 'react';
-import { TPeopleReponse } from '../../services/api';
+import { TPeopleReponse } from '../../services/api-types';
 import Loader from '../loader/loader';
 import styles from './search-results.module.scss';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Pagination from '../pagination/pagination';
+import PersonInList from '@components/person-in-list/person-in-list';
+import { IPerson } from '@services/api-types';
+import { useSelector } from 'react-redux';
+import { isPeopleLoadingSelector } from '../../store';
 
 export interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults?: TPeopleReponse;
-  isLoading: boolean;
+  setPageCallback: (value: number) => void;
 }
 
 function getPage(url: string | null) {
-  console.log(url);
   if (url) {
     const page = new URL(url).searchParams.get('page');
     if (page) {
@@ -38,8 +41,9 @@ export default function SearchResults(props: SearchResultsProps) {
   const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
+  const isLoading = useSelector(isPeopleLoadingSelector).value;
 
-  if (props.isLoading) {
+  if (isLoading) {
     return (
       <div className={[styles.searchResults, styles.resultsFrame].join(' ')}>
         <Loader />
@@ -60,6 +64,7 @@ export default function SearchResults(props: SearchResultsProps) {
       navigate(`/${location.search}`);
     }
   }
+
   return (
     <div
       className={[styles.searchResults, styles.resultsFrame].join(' ')}
@@ -69,24 +74,17 @@ export default function SearchResults(props: SearchResultsProps) {
       }}
     >
       <h2>Search results</h2>
-      <ul className={styles.searchResultsList}>
-        {props.searchResults.results.map((result, index) => (
-          <li
-            key={index}
-            className={styles.searchResultsResult}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              navigate(`/person/${result.id}${location.search}`);
-            }}
-          >
-            <div>name: {result.name}</div>
-            <div>Gender: {result.gender}</div>
-            <div>Birth year: {result.birth_year}</div>
-          </li>
+      <div className={styles.searchResultsList}>
+        {props.searchResults.results.map((result: IPerson, index: number) => (
+          <PersonInList person={result} key={index} />
         ))}
-      </ul>
-      <Pagination nextPage={nextPage} prevPage={prevPage} totalPages={totalPages} />
+      </div>
+      <Pagination
+        setPageCallback={props.setPageCallback}
+        nextPage={nextPage}
+        prevPage={prevPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 }

@@ -1,0 +1,46 @@
+$light-text-color: rgb(0 0 0 / 87%);
+$light-bg-color: #f0f2f5;
+$light-panel-color: #fafafa;
+$light-border-color: #e8e8e8;
+$light-primary1-color: #2673dd;
+$light-primary2-color: rgb(38 115 221 / 20%);
+$light-primary3-color: rgb(38 115 221 / 5%);
+
+/* dark-theme */
+$dark-text-color: rgb(255 255 255 / 87%);
+$dark-bg-color: #121212;
+$dark-panel-color: #222;
+$dark-border-color: rgb(255 255 255 / 9%);
+$dark-primary1-color: #2673dd;
+$dark-primary2-color: rgb(38 115 221 / 30%);
+$dark-primary3-color: rgb(38 115 221 / 14%);
+
+@mixin dark {
+  color: $dark-text-color;
+  background: $dark-bg-color;
+}
+
+@mixin light {
+  color: $light-text-color;
+  background: $light-bg-color;
+}
+
+@mixin hover-effect {
+  background-color: $light-panel-color;
+  border: 1px solid transparent;
+  border-color: $light-primary2-color;
+  transition: border-color 0.25s;
+
+  &.dark {
+    background-color: $dark-panel-color;
+    border-color: $dark-primary2-color;
+  }
+
+  &:hover {
+    border-color: $light-primary1-color;
+
+    &.dark {
+      border-color: $dark-primary1-color;
+    }
+  }
+}

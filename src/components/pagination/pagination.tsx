@@ -6,6 +6,7 @@ interface IPagination {
   nextPage?: number;
   prevPage?: number;
   totalPages?: number;
+  setPageCallback: (value: number) => void;
 }
 
 function Pagination(props: IPagination) {
@@ -14,9 +15,13 @@ function Pagination(props: IPagination) {
 
   return (
     <div className={styles.pagination}>
-      {props.prevPage && <PaginationButton isCurrent={false} value={`${currentPage - 1}`} />}
-      {currentPage && <PaginationButton isCurrent={true} value={`${currentPage}`} />}
-      {props.nextPage && <PaginationButton isCurrent={false} value={`${currentPage + 1}`} />}
+      {props.prevPage && (
+        <PaginationButton isCurrent={false} value={currentPage - 1} setPageCallback={props.setPageCallback} />
+      )}
+      {currentPage && <PaginationButton isCurrent={true} value={currentPage} setPageCallback={props.setPageCallback} />}
+      {props.nextPage && (
+        <PaginationButton isCurrent={false} value={currentPage + 1} setPageCallback={props.setPageCallback} />
+      )}
     </div>
   );
 }

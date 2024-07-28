@@ -1,26 +1,23 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
-function useLocalStorage(
-  key: string,
-  initialValue?: string
-): [string, Dispatch<SetStateAction<string>>, (data: string) => void] {
+function useLocalStorage<T>(key: string, initialValue: T): [T, Dispatch<SetStateAction<T>>, (data: T) => void] {
   const isDataExist = () => {
     return Boolean(localStorage.getItem(key));
   };
 
-  const getData = (): string => {
+  const getData = (): T => {
     if (isDataExist()) {
-      return localStorage.getItem(key) as string;
+      return localStorage.getItem(key) as T;
     }
-    return '';
+    return initialValue;
   };
 
-  const saveData = (data: string) => {
-    const preparedData = data.trim();
+  const saveData = (data: T) => {
+    const preparedData = `${data}`.trim();
     localStorage.setItem(key, preparedData);
   };
 
-  const [data, setData] = useState<string>(initialValue || getData);
+  const [data, setData] = useState<T>(initialValue || getData);
 
   return [data, setData, saveData];
 }
