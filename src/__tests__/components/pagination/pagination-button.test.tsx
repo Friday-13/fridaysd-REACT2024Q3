@@ -10,10 +10,10 @@ describe('pagination button', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <PaginationButton isCurrent={true} value={'page value'} />
+          <PaginationButton isCurrent={true} value={123} setPageCallback={() => {}} />
         </Provider>
       </MemoryRouter>
     );
-    expect(screen.queryByText(/page value/i)).toBeInTheDocument();
+    expect(screen.queryByText(/123/i)).toBeInTheDocument();
   });
 });

@@ -10,7 +10,15 @@ describe('pagination', () => {
     [
       {
         path: '/',
-        element: <Pagination prevPage={2} nextPage={4} />,
+        element: (
+          <Pagination
+            prevPage={2}
+            nextPage={4}
+            setPageCallback={(newValue) => {
+              router.state.location.search = `?page=${newValue}`;
+            }}
+          />
+        ),
       },
     ],
     {
@@ -23,7 +31,7 @@ describe('pagination', () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <Pagination />
+          <Pagination setPageCallback={() => {}} />
         </Provider>
       </MemoryRouter>
     );
@@ -34,7 +42,7 @@ describe('pagination', () => {
     render(
       <MemoryRouter initialEntries={['/?page=3']}>
         <Provider store={store}>
-          <Pagination prevPage={2} nextPage={4} />
+          <Pagination prevPage={2} nextPage={4} setPageCallback={() => {}} />
         </Provider>
       </MemoryRouter>
     );
@@ -47,7 +55,13 @@ describe('pagination', () => {
     render(
       <MemoryRouter initialEntries={['/?page=3']}>
         <Provider store={store}>
-          <Pagination prevPage={2} nextPage={4} />
+          <Pagination
+            prevPage={2}
+            nextPage={4}
+            setPageCallback={(newValue: number) => {
+              window.location.search = `?page=${newValue}`;
+            }}
+          />
         </Provider>
       </MemoryRouter>
     );
@@ -64,7 +78,6 @@ describe('pagination', () => {
     );
     expect(screen.queryByText(/4/i)).toBeInTheDocument();
     const nextButton = screen.getByText('4');
-    console.log(nextButton);
     fireEvent.click(nextButton);
     await waitFor(() => {
       expect(router.state.location.search).toEqual('?page=4');

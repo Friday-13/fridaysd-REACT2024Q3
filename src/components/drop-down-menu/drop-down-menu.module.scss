@@ -1,15 +1,25 @@
+@use '../../theme';
+
 .drop-down-menu {
   padding: 10px;
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: #1a1a1a;
+  background-color: theme.$light-panel-color;
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
 
+  &.dark {
+    background-color: theme.$dark-panel-color;
+  }
+
   &:hover {
-    border-color: #646cff;
+    border-color: theme.$light-primary1-color;
+
+    &.dark {
+      border-color: theme.$dark-primary1-color;
+    }
   }
 
   li {
@@ -22,6 +32,10 @@
   }
 
   li:hover {
-    border-color: #646cff;
+    border-color: theme.$light-primary2-color;
+
+    &.dark {
+      border-color: theme.$dark-primary2-color;
+    }
   }
 }

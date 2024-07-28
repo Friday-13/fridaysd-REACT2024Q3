@@ -1,48 +1,55 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPerson } from '@services/api';
-import { RootState } from '../../store';
-import isIdEqual from '../person/compare-person';
+import { IPerson } from '@services/api-types';
+import isUrlEqual from '../person/compare-person';
 
-const initialState = Array<IPerson>;
+export type TSelectedPeopleState = {
+  people: Array<IPerson>;
+};
 
-export function isPersonInState(state: Array<IPerson>, testPerson: IPerson) {
-  return state.some((person) => isIdEqual(person, testPerson));
+const initialState: TSelectedPeopleState = {
+  people: [],
+};
+
+export function isPersonInState(state: TSelectedPeopleState, testPerson: IPerson) {
+  return state.people.some((person) => isUrlEqual(person, testPerson));
 }
+
+const removePersonReducer = (state: TSelectedPeopleState, action: PayloadAction<IPerson>): TSelectedPeopleState => {
+  if (isPersonInState(state, action.payload)) {
+    const filteredPeople = state.people.filter((person) => {
+      return !isUrlEqual(person, action.payload);
+    });
+    state.people = filteredPeople;
+  }
+  return state;
+};
+
+const addPersonReducer = (state: TSelectedPeopleState, action: PayloadAction<IPerson>) => {
+  if (!isPersonInState(state, action.payload)) {
+    state.people.push(action.payload);
+  }
+  return state;
+};
+
+const togglePersonReducer = (state: TSelectedPeopleState, action: PayloadAction<IPerson>) => {
+  if (isPersonInState(state, action.payload)) {
+    return removePersonReducer(state, action);
+  }
+  return addPersonReducer(state, action);
+};
 
 export const peopleSlice = createSlice({
   name: 'people',
   initialState,
   reducers: {
-    addPerson: (state, action: PayloadAction<IPerson>) => {
-      if (!isPersonInState(state, action.payload)) {
-        state.push(action.payload);
-      }
-      return state;
-    },
-    removePerson: (state, action: PayloadAction<IPerson>) => {
-      if (isPersonInState(state, action.payload)) {
-        return state.filter((person) => {
-          return !isIdEqual(person, action.payload);
-        });
-      }
-      return state;
-    },
-
-    togglePerson: (state, action: PayloadAction<IPerson>): Array<IPerson> => {
-      if (isPersonInState(state, action.payload)) {
-        return peopleSlice.caseReducers.removePerson(state, action);
-      }
-      return peopleSlice.caseReducers.addPerson(state, action);
-    },
-
-    clear: () => {
-      return [];
+    addPerson: addPersonReducer,
+    removePerson: removePersonReducer,
+    togglePerson: togglePersonReducer,
+    clear: (state) => {
+      state.people = [];
     },
   },
 });
 
 export const { addPerson, removePerson, togglePerson, clear } = peopleSlice.actions;
-
-export const selectedPeopleSelector = (state: RootState) => state.people;
-
 export default peopleSlice.reducer;

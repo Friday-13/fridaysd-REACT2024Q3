@@ -1,40 +1,30 @@
 import SearchResults from '@components/search-results/search-results';
+import { useGetPeopleQuery } from '@services/swapi';
+import { Outlet } from 'react-router-dom';
+import { setIsPeopleLoading } from '@utils/slices/is-loading-slice';
+import { useDispatch } from 'react-redux';
 import styles from '../search.module.scss';
-import { Outlet, useSearchParams } from 'react-router-dom';
-import { getPeople, TPeopleReponse } from '@services/api';
-import { useEffect, useState } from 'react';
-import getPageNumber from '../../../utils/parse-url/get-page-number';
+import { useEffect } from 'react';
+import { setCurrentPageResults } from '@utils/slices/current-page-slice';
 
-export default function SearchResultsSection(props: { query: string; page?: number }) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [searchResults, setSearchResults] = useState<TPeopleReponse | undefined>(undefined);
-  const searchParams = useSearchParams()[0];
-  const [page, setPage] = useState<number | undefined>(props.page);
-
-  async function applySearchQuery(newQuery?: string, page?: number) {
-    setIsLoading(true);
-    const response = await getPeople(newQuery, page);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsLoading(false);
-    setSearchResults(response);
-  }
+export default function SearchResultsSection(props: {
+  query: string;
+  page?: number;
+  setPageCallback: (value: number) => void;
+}) {
+  const { data, isLoading, isFetching } = useGetPeopleQuery({ name: props.query, page: props.page });
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    applySearchQuery(props.query, page);
-  }, [props.query, page]);
-
-  useEffect(() => {
-    const pageUrl = getPageNumber(searchParams);
-    if (pageUrl) {
-      setPage(pageUrl);
-    } else {
-      setPage(1);
+    dispatch(setIsPeopleLoading(isLoading || isFetching));
+    if (!(isLoading || isFetching)) {
+      dispatch(setCurrentPageResults(data.results));
     }
-  }, [searchParams]);
+  }, [isLoading, isFetching]);
 
   return (
     <section className={styles.resultsWrapper}>
-      <SearchResults searchResults={searchResults} isLoading={isLoading} />
+      <SearchResults searchResults={data} setPageCallback={props.setPageCallback} />
       <Outlet />
     </section>
   );
