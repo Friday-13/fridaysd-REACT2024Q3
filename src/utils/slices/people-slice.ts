@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPerson } from '@services/api-types';
-import isIdEqual from '../person/compare-person';
+import isUrlEqual from '../person/compare-person';
 
 type TSelectedPeopleState = {
   people: Array<IPerson>;
@@ -11,13 +11,13 @@ const initialState: TSelectedPeopleState = {
 };
 
 export function isPersonInState(state: TSelectedPeopleState, testPerson: IPerson) {
-  return state.people.some((person) => isIdEqual(person, testPerson));
+  return state.people.some((person) => isUrlEqual(person, testPerson));
 }
 
 const removePersonReducer = (state: TSelectedPeopleState, action: PayloadAction<IPerson>): TSelectedPeopleState => {
   if (isPersonInState(state, action.payload)) {
     const filteredPeople = state.people.filter((person) => {
-      return !isIdEqual(person, action.payload);
+      return !isUrlEqual(person, action.payload);
     });
     state.people = filteredPeople;
   }

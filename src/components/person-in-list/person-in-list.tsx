@@ -1,16 +1,20 @@
 import { IPerson } from '@services/api-types';
 import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
 import { isPersonInState, togglePerson } from '../../utils/slices/people-slice';
-import styles from './person-in-list.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { selectedPeopleSelector } from '../../store';
+import styles from './person-in-list.module.scss';
 
 export default function PersonInList(props: { person: IPerson }) {
   const navigate = useNavigate();
   const selectedPeople = useAppSelector(selectedPeopleSelector);
   const [isSelected, setIsSelected] = useState<boolean>(isPersonInState(selectedPeople, props.person));
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setIsSelected(isPersonInState(selectedPeople, props.person));
+  }, [selectedPeople]);
 
   return (
     <div className={styles.personInList}>
