@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { getThemedClassName, ThemeContext } from '../../../context/theme-context';
 
 export default function ThrowErrorSection() {
   const [hasError, setHasError] = useState<boolean>(false);
+  const theme = useContext(ThemeContext);
 
   if (hasError) {
     throw new Error('The Emperor Will Show You The True Nature Of The Force...');
@@ -10,6 +12,7 @@ export default function ThrowErrorSection() {
   return (
     <section>
       <button
+        className={getThemedClassName(theme, [])}
         onClick={() => {
           setHasError(true);
         }}

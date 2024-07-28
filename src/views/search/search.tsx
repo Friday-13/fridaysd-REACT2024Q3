@@ -7,13 +7,13 @@ import ThrowErrorSection from './sections/throw-error-section';
 import getPageNumber from '../../utils/parse-url/get-page-number';
 import getSearchQuery from '../../utils/parse-url/get-search-query';
 import SelectedPeopleManager from '@components/selected-people-manager/selected-people-manager';
-import { ThemeContext } from '../../context/theme-context';
+import { getThemedClassName, ThemeContext } from '../../context/theme-context';
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState<number | undefined>(getPageNumber(searchParams));
   const [query, setQuery, saveQuery] = useLocalStorage<string>('query', getSearchQuery(searchParams));
-  const themeContext = useContext(ThemeContext);
+  const theme = useContext(ThemeContext);
 
   useEffect(() => {
     const searchQueryURL = getSearchQuery(searchParams);
@@ -49,8 +49,8 @@ export default function Search() {
 
   return (
     <>
-      <button onClick={themeContext.toggleTheme} className={themeContext.theme === 'dark' ? 'dark' : undefined}>
-        {themeContext.theme}
+      <button onClick={theme.toggleTheme} className={getThemedClassName(theme, [])}>
+        {theme.theme}
       </button>
       <h1> Star Wars Characters </h1>
       <section>

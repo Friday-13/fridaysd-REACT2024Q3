@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { IPerson } from '../../services/api-types';
 import Loader from '../loader/loader';
-import styles from './person.module.scss';
-import closeIcon from '@assets/xmark.svg';
 import { useGetPersonByIdQuery } from '@services/swapi';
+import { getThemedClassName, ThemeContext } from '../../context/theme-context';
+import styles from './person.module.scss';
 
 function Person() {
   const params = useParams();
@@ -12,6 +12,7 @@ function Person() {
   const navigate = useNavigate();
   const location = useLocation();
   const { data, error, isLoading, isFetching } = useGetPersonByIdQuery(params['id'] as string); // TODO: fix as string approach
+  const theme = useContext(ThemeContext);
 
   useEffect(() => {
     setPerson(data);
@@ -34,13 +35,11 @@ function Person() {
   return (
     <div className={[styles.person, styles.resultsFrame].join(' ')}>
       <div
-        className={styles.close}
+        className={getThemedClassName(theme, [styles.close])}
         onClick={() => {
           navigate(`/${location.search}`);
         }}
-      >
-        <img src={closeIcon} alt="close" />
-      </div>
+      ></div>
       <h2>{person?.name}</h2>
       <ul>
         <li>Gender: {person.gender}</li>

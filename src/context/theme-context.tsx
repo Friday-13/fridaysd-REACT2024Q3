@@ -33,5 +33,5 @@ export function getThemedClassName(context: IThemeContext, styles: Array<string>
   if (context.theme === 'dark') {
     className += ' dark';
   }
-  return className;
+  return className.trim();
 }

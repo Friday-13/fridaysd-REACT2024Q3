@@ -47,17 +47,24 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: rgb(255 255 255 / 70%);
+  background-color: theme.$light-panel-color;
   cursor: pointer;
   transition: border-color 0.25s;
+
+  &.dark {
+    background-color: theme.$dark-panel-color;
+  }
 }
 
 button:hover {
-  border-color: #646cff;
+  border-color: theme.$light-primary1-color;
+
+  &.dark {
+    border-color: theme.$dark-primary1-color;
+  }
 }
 
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-

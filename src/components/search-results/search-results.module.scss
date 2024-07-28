@@ -1,3 +1,5 @@
+@use '../../theme';
+
 .search-results {
   overflow-y: hidden;
   display: flex;
@@ -16,6 +18,10 @@
   width: 40vw;
   list-style: none;
   padding: 40px;
-  border: 2px solid white;
+  border: 2px solid theme.$light-primary1-color;
   border-radius: 20px;
+
+  &.dark {
+    border-color: theme.$dark-primary1-color;
+  }
 }

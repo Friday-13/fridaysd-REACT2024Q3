@@ -1,3 +1,5 @@
+@use '../../theme';
+
 .pagination {
   display: flex;
   gap: 10px;
@@ -11,14 +13,26 @@
     vertical-align: bottom;
     border-radius: 50%;
     cursor: pointer;
+    background-color: theme.$light-panel-color;
+    border-color: theme.$light-primary2-color;
+    transition: border-color 0.25s;
+
+    &.dark {
+      background-color: theme.$dark-panel-color;
+      border-color: theme.$dark-primary2-color;
+    }
+
+    &:hover {
+      border-color: theme.$light-primary1-color;
+
+      &.dark {
+        border-color: theme.$dark-primary1-color;
+      }
+    }
 
     &_current-page {
       opacity: 0.2;
       cursor: default;
-    }
-
-    &.dark {
-      background-color: red;
     }
   }
 }
