@@ -17,7 +17,7 @@ export default function PersonInList(props: { person: IPerson }) {
   }, [selectedPeople]);
 
   return (
-    <div className={styles.personInList}>
+    <div className={styles['person-in-list']}>
       <label
         onClick={(e) => {
           e.stopPropagation();
@@ -34,7 +34,7 @@ export default function PersonInList(props: { person: IPerson }) {
         />
       </label>
       <div
-        className={styles.personInfo}
+        className={styles['person-info']}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();

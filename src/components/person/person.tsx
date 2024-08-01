@@ -26,14 +26,14 @@ function Person() {
 
   if (person === undefined || isLoading || isFetching) {
     return (
-      <div className={[styles.person, styles.resultsFrame].join(' ')}>
+      <div className={[styles.person, styles['results-frame']].join(' ')}>
         <Loader />
       </div>
     );
   }
 
   return (
-    <div className={[styles.person, styles.resultsFrame].join(' ')}>
+    <div className={[styles.person, styles['results-frame']].join(' ')}>
       <div
         className={getThemedClassName(theme, [styles.close])}
         onClick={() => {

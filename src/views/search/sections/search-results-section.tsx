@@ -23,7 +23,7 @@ export default function SearchResultsSection(props: {
   }, [isLoading, isFetching]);
 
   return (
-    <section className={styles.resultsWrapper}>
+    <section className={styles['results-wrapper']}>
       <SearchResults searchResults={data} setPageCallback={props.setPageCallback} />
       <Outlet />
     </section>
