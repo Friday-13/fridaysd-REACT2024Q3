@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { useContext } from 'react';
 import { getThemedClassName, ThemeContext } from './context/theme-context';
-import { ThemeProvider } from './context/theme-context.tsx';
 import styles from './App.module.scss';
 
 const searchChildren: Array<RouteObject> = [
@@ -30,13 +29,11 @@ const router = createBrowserRouter([searchRoute, errorRoute]);
 function App() {
   const theme = useContext(ThemeContext);
   return (
-    <ThemeProvider>
       <div className={getThemedClassName(theme, [styles['page-wrapper']])}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>
       </div>
-    </ThemeProvider>
   );
 }
 
