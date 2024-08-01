@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'My app',
-  description: 'My App is a...',
+  title: 'Star Wars Characters',
+  description: 'Explore Star Wars Characters',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
