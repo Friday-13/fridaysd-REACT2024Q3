@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:css": "stylelint '**/*.{css,scss}'",
     "lint:css:fix": "stylelint '**/*.{css,scss}' --fix",
     "format": "prettier .",
     "format:fix": "prettier --write .",
-    "preview": "vite preview",
     "prepare": "husky",
     "deploy": "npm run build && npx gh-pages -d dist -e class-components",
     "test": "jest --coverage"

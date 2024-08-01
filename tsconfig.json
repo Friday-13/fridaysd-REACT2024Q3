@@ -36,16 +36,17 @@
       "@utils/*": ["./src/utils/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@services/*": ["./src/services/*"],
-      "@components/*": ["./src/components/*"]
+      "@components/*": ["./src/components/*"],
+      "@styles/*": ["./src/styles/*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     "plugins": [
+      { "name": "next" },
       {
         "name": "typescript-plugin-css-modules",
         "options": {
-          "classnameTransform": "camelCaseOnly"
+        "classnameTransform": "asIs"
         }
-      },
-      { "name": "next" }
+      }
     ],
 
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
