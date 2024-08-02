@@ -29,11 +29,11 @@ const router = createBrowserRouter([searchRoute, errorRoute]);
 function App() {
   const theme = useContext(ThemeContext);
   return (
-      <div className={getThemedClassName(theme, [styles['page-wrapper']])}>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
-      </div>
+    <div className={getThemedClassName(theme, [styles['page-wrapper']])}>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </div>
   );
 }
 
