@@ -60,7 +60,6 @@ export default function SearchResults(props: SearchResultsProps) {
   function sectionClick() {
     if (router.query['id'] !== undefined) {
       router.push('/');
-      // navigate(`/${location.search}`);
     }
   }
 

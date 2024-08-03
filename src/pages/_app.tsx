@@ -2,6 +2,7 @@ import { AppProps } from 'next/app';
 import '@styles/index.scss';
 import Head from 'next/head';
 import AppLayout from '@views/app-layout/app-layout';
+import { ThemeProvider } from '@context/theme-context';
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -11,9 +12,11 @@ function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Star Wars Characters</title>
       </Head>
-      <AppLayout>
-        <Component {...pageProps} />
-      </AppLayout>
+      <ThemeProvider>
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
+      </ThemeProvider>
     </>
   );
 }
