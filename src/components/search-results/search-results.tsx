@@ -1,7 +1,6 @@
 import { ComponentProps } from 'react';
 import { TPeopleReponse } from '../../services/api-types';
 import Loader from '../loader/loader';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Pagination from '../pagination/pagination';
 import PersonInList from '@components/person-in-list/person-in-list';
 import { IPerson } from '@services/api-types';
@@ -38,14 +37,12 @@ function getTotalPages(response: TPeopleReponse) {
 }
 
 export default function SearchResults(props: SearchResultsProps) {
-  const navigate = useNavigate();
   const params = useParams();
-  const location = useLocation();
   const isLoading = useSelector(isPeopleLoadingSelector).value;
 
   if (isLoading) {
     return (
-      <div className={[styles['search-results'], styles.resultsFrame].join(' ')}>
+      <div className={[styles['search-results'], styles['results-frame']].join(' ')}>
         <Loader />
       </div>
     );
@@ -61,7 +58,7 @@ export default function SearchResults(props: SearchResultsProps) {
 
   function sectionClick() {
     if (params['id'] !== undefined) {
-      navigate(`/${location.search}`);
+      // navigate(`/${location.search}`);
     }
   }
 

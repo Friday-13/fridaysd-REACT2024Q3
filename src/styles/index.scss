@@ -10,7 +10,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root {
+/* stylelint-disable-next-line */
+#__next {
   width: 100%;
   height: 100vh;
 }
