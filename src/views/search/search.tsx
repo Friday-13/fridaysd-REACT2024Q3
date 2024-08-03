@@ -16,6 +16,7 @@ export default function Search(props: PropsWithChildren) {
   const theme = useContext(ThemeContext);
 
   useEffect(() => {
+    if (!router.isReady) return;
     const searchQueryURL = router.query['search-string'];
     const pageURL = Number(router.query['page']);
     if (searchQueryURL === undefined) {
@@ -33,7 +34,7 @@ export default function Search(props: PropsWithChildren) {
       setQuery(`${searchQueryURL}` || '');
       setPage(pageURL || 1);
     }
-  }, [router, query]);
+  }, [router.isReady]);
 
   const searchCallback = (event: FormEvent) => {
     event.preventDefault();
@@ -90,8 +91,9 @@ export default function Search(props: PropsWithChildren) {
           searchCallback={searchCallback}
         />
       </section>
-      <SearchResultsSection query={query} page={page} setPageCallback={setPageCallback} />
-      {props.children}
+      <SearchResultsSection query={query} page={page} setPageCallback={setPageCallback}>
+        {props.children}
+      </SearchResultsSection>
       <section>
         <SelectedPeopleManager />
       </section>

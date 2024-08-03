@@ -8,11 +8,11 @@ import Search from '@views/search/search';
 function AppLayout(props: PropsWithChildren) {
   const theme = useContext(ThemeContext);
   return (
-      <div id={'root'} className={getThemedClassName(theme, [styles['page-wrapper']])}>
-        <Provider store={store}>
-          <Search>{props.children}</Search>
-        </Provider>
-      </div>
+    <div id={'root'} className={getThemedClassName(theme, [styles['page-wrapper']])}>
+      <Provider store={store}>
+        <Search>{props.children}</Search>
+      </Provider>
+    </div>
   );
 }
 
