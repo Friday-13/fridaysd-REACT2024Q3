@@ -7,6 +7,7 @@ import { IPerson } from '@services/api-types';
 import { useSelector } from 'react-redux';
 import { isPeopleLoadingSelector } from '../../store';
 import styles from './search-results.module.scss';
+import { useRouter } from 'next/router';
 
 export interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults?: TPeopleReponse;
@@ -37,7 +38,7 @@ function getTotalPages(response: TPeopleReponse) {
 }
 
 export default function SearchResults(props: SearchResultsProps) {
-  const params = useParams();
+  const router = useRouter();
   const isLoading = useSelector(isPeopleLoadingSelector).value;
 
   if (isLoading) {
@@ -57,7 +58,8 @@ export default function SearchResults(props: SearchResultsProps) {
   const totalPages = getTotalPages(props.searchResults);
 
   function sectionClick() {
-    if (params['id'] !== undefined) {
+    if (router.query['id'] !== undefined) {
+      router.push('/');
       // navigate(`/${location.search}`);
     }
   }
