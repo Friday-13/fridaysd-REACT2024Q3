@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { isPeopleLoadingSelector } from '../../store';
 import styles from './search-results.module.scss';
 import { useRouter } from 'next/router';
+import closePerson from '@utils/close-person/close-person';
 
 export interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults?: TPeopleReponse;
@@ -59,7 +60,7 @@ export default function SearchResults(props: SearchResultsProps) {
 
   function sectionClick() {
     if (router.query['id'] !== undefined) {
-      router.push('/');
+      closePerson(router);
     }
   }
 

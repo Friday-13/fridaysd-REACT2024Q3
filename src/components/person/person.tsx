@@ -5,6 +5,7 @@ import { useGetPersonByIdQuery } from '@services/swapi';
 import { getThemedClassName, ThemeContext } from '../../context/theme-context';
 import styles from './person.module.scss';
 import { useRouter } from 'next/router';
+import closePerson from '@utils/close-person/close-person';
 
 function Person() {
   const router = useRouter();
@@ -35,7 +36,7 @@ function Person() {
       <div
         className={getThemedClassName(theme, [styles.close])}
         onClick={() => {
-          router.push('/');
+          closePerson(router);
         }}
       ></div>
       <h2>{person?.name}</h2>

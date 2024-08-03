@@ -8,9 +8,7 @@ import { getThemedClassName, ThemeContext } from '../../context/theme-context';
 import { useRouter } from 'next/router';
 
 export default function Search(props: PropsWithChildren) {
-  // const [searchParams, setSearchParams] = useSearchParams();
   const router = useRouter();
-  // const [page, setPage] = useState<number | undefined>(getPageNumber(router.query));
   const [page, setPage] = useState<number | undefined>(undefined);
   const [query, setQuery, getQuery, saveQuery] = useLocalStorage<string>('query', '');
   const theme = useContext(ThemeContext);
@@ -20,10 +18,12 @@ export default function Search(props: PropsWithChildren) {
     const searchQueryURL = router.query['search-string'];
     const pageURL = Number(router.query['page']);
     if (searchQueryURL === undefined) {
+      const savedQuery = getQuery();
+      setQuery(savedQuery);
       router.push(
         {
           pathname: router.pathname,
-          query: { ...router.query, 'search-string': getQuery() },
+          query: { ...router.query, 'search-string': savedQuery },
         },
         undefined,
         { shallow: true }
