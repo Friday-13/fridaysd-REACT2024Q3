@@ -26,6 +26,8 @@ const config: Config = {
     '^@services/(.*)$': '<rootDir>/services/$1',
     '^@components/(.*)$': '<rootDir>/components/$1',
   },
+  resetMocks: false,
+  setupFiles: ['jest-localstorage-mock'],
 };
 
 export default createJestConfig(config);

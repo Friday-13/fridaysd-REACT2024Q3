@@ -2,7 +2,6 @@ import SearchResults from '@components/search-results/search-results';
 import { render, screen } from '@testing-library/react';
 import { TPeopleReponse } from '@services/api-types';
 import apiResponse from '../../people.json';
-import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
