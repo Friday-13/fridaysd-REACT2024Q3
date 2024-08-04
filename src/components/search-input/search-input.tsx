@@ -26,7 +26,7 @@ export default function SearchInput(props: SearchInputProps) {
   }, [props.inputInitialValue]);
 
   return (
-    <form className={styles.searchInput} onSubmit={props.searchCallback}>
+    <form className={styles['search-input']} onSubmit={props.searchCallback}>
       <label htmlFor={props.inputName}>{props.labelContent}</label>
       <input type="search" name={props.inputName} onChange={handleQueryChange} value={searchString} />
       <input type="submit" value={props.buttonContent} />

@@ -1,4 +1,4 @@
-@use '../../theme';
+@use '@styles/theme';
 @import '../search-results/search-results.module';
 
 .person {
@@ -6,8 +6,6 @@
 }
 
 .close {
-  @include theme.hover-effect;
-
   width: 32px;
   height: 32px;
   position: absolute;
@@ -20,6 +18,8 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  @include theme.hover-effect;
 
   &::before,
   &::after {

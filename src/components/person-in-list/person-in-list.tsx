@@ -1,13 +1,13 @@
 import { IPerson } from '@services/api-types';
 import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
 import { isPersonInState, togglePerson } from '../../utils/slices/people-slice';
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { selectedPeopleSelector } from '../../store';
 import styles from './person-in-list.module.scss';
+import { useRouter } from 'next/router';
 
 export default function PersonInList(props: { person: IPerson }) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const selectedPeople = useAppSelector(selectedPeopleSelector);
   const [isSelected, setIsSelected] = useState<boolean>(isPersonInState(selectedPeople, props.person));
   const dispatch = useAppDispatch();
@@ -17,7 +17,7 @@ export default function PersonInList(props: { person: IPerson }) {
   }, [selectedPeople]);
 
   return (
-    <div className={styles.personInList}>
+    <div className={styles['person-in-list']}>
       <label
         onClick={(e) => {
           e.stopPropagation();
@@ -34,13 +34,16 @@ export default function PersonInList(props: { person: IPerson }) {
         />
       </label>
       <div
-        className={styles.personInfo}
+        className={styles['person-info']}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
           e.stopPropagation();
           const id = props.person.url.split('/').slice(-2, -1);
-          navigate(`/person/${id}${location.search}`);
+          router.push({
+            pathname: '/[id]',
+            query: { ...router.query, id },
+          });
         }}
       >
         <div>name: {props.person.name}</div>

@@ -1,4 +1,12 @@
-export default {
+import type { Config } from 'jest';
+import nextJest from 'next/jest.js';
+
+const createJestConfig = nextJest({
+  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+  dir: './',
+});
+
+const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
   transform: {
@@ -18,4 +26,8 @@ export default {
     '^@services/(.*)$': '<rootDir>/services/$1',
     '^@components/(.*)$': '<rootDir>/components/$1',
   },
+  resetMocks: false,
+  setupFiles: ['jest-localstorage-mock'],
 };
+
+export default createJestConfig(config);

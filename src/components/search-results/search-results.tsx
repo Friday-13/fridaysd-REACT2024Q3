@@ -1,13 +1,14 @@
 import { ComponentProps } from 'react';
 import { TPeopleReponse } from '../../services/api-types';
 import Loader from '../loader/loader';
-import styles from './search-results.module.scss';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Pagination from '../pagination/pagination';
 import PersonInList from '@components/person-in-list/person-in-list';
 import { IPerson } from '@services/api-types';
 import { useSelector } from 'react-redux';
 import { isPeopleLoadingSelector } from '../../store';
+import styles from './search-results.module.scss';
+import { useRouter } from 'next/router';
+import closePerson from '@utils/close-person/close-person';
 
 export interface SearchResultsProps extends ComponentProps<'div'> {
   searchResults?: TPeopleReponse;
@@ -38,14 +39,12 @@ function getTotalPages(response: TPeopleReponse) {
 }
 
 export default function SearchResults(props: SearchResultsProps) {
-  const navigate = useNavigate();
-  const params = useParams();
-  const location = useLocation();
+  const router = useRouter();
   const isLoading = useSelector(isPeopleLoadingSelector).value;
 
   if (isLoading) {
     return (
-      <div className={[styles.searchResults, styles.resultsFrame].join(' ')}>
+      <div className={[styles['search-results'], styles['results-frame']].join(' ')}>
         <Loader />
       </div>
     );
@@ -60,21 +59,21 @@ export default function SearchResults(props: SearchResultsProps) {
   const totalPages = getTotalPages(props.searchResults);
 
   function sectionClick() {
-    if (params['id'] !== undefined) {
-      navigate(`/${location.search}`);
+    if (router.query['id'] !== undefined) {
+      closePerson(router);
     }
   }
 
   return (
     <div
-      className={[styles.searchResults, styles.resultsFrame].join(' ')}
+      className={[styles['search-results'], styles['results-frame']].join(' ')}
       onClick={(e) => {
         e.preventDefault;
         sectionClick();
       }}
     >
       <h2>Search results</h2>
-      <div className={styles.searchResultsList}>
+      <div className={styles['search-results__list']}>
         {props.searchResults.results.map((result: IPerson, index: number) => (
           <PersonInList person={result} key={index} />
         ))}
