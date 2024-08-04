@@ -21,7 +21,7 @@ export function ThemeProvider(props: PropsWithChildren) {
   };
 
   useEffect(() => {
-    saveTheme(theme);
+    saveTheme();
   }, [theme]);
 
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{props.children}</ThemeContext.Provider>;

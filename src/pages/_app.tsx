@@ -3,6 +3,7 @@ import '@styles/index.scss';
 import Head from 'next/head';
 import AppLayout from '@views/app-layout/app-layout';
 import { ThemeProvider } from '@context/theme-context';
+import ErrorBoundary from '@components/error-boundarie/error-boundarie';
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -13,9 +14,11 @@ function App({ Component, pageProps }: AppProps) {
         <title>Star Wars Characters</title>
       </Head>
       <ThemeProvider>
-        <AppLayout>
-          <Component {...pageProps} />
-        </AppLayout>
+        <ErrorBoundary>
+          <AppLayout>
+            <Component {...pageProps} />
+          </AppLayout>
+        </ErrorBoundary>
       </ThemeProvider>
     </>
   );
