@@ -14,11 +14,11 @@ function App({ Component, pageProps }: AppProps) {
         <title>Star Wars Characters</title>
       </Head>
       <ThemeProvider>
-        <ErrorBoundary>
-          <AppLayout>
+        <AppLayout>
+          <ErrorBoundary>
             <Component {...pageProps} />
-          </AppLayout>
-        </ErrorBoundary>
+          </ErrorBoundary>
+        </AppLayout>
       </ThemeProvider>
     </>
   );
