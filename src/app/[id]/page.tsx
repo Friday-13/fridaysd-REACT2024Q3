@@ -13,15 +13,14 @@ export async function generateStaticParams() {
   };
   const count = rawResponse.count;
   const ids = Array.from({ length: count }, (_, index) => `${index + 1}`);
-  const hehe = ids.map((id) => {
+  const pages = ids.map((id) => {
     return {
       id: id,
     };
   });
-  return hehe;
+  return pages;
 }
 
-export default function Post({ params }: { params: { id: string } }) {
-  console.log(params.id);
+export default async function PersonPage({ params }: { params: { id: string } }) {
   return <Person id={params.id} />;
 }
