@@ -11,7 +11,6 @@ import styles from './person.module.scss';
 
 async function Person(props: { id: string }) {
   const person = await getPerson(props.id);
-  console.log(person);
   // const router = useRouter();
   // const [person, setPerson] = useState<IPerson | undefined>(undefined);
   // const { data, error, isLoading, isFetching } = useGetPersonByIdQuery(props.id);

@@ -1,13 +1,18 @@
 import { FormEvent, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import SearchInput from '../../components/search-input/search-input';
 // import useLocalStorage from '../../hooks/use-local-storage';
-// import SearchResultsSection from './sections/search-results-section';
+import { TPeopleReponse } from '@services/api-types';
+import SearchResults from '@components/search-results/search-results';
 // import ThrowErrorSection from './sections/throw-error-section';
 // import SelectedPeopleManager from '@components/selected-people-manager/selected-people-manager';
 // import { getThemedClassName, ThemeContext } from '../../context/theme-context';
-// import { useRouter } from 'next/router';
 
-export default function Search(props: PropsWithChildren) {
+interface ISearch extends PropsWithChildren {
+  response: TPeopleReponse;
+  searchParams?: { searchString?: string; page?: string };
+}
+
+export default async function Search(props: ISearch) {
   // const router = useRouter();
   // const [page, setPage] = useState<number | undefined>(undefined);
   // const [query, setQuery, getQuery, saveQuery] = useLocalStorage<string>('query', '');
@@ -83,16 +88,16 @@ export default function Search(props: PropsWithChildren) {
         // </button>
       }
       <h1> Star Wars Characters </h1>
+      <section>
+        <SearchInput
+          labelContent={'Input'}
+          inputName={'search-string'}
+          inputInitialValue={props.searchParams?.searchString || ''}
+          buttonContent={'Search'}
+        />
+      </section>
+      <SearchResults searchResults={props.response}>{props.children}</SearchResults>
       {
-        // <section>
-        //   <SearchInput
-        //     labelContent={'Input'}
-        //     inputName={'search-string'}
-        //     inputInitialValue={''}
-        //     buttonContent={'Search'}
-        //     searchCallback={searchCallback}
-        //   />
-        // </section>
         // <SearchResultsSection query={query} page={page} setPageCallback={setPageCallback}>
         //   {props.children}
         // </SearchResultsSection>
