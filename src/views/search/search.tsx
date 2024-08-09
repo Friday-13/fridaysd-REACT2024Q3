@@ -1,14 +1,8 @@
-import { FormEvent, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { PropsWithChildren } from 'react';
 import SearchInput from '../../components/search-input/search-input';
-// import useLocalStorage from '../../hooks/use-local-storage';
-import { TPeopleReponse } from '@services/api-types';
-import SearchResults from '@components/search-results/search-results';
-// import ThrowErrorSection from './sections/throw-error-section';
-// import SelectedPeopleManager from '@components/selected-people-manager/selected-people-manager';
-// import { getThemedClassName, ThemeContext } from '../../context/theme-context';
+import SearchResultsSection from './sections/search-results-section';
 
 interface ISearch extends PropsWithChildren {
-  response: TPeopleReponse;
   searchParams?: { searchString?: string; page?: string };
 }
 
@@ -96,11 +90,10 @@ export default async function Search(props: ISearch) {
           buttonContent={'Search'}
         />
       </section>
-      <SearchResults searchResults={props.response}>{props.children}</SearchResults>
+      <SearchResultsSection query={props.searchParams.searchString} page={props.searchParams.page}>
+        {props.children}
+      </SearchResultsSection>
       {
-        // <SearchResultsSection query={query} page={page} setPageCallback={setPageCallback}>
-        //   {props.children}
-        // </SearchResultsSection>
         // <section>
         //   <SelectedPeopleManager />
         // </section>

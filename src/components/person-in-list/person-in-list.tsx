@@ -1,3 +1,5 @@
+'use client';
+
 import { IPerson } from '@services/api-types';
 import styles from './person-in-list.module.scss';
 

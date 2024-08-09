@@ -1,0 +1,7 @@
+.people {
+  &__list {
+    overflow-y: scroll;
+    height: 45vh;
+    scrollbar-width: thin;
+  }
+}

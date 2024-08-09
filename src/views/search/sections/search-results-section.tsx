@@ -1,10 +1,6 @@
 import SearchResults from '@components/search-results/search-results';
-import { useGetPeopleQuery } from '@services/swapi';
-import { setIsPeopleLoading } from '@utils/slices/is-loading-slice';
-import { useDispatch } from 'react-redux';
 import styles from '../search.module.scss';
-import { PropsWithChildren, useEffect } from 'react';
-import { setCurrentPageResults } from '@utils/slices/current-page-slice';
+import { PropsWithChildren } from 'react';
 
 interface ISearchResultsSection extends PropsWithChildren {
   query: string;
@@ -12,20 +8,10 @@ interface ISearchResultsSection extends PropsWithChildren {
   setPageCallback: (value: number) => void;
 }
 
-export default function SearchResultsSection(props: ISearchResultsSection) {
-  const { data, isLoading, isFetching } = useGetPeopleQuery({ name: props.query, page: props.page });
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setIsPeopleLoading(isLoading || isFetching));
-    if (!(isLoading || isFetching)) {
-      dispatch(setCurrentPageResults(data.results));
-    }
-  }, [isLoading, isFetching]);
-
+export default async function SearchResultsSection(props: ISearchResultsSection) {
   return (
     <section className={styles['results-wrapper']}>
-      <SearchResults searchResults={data} setPageCallback={props.setPageCallback} />
+      <SearchResults query={props.query} page={props.page} />
       {props.children}
     </section>
   );
