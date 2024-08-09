@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react';
 import styles from '../App.module.scss';
 
 interface IRootPage extends PropsWithChildren {
-  searchParams?: { searchString?: string; page?: string };
+  searchParams?: { searchString?: string; page?: number };
 }
 
 export default async function RootPage(props: IRootPage) {

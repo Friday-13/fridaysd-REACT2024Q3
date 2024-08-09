@@ -5,7 +5,6 @@ import { PropsWithChildren } from 'react';
 interface ISearchResultsSection extends PropsWithChildren {
   query: string;
   page?: number;
-  setPageCallback: (value: number) => void;
 }
 
 export default async function SearchResultsSection(props: ISearchResultsSection) {

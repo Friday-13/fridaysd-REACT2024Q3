@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react';
-import SearchInput from '../../components/search-input/search-input';
 import SearchResultsSection from './sections/search-results-section';
+import SearchPeopleInput from './search-people-input/search-people-input';
 
 interface ISearch extends PropsWithChildren {
-  searchParams?: { searchString?: string; page?: string };
+  searchParams?: { searchString?: string; page?: number };
 }
 
 export default async function Search(props: ISearch) {
@@ -83,14 +83,9 @@ export default async function Search(props: ISearch) {
       }
       <h1> Star Wars Characters </h1>
       <section>
-        <SearchInput
-          labelContent={'Input'}
-          inputName={'search-string'}
-          inputInitialValue={props.searchParams?.searchString || ''}
-          buttonContent={'Search'}
-        />
+        <SearchPeopleInput searchParams={props.searchParams} />
       </section>
-      <SearchResultsSection query={props.searchParams.searchString} page={props.searchParams.page}>
+      <SearchResultsSection query={props.searchParams?.searchString || ''} page={props.searchParams?.page}>
         {props.children}
       </SearchResultsSection>
       {
