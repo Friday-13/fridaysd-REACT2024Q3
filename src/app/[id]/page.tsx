@@ -28,7 +28,6 @@ interface IPersonPage {
 }
 
 export default async function PersonPage(props: IPersonPage) {
-  console.log(props);
   return (
     <div id={'root'} className={styles['page-wrapper']}>
       <h2>Person</h2>

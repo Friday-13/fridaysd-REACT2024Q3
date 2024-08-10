@@ -1,9 +1,11 @@
 'use client';
 
 import Pagination from '@components/pagination/pagination';
+import { ThemeContext } from '@context/theme-context';
 import { TPeopleReponse } from '@services/api-types';
 import createSearchParams from '@utils/create-search-params/create-search-params';
 import { usePathname, useRouter } from 'next/navigation';
+import { useContext } from 'react';
 
 function getPage(url: string | null) {
   if (url) {

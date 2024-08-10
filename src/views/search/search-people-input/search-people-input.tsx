@@ -18,7 +18,8 @@ function SearchPeopleInput(props: { searchParams?: { searchString?: string; page
   }, []);
 
   useEffect(() => {
-    if (!searchParams.get('searchString')) {
+    if (searchParams.get('searchString') === null) {
+      console.log('Query updating');
       router.push(
         path +
           '?' +

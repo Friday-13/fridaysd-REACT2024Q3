@@ -4,8 +4,6 @@ function useLocalStorage<T>(
   key: string,
   initialValue: T
 ): [T, Dispatch<SetStateAction<T>>, () => T, (data: T) => void] {
-  const [data, setData] = useState<T>(initialValue);
-
   const isDataExist = () => {
     if (window !== undefined) {
       return Boolean(localStorage.getItem(key));
@@ -27,6 +25,7 @@ function useLocalStorage<T>(
     }
   };
 
+  const [data, setData] = useState<T>(window === undefined ? initialValue : getData());
   return [data, setData, getData, saveData];
 }
 
