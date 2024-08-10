@@ -27,7 +27,7 @@ function useLocalStorage<T>(
     }
   };
 
-  return [data, setData, getData, saveData]; /*TODO: rewrite like an object*/
+  return [data, setData, getData, saveData];
 }
 
 export default useLocalStorage;
