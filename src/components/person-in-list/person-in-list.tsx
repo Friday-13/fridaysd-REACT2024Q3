@@ -2,9 +2,11 @@
 
 import { IPerson } from '@services/api-types';
 import styles from './person-in-list.module.scss';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function PersonInList(props: { person: IPerson }) {
-  // const router = useRouter();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   // const selectedPeople = useAppSelector(selectedPeopleSelector);
   // const [isSelected, setIsSelected] = useState<boolean>(isPersonInState(selectedPeople, props.person));
   // const dispatch = useAppDispatch();
@@ -38,11 +40,8 @@ export default function PersonInList(props: { person: IPerson }) {
           e.stopPropagation();
           e.preventDefault();
           e.stopPropagation();
-          // const id = props.person.url.split('/').slice(-2, -1);
-          // router.push({
-          //   pathname: '/[id]',
-          //   query: { ...router.query, id },
-          // });
+          const id = props.person.url.split('/').slice(-2, -1);
+          router.push(`/${id}` + '?' + searchParams);
         }}
       >
         <div>name: {props.person.name}</div>

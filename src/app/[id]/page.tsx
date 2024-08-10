@@ -1,5 +1,7 @@
 import Person from '@components/person/person';
 import { IPerson, TPeopleReponse } from '@services/api-types';
+import styles from '../../App.module.scss';
+import Search from '@views/search/search';
 
 export async function generateStaticParams() {
   const answer = await fetch('https://swapi.dev/api/people/');
@@ -20,7 +22,19 @@ export async function generateStaticParams() {
   });
   return pages;
 }
+interface IPersonPage {
+  searchParams?: { searchString?: string; page?: number };
+  params: { id: string };
+}
 
-export default async function PersonPage({ params }: { params: { id: string } }) {
-  return <Person id={params.id} />;
+export default async function PersonPage(props: IPersonPage) {
+  console.log(props);
+  return (
+    <div id={'root'} className={styles['page-wrapper']}>
+      <h2>Person</h2>
+      <Search searchParams={props.searchParams}>
+        <Person id={props.params.id} />
+      </Search>
+    </div>
+  );
 }
