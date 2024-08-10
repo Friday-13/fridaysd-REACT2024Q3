@@ -6,7 +6,6 @@ import PeopleListPagination from '@views/people-list/pagination/pagination';
 
 async function PeopleList(props: { query: string; page?: number }) {
   const response = await getPeople(props.query, props.page);
-  console.log(response);
 
   if (!response.results) {
     return <h3>No results</h3>;

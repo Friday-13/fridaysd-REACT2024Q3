@@ -9,7 +9,6 @@ export interface IRootPage extends PropsWithChildren {
 export default async function RootPage({ searchParams }: { searchParams: { searchString?: string; page?: number } }) {
   return (
     <div id={'root'} className={styles['page-wrapper']}>
-      <h2>Root</h2>
       <Search searchParams={searchParams}></Search>
     </div>
   );

@@ -46,11 +46,6 @@ export async function getPeople(search?: string, pageNumber?: number) {
     count: data.count,
   };
   const response = rawResponse;
-  // response.results = response.results.map((person) => {
-  //   const urlParts = person.url.split('/');
-  //   person.id = urlParts[urlParts.length - 2];
-  //   return person;
-  // });
   return response;
 }
 

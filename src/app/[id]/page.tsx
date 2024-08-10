@@ -30,7 +30,6 @@ interface IPersonPage {
 export default async function PersonPage(props: IPersonPage) {
   return (
     <div id={'root'} className={styles['page-wrapper']}>
-      <h2>Person</h2>
       <Search searchParams={props.searchParams}>
         <Person id={props.params.id} />
       </Search>

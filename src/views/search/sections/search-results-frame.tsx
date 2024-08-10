@@ -8,7 +8,6 @@ function SearchResultsFrame(props: PropsWithChildren) {
   const searchParams = useSearchParams();
 
   function frameClick() {
-    console.log(searchParams.toString());
     router.push('/' + '?' + searchParams.toString());
   }
   return <div onClick={frameClick}>{props.children}</div>;

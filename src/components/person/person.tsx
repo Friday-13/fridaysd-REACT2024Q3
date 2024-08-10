@@ -1,39 +1,9 @@
-// import { useContext, useEffect, useState } from 'react';
-// import { IPerson } from '../../services/api-types';
-// import Loader from '../loader/loader';
-// import { useGetPersonByIdQuery } from '@services/swapi';
-// import { getThemedClassName, ThemeContext } from '../../context/theme-context';
 import { getPerson } from '@services/api';
 import ClosePersonButton from '@views/person/close-person-button';
 import styles from './person.module.scss';
-// import { useRouter } from 'next/router';
-// import closePerson from '@utils/close-person/close-person';
 
 async function Person(props: { id: string }) {
   const person = await getPerson(props.id);
-  // const router = useRouter();
-  // const [person, setPerson] = useState<IPerson | undefined>(undefined);
-  // const { data, error, isLoading, isFetching } = useGetPersonByIdQuery(props.id);
-  // const theme = useContext(ThemeContext);
-  //
-  // useEffect(() => {
-  //   setPerson(data);
-  // }, [data]);
-  //
-  // useEffect(() => {
-  //   if (error) {
-  //     console.error(error);
-  //   }
-  // }, [error]);
-  //
-  // if (person === undefined || isLoading || isFetching) {
-  //   return (
-  //     <div className={[styles.person, styles['results-frame']].join(' ')}>
-  //       <Loader />
-  //     </div>
-  //   );
-  // }
-  //
   return (
     <div className={[styles.person, styles['results-frame']].join(' ')}>
       <ClosePersonButton />
