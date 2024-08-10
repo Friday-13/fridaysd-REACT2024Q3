@@ -13,7 +13,7 @@ export async function generateStaticParams() {
     count: data.count,
     currentUrl: new URL('https://swapi.dev/api/people/'),
   };
-  const count = rawResponse.count;
+  const count = Math.floor(rawResponse.count / 10);
   const ids = Array.from({ length: count }, (_, index) => `${index + 1}`);
   const pages = ids.map((id) => {
     return {
