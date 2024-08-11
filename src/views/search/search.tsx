@@ -1,103 +1,37 @@
-import { FormEvent, PropsWithChildren, useContext, useEffect, useState } from 'react';
-import SearchInput from '../../components/search-input/search-input';
-import useLocalStorage from '../../hooks/use-local-storage';
-import SearchResultsSection from './sections/search-results-section';
-import ThrowErrorSection from './sections/throw-error-section';
-import SelectedPeopleManager from '@components/selected-people-manager/selected-people-manager';
-import { getThemedClassName, ThemeContext } from '../../context/theme-context';
 import { useRouter } from 'next/router';
+import { PropsWithChildren } from 'react';
+import SearchResultsSection from './sections/search-results-section';
+import SearchPeopleInput from './search-people-input/search-people-input';
+import { TPeopleReponse } from '@services/api-types';
+// import SwitchThemeButton from '@views/switch-theme-button/switch-theme-button';
+// import SelectedPeopleManager from '@components/selected-people-manager/selected-people-manager';
+// import ThrowErrorSection from './sections/throw-error-section';
 
-export default function Search(props: PropsWithChildren) {
-  const router = useRouter();
-  const [page, setPage] = useState<number | undefined>(undefined);
-  const [query, setQuery, getQuery, saveQuery] = useLocalStorage<string>('query', '');
-  const theme = useContext(ThemeContext);
+interface ISearch extends PropsWithChildren {
+  searchParams?: { searchString?: string; page?: number };
+  response: TPeopleReponse;
+}
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    const searchQueryURL = router.query['search-string'];
-    const pageURL = Number(router.query['page']);
-    if (searchQueryURL === undefined) {
-      const savedQuery = getQuery();
-      setQuery(savedQuery);
-      router.push(
-        {
-          pathname: router.pathname,
-          query: { ...router.query, 'search-string': savedQuery },
-        },
-        undefined,
-        { shallow: true }
-      );
-      return;
-    }
-    if (query !== searchQueryURL) {
-      setQuery(`${searchQueryURL}` || '');
-      setPage(pageURL || 1);
-    }
-  }, [router.isReady]);
-
-  const searchCallback = (event: FormEvent) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget as HTMLFormElement);
-    const newQuery = formData.get('search-string') as string;
-    saveQuery(newQuery);
-    setQuery(newQuery);
-    setPage(1);
-    if (newQuery !== '') {
-      router.push(
-        {
-          pathname: router.pathname,
-          query: { ...router.query, 'search-string': newQuery },
-        },
-        undefined,
-        { shallow: true }
-      );
-      return;
-    }
-    router.push(
-      {
-        pathname: router.pathname,
-        query: { ...router.query, 'search-string': newQuery },
-      },
-      undefined,
-      { shallow: true }
-    );
-  };
-
-  const setPageCallback = (newValue: number) => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: { ...router.query, page: newValue },
-      },
-      undefined,
-      { shallow: true }
-    );
-    setPage(newValue);
-  };
-
+export default function Search(props: ISearch) {
   return (
     <>
-      <button onClick={theme.toggleTheme} className={getThemedClassName(theme, [])}>
-        {theme.theme}
-      </button>
+      {
+        // <SwitchThemeButton />
+      }
       <h1> Star Wars Characters </h1>
       <section>
-        <SearchInput
-          labelContent={'Input'}
-          inputName={'search-string'}
-          inputInitialValue={query}
-          buttonContent={'Search'}
-          searchCallback={searchCallback}
-        />
+        <SearchPeopleInput searchParams={props.searchParams} />
       </section>
-      <SearchResultsSection query={query} page={page} setPageCallback={setPageCallback}>
-        {props.children}
-      </SearchResultsSection>
-      <section>
-        <SelectedPeopleManager />
-      </section>
-      <ThrowErrorSection />
+      <SearchResultsSection response={props.response}>{props.children}</SearchResultsSection>
+      {
+        // <SearchResultsSection query={props.searchParams?.searchString || ''} page={props.searchParams?.page}>
+        //   {props.children}
+        // </SearchResultsSection>
+        // <section>
+        //   <SelectedPeopleManager />
+        // </section>
+        // <ThrowErrorSection />
+      }
     </>
   );
 }

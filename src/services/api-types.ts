@@ -11,7 +11,7 @@ export interface IPerson {
 }
 
 export interface IResponse<T> {
-  currentUrl: URL;
+  currentUrl: string;
   count: number;
   next: string | null;
   previous: string | null;
