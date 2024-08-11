@@ -21,7 +21,7 @@ describe('pagination', () => {
   test('Render with pervious and next', async () => {
     mockRouter.push({
       pathname: '',
-      query: { page: 3 },
+      query: { page: '3' },
     });
     render(
       <Provider store={store}>
@@ -30,8 +30,8 @@ describe('pagination', () => {
           nextPage={4}
           setPageCallback={(newValue: number) => {
             mockRouter.push({
-              pathname: router.pathname,
-              query: { ...mockRouter.query, page: newValue },
+              pathname: mockRouter.pathname,
+              query: { ...mockRouter.query, page: `${newValue}` },
             });
           }}
         />
@@ -45,7 +45,7 @@ describe('pagination', () => {
   test('Render with pervious and next', async () => {
     mockRouter.push({
       pathname: '',
-      query: { page: 3 },
+      query: { page: '3' },
     });
     render(
       <Provider store={store}>
@@ -55,7 +55,7 @@ describe('pagination', () => {
           setPageCallback={(newValue: number) => {
             mockRouter.push({
               pathname: mockRouter.pathname,
-              query: { ...mockRouter.query, page: newValue },
+              query: { ...mockRouter.query, page: `${newValue}` },
             });
           }}
         />
