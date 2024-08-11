@@ -1,6 +1,6 @@
 import styles from './pagination.module.scss';
 import PaginationButton from './pagination-button';
-import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 interface IPagination {
   nextPage?: number;
@@ -10,8 +10,8 @@ interface IPagination {
 }
 
 function Pagination(props: IPagination) {
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
+  const queryParams = useRouter().query;
+  const currentPage = Number(queryParams['page']) || 1;
 
   return (
     <div className={styles.pagination}>

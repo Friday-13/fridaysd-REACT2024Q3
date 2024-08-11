@@ -1,7 +1,6 @@
 import Pagination from '@components/pagination/pagination';
 import { TPeopleReponse } from '@services/api-types';
-import createSearchParams from '@utils/create-search-params/create-search-params';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 function getPage(url: string | null) {
   if (url) {
@@ -28,15 +27,17 @@ function getTotalPages(response: TPeopleReponse) {
 
 function PeopleListPagination(props: { searchResults: TPeopleReponse }) {
   const router = useRouter();
-  const pathName = usePathname();
-  const updateSearchParams = createSearchParams();
 
   const nextPage = getPage(props.searchResults.next);
   const prevPage = getPage(props.searchResults.previous);
   const totalPages = getTotalPages(props.searchResults);
 
   const setPageCallback = (newValue: number) => {
-    router.push(pathName + '?' + updateSearchParams([{ name: 'page', value: `${newValue}` }]), { scroll: false });
+    // const {...searchParams } = router.query;
+    router.push({
+      pathname: router.pathname,
+      query: { ...router.query, page: newValue },
+    });
   };
 
   return (

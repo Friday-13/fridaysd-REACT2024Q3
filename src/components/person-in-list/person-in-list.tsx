@@ -44,7 +44,6 @@ export default function PersonInList(props: { person: IPerson }) {
           const id = props.person.url.split('/').slice(-2, -1);
           const { id: _id, ...queryParams } = router.query;
           router.push({ pathname: `/${id}`, query: queryParams });
-          // router.push(`/${id}` + '?' + searchParams);
         }}
       >
         <div>name: {props.person.name}</div>
