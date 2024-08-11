@@ -1,5 +1,3 @@
-'use client';
-
 import Pagination from '@components/pagination/pagination';
 import { TPeopleReponse } from '@services/api-types';
 import createSearchParams from '@utils/create-search-params/create-search-params';

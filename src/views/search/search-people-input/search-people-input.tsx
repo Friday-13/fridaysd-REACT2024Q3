@@ -1,13 +1,11 @@
 import SearchInput from '@components/search-input/search-input';
 import useLocalStorage from '@hooks/use-local-storage';
-import createSearchParams from '@utils/create-search-params/create-search-params';
 import { useRouter } from 'next/router';
 import { FormEvent, useEffect } from 'react';
 
 function SearchPeopleInput(props: { searchParams?: { searchString?: string; page?: number } }) {
   const router = useRouter();
-  const updateSearchParams = createSearchParams();
-  const [data, setData, getData, saveData] = useLocalStorage('query', props.searchParams?.searchString || '');
+  const [_data, setData, getData, saveData] = useLocalStorage('query', props.searchParams?.searchString || '');
 
   useEffect(() => {
     if (router.query['searchString'] === undefined) {

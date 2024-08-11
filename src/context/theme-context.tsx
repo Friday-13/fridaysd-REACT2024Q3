@@ -1,5 +1,3 @@
-'use client';
-
 import useLocalStorage from '@hooks/use-local-storage';
 import { createContext, PropsWithChildren, useEffect } from 'react';
 

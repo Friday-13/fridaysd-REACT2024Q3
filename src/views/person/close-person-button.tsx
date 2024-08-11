@@ -1,16 +1,14 @@
-'use client';
-
 import CloseButton from '@components/close-button/close-button';
-import { useRouter, useSearchParams } from 'next/navigation';
+import closePerson from '@utils/close-person/close-person';
+import { useRouter } from 'next/router';
 
 function ClosePersonButton() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   return (
     <CloseButton
       clickHandler={() => {
-        router.push('/' + '?' + searchParams);
+        closePerson(router);
       }}
     />
   );

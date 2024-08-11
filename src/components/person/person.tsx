@@ -1,21 +1,20 @@
-import { getPerson } from '@services/api';
 import ClosePersonButton from '@views/person/close-person-button';
 import styles from './person.module.scss';
+import { IPerson } from '@services/api-types';
 
-async function Person(props: { id: string }) {
-  const person = await getPerson(props.id);
+function Person(props: { person: IPerson }) {
   return (
     <div className={[styles.person, styles['results-frame']].join(' ')}>
       <ClosePersonButton />
-      <h2>{person?.name}</h2>
+      <h2>{props.person?.name}</h2>
       <ul>
-        <li>Gender: {person.gender}</li>
-        <li>Mass: {person.mass}</li>
-        <li>Height: {person.height}</li>
-        <li>Birth Year: {person.birth_year}</li>
-        <li>Eye color: {person.eye_color}</li>
-        <li>Hair color: {person.hair_color}</li>
-        <li>Skin color: {person.skin_color}</li>
+        <li>Gender: {props.person.gender}</li>
+        <li>Mass: {props.person.mass}</li>
+        <li>Height: {props.person.height}</li>
+        <li>Birth Year: {props.person.birth_year}</li>
+        <li>Eye color: {props.person.eye_color}</li>
+        <li>Hair color: {props.person.hair_color}</li>
+        <li>Skin color: {props.person.skin_color}</li>
       </ul>
     </div>
   );

@@ -1,5 +1,3 @@
-'use client';
-
 import { useContext, useState } from 'react';
 import { getThemedClassName, ThemeContext } from '../../../context/theme-context';
 

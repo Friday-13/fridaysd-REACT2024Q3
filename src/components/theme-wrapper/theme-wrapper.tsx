@@ -1,5 +1,3 @@
-'use client';
-
 import { getThemedClassName, ThemeContext } from '@context/theme-context';
 import { PropsWithChildren, useContext } from 'react';
 import styles from './theme-wrapper.module.scss';

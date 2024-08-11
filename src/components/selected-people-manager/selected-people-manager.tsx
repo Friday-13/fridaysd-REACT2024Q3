@@ -1,5 +1,3 @@
-'use client';
-
 import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
 import { clear } from '../../utils/slices/people-slice';
 import { useEffect, useState } from 'react';

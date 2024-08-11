@@ -1,5 +1,3 @@
-'use client';
-
 import { FormEvent, useEffect, useState } from 'react';
 import styles from './search-input.module.scss';
 

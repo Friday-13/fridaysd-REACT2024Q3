@@ -1,14 +1,12 @@
-'use client';
-
-import { useRouter, useSearchParams } from 'next/navigation';
+import closePerson from '@utils/close-person/close-person';
+import { useRouter } from 'next/router';
 import { PropsWithChildren } from 'react';
 
 function SearchResultsFrame(props: PropsWithChildren) {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   function frameClick() {
-    router.push('/' + '?' + searchParams.toString());
+    closePerson(router);
   }
   return <div onClick={frameClick}>{props.children}</div>;
 }
