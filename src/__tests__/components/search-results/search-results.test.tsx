@@ -12,26 +12,12 @@ function getSearchResults(): TPeopleReponse {
   const searchResults: TPeopleReponse = {
     results: apiResponse.results,
     count: apiResponse.count,
-    currentUrl: new URL('https://swapi.dev/api/'),
+    currentUrl: new URL('https://swapi.dev/api/').toString(),
     previous: apiResponse.previous,
     next: apiResponse.next,
   };
   return searchResults;
 }
-
-test('Renders the search results component: loading', async () => {
-  const searchResults = getSearchResults();
-  const store = mockStore({
-    isPeopleLoading: { value: true },
-    people: { people: [] },
-  });
-  render(
-    <Provider store={store}>
-      <SearchResults searchResults={searchResults} setPageCallback={() => {}} />
-    </Provider>
-  );
-  expect(screen.queryByText(/luke/i)).toBeNull();
-});
 
 test('Renders the search results component: with content', () => {
   const searchResults = getSearchResults();
@@ -43,7 +29,7 @@ test('Renders the search results component: with content', () => {
   searchResults.next = new URL('https://swapi.dev/api/people/?page=4').toString();
   render(
     <Provider store={store}>
-      <SearchResults searchResults={searchResults} setPageCallback={() => {}} />
+      <SearchResults response={searchResults} />
     </Provider>
   );
   expect(screen.queryByText(/luke/i)).toBeInTheDocument();
@@ -59,7 +45,7 @@ test('Renders the search results component: last page', async () => {
   searchResults.next = null;
   render(
     <Provider store={store}>
-      <SearchResults searchResults={searchResults} setPageCallback={() => {}} />
+      <SearchResults response={searchResults} />
     </Provider>
   );
   expect(screen.queryByText(/Obi-Wan Kenobi/i)).toBeInTheDocument();
@@ -75,7 +61,7 @@ test('Renders the search results component: only one page', async () => {
   searchResults.previous = null;
   render(
     <Provider store={store}>
-      <SearchResults searchResults={searchResults} setPageCallback={() => {}} />
+      <SearchResults response={searchResults} />
     </Provider>
   );
   expect(screen.queryByText(/luke/i)).toBeInTheDocument();

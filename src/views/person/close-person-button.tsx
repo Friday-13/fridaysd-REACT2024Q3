@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 function ClosePersonButton() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  console.log(router);
   return (
     <CloseButton
       clickHandler={() => {

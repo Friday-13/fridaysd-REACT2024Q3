@@ -39,7 +39,6 @@ export default [
       'dist',
       '.eslint.config.js',
       'vite.config.ts',
-      'src/test/__mocks__/*',
       '.next',
       'node-modules/',
       'public/',

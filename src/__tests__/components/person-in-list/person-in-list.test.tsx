@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import { togglePerson } from '../../../utils/slices/people-slice';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import PersonInList from '@components/person-in-list/person-in-list';
 import { Provider } from 'react-redux';
@@ -23,7 +24,7 @@ describe('Person in list', () => {
     expect(screen.queryByText(/luke/i)).toBeInTheDocument();
   });
 
-  test('add to store', async () => {
+  test('open person page', async () => {
     mockRouter.push('/');
     const store = mockStore({
       isPeopleLoading: { value: true },
@@ -42,5 +43,27 @@ describe('Person in list', () => {
     await waitFor(() => {
       expect(mockRouter.asPath).toEqual('/1');
     });
+  });
+
+  test('add to store', async () => {
+    const person = apiResponse.results[0];
+    mockRouter.push('/');
+    const testPeople = apiResponse.results.slice(2, 5);
+    const store = mockStore({
+      isPeopleLoading: { value: true },
+      people: { people: testPeople },
+    });
+    render(
+      <Provider store={store}>
+        <PersonInList person={apiResponse.results[0]} />
+      </Provider>
+    );
+
+    expect(screen.queryByText(/Luke Skywalker/i)).toBeInTheDocument();
+
+    const checkbox = screen.getByLabelText(person.name);
+    fireEvent.click(checkbox);
+    const actions = store.getActions();
+    expect(actions).toContainEqual(togglePerson(person));
   });
 });
