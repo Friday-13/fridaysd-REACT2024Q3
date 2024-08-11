@@ -35,13 +35,6 @@ export default [
     files: ['**/*.ts', '**/*.tsx'],
   },
   {
-    ignores: [
-      'dist',
-      '.eslint.config.js',
-      'vite.config.ts',
-      '.next',
-      'node-modules/',
-      'public/',
-    ],
+    ignores: ['dist', '.eslint.config.js', 'vite.config.ts', '.next', 'node-modules/', 'public/'],
   },
 ];
