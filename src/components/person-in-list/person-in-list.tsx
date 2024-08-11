@@ -23,6 +23,7 @@ export default function PersonInList(props: { person: IPerson }) {
     <div className={styles['person-in-list']}>
       {
         <label
+          aria-label={props.person.name}
           onClick={(e) => {
             e.stopPropagation();
           }}

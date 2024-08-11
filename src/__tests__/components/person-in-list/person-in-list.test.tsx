@@ -5,12 +5,19 @@ import PersonInList from '@components/person-in-list/person-in-list';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import apiResponse from '../../people.json';
-import mockRouter from 'next-router-mock';
+import { pushMock, useRouterMocked } from '../../../test/__mocks__/nextNavigationMock';
 
-jest.mock('next/router', () => jest.requireActual('next-router-mock'));
 const mockStore = configureStore([]);
+jest.mock('next/navigation', () => ({
+  useRouter: () => useRouterMocked(),
+  useSearchParams: jest.fn().mockReturnValue('page=3'),
+}));
 
 describe('Person in list', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('Renders', async () => {
     const store = mockStore({
       isPeopleLoading: { value: true },
@@ -25,7 +32,6 @@ describe('Person in list', () => {
   });
 
   test('open person page', async () => {
-    mockRouter.push('/');
     const store = mockStore({
       isPeopleLoading: { value: true },
       people: { people: apiResponse.results.slice(2, 5) },
@@ -40,14 +46,12 @@ describe('Person in list', () => {
 
     const personInList = screen.getByText('name: Luke Skywalker');
     fireEvent.click(personInList);
-    await waitFor(() => {
-      expect(mockRouter.asPath).toEqual('/1');
-    });
+
+    expect(pushMock).toHaveBeenCalledWith('/1?page=3');
   });
 
   test('add to store', async () => {
     const person = apiResponse.results[0];
-    mockRouter.push('/');
     const testPeople = apiResponse.results.slice(2, 5);
     const store = mockStore({
       isPeopleLoading: { value: true },

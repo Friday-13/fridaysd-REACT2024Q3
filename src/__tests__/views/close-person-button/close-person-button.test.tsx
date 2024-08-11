@@ -9,7 +9,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 describe('Close person button', () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
