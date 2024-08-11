@@ -4,7 +4,7 @@ import SearchPeopleInput from './search-people-input/search-people-input';
 import { TPeopleReponse } from '@services/api-types';
 import SwitchThemeButton from '@views/switch-theme-button/switch-theme-button';
 import SelectedPeopleManager from '@components/selected-people-manager/selected-people-manager';
-// import ThrowErrorSection from './sections/throw-error-section';
+import ThrowErrorSection from './sections/throw-error-section';
 
 interface ISearch extends PropsWithChildren {
   searchParams?: { searchString?: string; page?: number };
@@ -24,9 +24,7 @@ export default function Search(props: ISearch) {
       <section>
         <SelectedPeopleManager />
       </section>
-      {
-        // <ThrowErrorSection />
-      }
+      <ThrowErrorSection />
     </>
   );
 }

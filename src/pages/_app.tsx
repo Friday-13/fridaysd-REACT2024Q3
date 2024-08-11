@@ -4,6 +4,7 @@ import ThemeWrapper from '@components/theme-wrapper/theme-wrapper';
 import StoreWrapper from '@components/store-wrapper/store-wrapper';
 import '@styles/index.scss';
 import { ThemeProvider } from '@context/theme-context';
+import ErrorBoundary from '@components/error-boundarie/error-boundarie';
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -15,9 +16,11 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
       <ThemeProvider>
         <ThemeWrapper>
-          <StoreWrapper>
-            <Component {...pageProps} />
-          </StoreWrapper>
+          <ErrorBoundary>
+            <StoreWrapper>
+              <Component {...pageProps} />
+            </StoreWrapper>
+          </ErrorBoundary>
         </ThemeWrapper>
       </ThemeProvider>
     </>
