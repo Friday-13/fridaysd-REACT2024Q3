@@ -1,8 +1,8 @@
 import { AppProps } from 'next/app';
-import '@styles/index.scss';
 import Head from 'next/head';
 import ThemeWrapper from '@components/theme-wrapper/theme-wrapper';
 import StoreWrapper from '@components/store-wrapper/store-wrapper';
+import '@styles/index.scss';
 
 function App({ Component, pageProps }: AppProps) {
   return (

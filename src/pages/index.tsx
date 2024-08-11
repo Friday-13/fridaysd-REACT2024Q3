@@ -2,6 +2,7 @@ import { getPeople } from '@services/api';
 import { TPeopleReponse } from '@services/api-types';
 import Search from '@views/search/search';
 import { GetServerSidePropsContext } from 'next';
+import styles from '../App.module.scss'
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const page = Number(context.query['page']) || undefined;
@@ -23,7 +24,7 @@ export default function Page(props: {
   const page = props.searchParams.page || undefined;
   const searchString = props.searchParams.searchString || undefined;
   return (
-    <div id={'root'}>
+    <div id={'root'} className={styles['page-wrapper']}>
       <Search searchParams={{ page, searchString }} response={props.response}></Search>
     </div>
   );
