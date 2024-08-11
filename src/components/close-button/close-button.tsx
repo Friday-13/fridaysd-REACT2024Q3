@@ -7,6 +7,7 @@ export interface ICloseButtonProps {
 function CloseButton(props: ICloseButtonProps) {
   return (
     <div
+      data-testid="close-button"
       className={styles.close}
       onClick={(event) => {
         props.clickHandler(event);

@@ -18,23 +18,22 @@ export default function PersonInList(props: { person: IPerson }) {
 
   return (
     <div className={styles['person-in-list']}>
-      {
-        <label
-          onClick={(e) => {
+      <label
+        aria-label={props.person.name}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <input
+          type="checkbox"
+          checked={isSelected}
+          onChange={(e) => {
             e.stopPropagation();
+            dispatch(togglePerson(props.person));
+            setIsSelected(e.target.checked);
           }}
-        >
-          <input
-            type="checkbox"
-            checked={isSelected}
-            onChange={(e) => {
-              e.stopPropagation();
-              dispatch(togglePerson(props.person));
-              setIsSelected(e.target.checked);
-            }}
-          />
-        </label>
-      }
+        />
+      </label>
       <div
         className={styles['person-info']}
         onClick={(e) => {
