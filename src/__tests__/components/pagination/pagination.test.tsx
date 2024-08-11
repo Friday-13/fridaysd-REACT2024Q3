@@ -4,7 +4,7 @@ import Pagination from '@components/pagination/pagination';
 import { Provider } from 'react-redux';
 import { store } from '../../../store';
 import { useRouterMocked, useSearchParamsMocked } from '../../../test/__mocks__/nextNavigationMock';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 jest.mock('next/navigation', () => ({
   useRouter: () => useRouterMocked(),
