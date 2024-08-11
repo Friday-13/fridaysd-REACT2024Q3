@@ -1,21 +1,20 @@
 import { IPerson } from '@services/api-types';
 import styles from './person-in-list.module.scss';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { isPersonInState, togglePerson } from '@utils/slices/people-slice';
 import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
 import { selectedPeopleSelector } from '../../store';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function PersonInList(props: { person: IPerson }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const selectedPeople = useAppSelector(selectedPeopleSelector);
   const [isSelected, setIsSelected] = useState<boolean>(isPersonInState(selectedPeople, props.person));
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     setIsSelected(isPersonInState(selectedPeople, props.person));
-  }, [selectedPeople, searchParams, router]);
+  }, [selectedPeople, router]);
 
   return (
     <div className={styles['person-in-list']}>
@@ -43,7 +42,9 @@ export default function PersonInList(props: { person: IPerson }) {
           e.preventDefault();
           e.stopPropagation();
           const id = props.person.url.split('/').slice(-2, -1);
-          router.push(`/${id}` + '?' + searchParams);
+          const { id: _id, ...queryParams } = router.query;
+          router.push({ pathname: `/${id}`, query: queryParams });
+          // router.push(`/${id}` + '?' + searchParams);
         }}
       >
         <div>name: {props.person.name}</div>

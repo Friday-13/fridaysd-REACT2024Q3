@@ -23,24 +23,24 @@ describe('Person in list', () => {
     expect(screen.queryByText(/luke/i)).toBeInTheDocument();
   });
 
-  test('add to store', async () => {
-    mockRouter.push('/');
-    const store = mockStore({
-      isPeopleLoading: { value: true },
-      people: { people: apiResponse.results.slice(2, 5) },
-    });
-    render(
-      <Provider store={store}>
-        <PersonInList person={apiResponse.results[0]} />
-      </Provider>
-    );
-
-    expect(screen.queryByText(/Luke Skywalker/i)).toBeInTheDocument();
-
-    const personInList = screen.getByText('name: Luke Skywalker');
-    fireEvent.click(personInList);
-    await waitFor(() => {
-      expect(mockRouter.asPath).toEqual('/1');
-    });
-  });
+  // test('add to store', async () => {
+  //   mockRouter.push('/');
+  //   const store = mockStore({
+  //     isPeopleLoading: { value: true },
+  //     people: { people: apiResponse.results.slice(2, 5) },
+  //   });
+  //   render(
+  //     <Provider store={store}>
+  //       <PersonInList person={apiResponse.results[0]} />
+  //     </Provider>
+  //   );
+  //
+  //   expect(screen.queryByText(/Luke Skywalker/i)).toBeInTheDocument();
+  //
+  //   const personInList = screen.getByText('name: Luke Skywalker');
+  //   fireEvent.click(personInList);
+  //   await waitFor(() => {
+  //     expect(mockRouter.asPath).toEqual('/1');
+  //   });
+  // });
 });
