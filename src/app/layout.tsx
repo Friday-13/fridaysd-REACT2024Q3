@@ -13,6 +13,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <ThemeProvider>
       <html lang="en">
+        <head>
+          <link rel="icon" href="/favicon.svg" type="image/x-icon" />
+        </head>
         <body>
           <StoreWrapper>
             <ThemeWrapper>{children}</ThemeWrapper>
