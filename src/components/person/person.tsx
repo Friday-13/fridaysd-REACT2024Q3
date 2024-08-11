@@ -1,54 +1,20 @@
-import { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { IPerson } from '../../services/api-types';
-import Loader from '../loader/loader';
-import { useGetPersonByIdQuery } from '@services/swapi';
-import { getThemedClassName, ThemeContext } from '../../context/theme-context';
+import ClosePersonButton from '@views/person/close-person-button';
 import styles from './person.module.scss';
+import { IPerson } from '@services/api-types';
 
-function Person() {
-  const params = useParams();
-  const [person, setPerson] = useState<IPerson | undefined>(undefined);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { data, error, isLoading, isFetching } = useGetPersonByIdQuery(params['id'] as string); // TODO: fix as string approach
-  const theme = useContext(ThemeContext);
-
-  useEffect(() => {
-    setPerson(data);
-  }, [data]);
-
-  useEffect(() => {
-    if (error) {
-      console.error(error);
-    }
-  }, [error]);
-
-  if (person === undefined || isLoading || isFetching) {
-    return (
-      <div className={[styles.person, styles.resultsFrame].join(' ')}>
-        <Loader />
-      </div>
-    );
-  }
-
+function Person(props: { person: IPerson }) {
   return (
-    <div className={[styles.person, styles.resultsFrame].join(' ')}>
-      <div
-        className={getThemedClassName(theme, [styles.close])}
-        onClick={() => {
-          navigate(`/${location.search}`);
-        }}
-      ></div>
-      <h2>{person?.name}</h2>
+    <div className={[styles.person, styles['results-frame']].join(' ')}>
+      <ClosePersonButton />
+      <h2>{props.person?.name}</h2>
       <ul>
-        <li>Gender: {person.gender}</li>
-        <li>Mass: {person.mass}</li>
-        <li>Height: {person.height}</li>
-        <li>Birth Year: {person.birth_year}</li>
-        <li>Eye color: {person.eye_color}</li>
-        <li>Hair color: {person.hair_color}</li>
-        <li>Skin color: {person.skin_color}</li>
+        <li>Gender: {props.person.gender}</li>
+        <li>Mass: {props.person.mass}</li>
+        <li>Height: {props.person.height}</li>
+        <li>Birth Year: {props.person.birth_year}</li>
+        <li>Eye color: {props.person.eye_color}</li>
+        <li>Hair color: {props.person.hair_color}</li>
+        <li>Skin color: {props.person.skin_color}</li>
       </ul>
     </div>
   );

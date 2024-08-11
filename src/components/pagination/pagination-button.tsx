@@ -12,7 +12,7 @@ function PaginationButton(props: TPaginationButton) {
   const theme = useContext(ThemeContext);
   return (
     <div
-      className={getThemedClassName(theme, [styles.paginationButton])}
+      className={getThemedClassName(theme, [styles.pagination__button])}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();

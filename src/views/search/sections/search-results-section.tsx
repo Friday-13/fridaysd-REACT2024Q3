@@ -1,31 +1,17 @@
 import SearchResults from '@components/search-results/search-results';
-import { useGetPeopleQuery } from '@services/swapi';
-import { Outlet } from 'react-router-dom';
-import { setIsPeopleLoading } from '@utils/slices/is-loading-slice';
-import { useDispatch } from 'react-redux';
 import styles from '../search.module.scss';
-import { useEffect } from 'react';
-import { setCurrentPageResults } from '@utils/slices/current-page-slice';
+import { PropsWithChildren } from 'react';
+import { TPeopleReponse } from '@services/api-types';
 
-export default function SearchResultsSection(props: {
-  query: string;
-  page?: number;
-  setPageCallback: (value: number) => void;
-}) {
-  const { data, isLoading, isFetching } = useGetPeopleQuery({ name: props.query, page: props.page });
-  const dispatch = useDispatch();
+interface ISearchResultsSection extends PropsWithChildren {
+  response: TPeopleReponse;
+}
 
-  useEffect(() => {
-    dispatch(setIsPeopleLoading(isLoading || isFetching));
-    if (!(isLoading || isFetching)) {
-      dispatch(setCurrentPageResults(data.results));
-    }
-  }, [isLoading, isFetching]);
-
+export default function SearchResultsSection(props: ISearchResultsSection) {
   return (
-    <section className={styles.resultsWrapper}>
-      <SearchResults searchResults={data} setPageCallback={props.setPageCallback} />
-      <Outlet />
+    <section className={styles['results-wrapper']}>
+      <SearchResults response={props.response} />
+      {props.children}
     </section>
   );
 }

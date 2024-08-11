@@ -1,0 +1,42 @@
+@use '@styles/theme';
+@import '../search-results/search-results.module';
+
+.close {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  z-index: 1;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  @include theme.hover-effect;
+
+  &::before,
+  &::after {
+    content: '';
+    background-color: theme.$light-text-color;
+    position: absolute;
+    border-radius: 1px;
+    height: 2px;
+    width: 18px;
+  }
+
+  &.dark::before,
+  &.dark::after {
+    background-color: theme.$dark-text-color;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}

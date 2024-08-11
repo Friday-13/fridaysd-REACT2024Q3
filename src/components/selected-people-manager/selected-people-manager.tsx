@@ -35,7 +35,6 @@ function SelectedPeopleManager() {
       <DropDownItem
         onClick={(e) => {
           e.stopPropagation();
-          console.log('Downloading...');
         }}
       >
         <DownloadFile fileName={`${selectedPeople.people.length}_people`} fileContent={csvContent}>

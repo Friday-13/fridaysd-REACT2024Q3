@@ -1,24 +1,25 @@
 import { IPerson } from '@services/api-types';
-import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
-import { isPersonInState, togglePerson } from '../../utils/slices/people-slice';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { selectedPeopleSelector } from '../../store';
 import styles from './person-in-list.module.scss';
+import { isPersonInState, togglePerson } from '@utils/slices/people-slice';
+import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
+import { selectedPeopleSelector } from '../../store';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function PersonInList(props: { person: IPerson }) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const selectedPeople = useAppSelector(selectedPeopleSelector);
   const [isSelected, setIsSelected] = useState<boolean>(isPersonInState(selectedPeople, props.person));
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     setIsSelected(isPersonInState(selectedPeople, props.person));
-  }, [selectedPeople]);
+  }, [selectedPeople, router]);
 
   return (
-    <div className={styles.personInList}>
+    <div className={styles['person-in-list']}>
       <label
+        aria-label={props.person.name}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -34,13 +35,14 @@ export default function PersonInList(props: { person: IPerson }) {
         />
       </label>
       <div
-        className={styles.personInfo}
+        className={styles['person-info']}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
           e.stopPropagation();
           const id = props.person.url.split('/').slice(-2, -1);
-          navigate(`/person/${id}${location.search}`);
+          const { id: _id, ...queryParams } = router.query;
+          router.push({ pathname: `/${id}`, query: queryParams });
         }}
       >
         <div>name: {props.person.name}</div>

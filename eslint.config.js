@@ -28,12 +28,21 @@ export default [
       'react-compiler/react-compiler': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-react': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
     },
   },
   {
     files: ['**/*.ts', '**/*.tsx'],
   },
   {
-    ignores: ['dist', '.eslint.config.js', 'vite.config.ts', 'src/test/__mocks__/*'],
+    ignores: [
+      'dist',
+      '.eslint.config.js',
+      'vite.config.ts',
+      'src/test/__mocks__/*',
+      '.next',
+      'node-modules/',
+      'public/',
+    ],
   },
 ];
