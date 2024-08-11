@@ -3,13 +3,22 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import Pagination from '@components/pagination/pagination';
 import { Provider } from 'react-redux';
 import { store } from '../../../store';
-import mockRouter from 'next-router-mock';
+import { useRouterMocked, useSearchParamsMocked } from '../../../test/__mocks__/nextNavigationMock';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-jest.mock('next/router', () => jest.requireActual('next-router-mock'));
+jest.mock('next/navigation', () => ({
+  useRouter: () => useRouterMocked(),
+  useSearchParams: () => useSearchParamsMocked(),
+}));
 
 describe('pagination', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('Renders', async () => {
-    mockRouter.push('/');
+    const mockedSearchparams = useSearchParamsMocked();
+    mockedSearchparams.delete('page');
     render(
       <Provider store={store}>
         <Pagination setPageCallback={() => {}} />
@@ -19,20 +28,16 @@ describe('pagination', () => {
   });
 
   test('Render with pervious and next', async () => {
-    mockRouter.push({
-      pathname: '',
-      query: { page: '3' },
-    });
+    const mockedSearchparams = useSearchParamsMocked();
+    mockedSearchparams.set('page', '3');
     render(
       <Provider store={store}>
         <Pagination
           prevPage={2}
           nextPage={4}
           setPageCallback={(newValue: number) => {
-            mockRouter.push({
-              pathname: mockRouter.pathname,
-              query: { ...mockRouter.query, page: `${newValue}` },
-            });
+            const router = useRouter();
+            router.push(`/?page=${newValue}`);
           }}
         />
       </Provider>
@@ -41,22 +46,19 @@ describe('pagination', () => {
     expect(screen.queryByText(/3/i)).toBeInTheDocument();
     expect(screen.queryByText(/4/i)).toBeInTheDocument();
   });
+  //
+  test('Button click works', async () => {
+    const mockedSearchparams = useSearchParamsMocked();
+    mockedSearchparams.set('page', '3');
+    const mockedRouter = useRouterMocked();
 
-  test('Render with pervious and next', async () => {
-    mockRouter.push({
-      pathname: '',
-      query: { page: '3' },
-    });
     render(
       <Provider store={store}>
         <Pagination
           prevPage={2}
           nextPage={4}
           setPageCallback={(newValue: number) => {
-            mockRouter.push({
-              pathname: mockRouter.pathname,
-              query: { ...mockRouter.query, page: `${newValue}` },
-            });
+            mockedRouter.push(`/?page=${newValue}`);
           }}
         />
       </Provider>
@@ -64,6 +66,6 @@ describe('pagination', () => {
     expect(screen.queryByText(/4/i)).toBeInTheDocument();
     const nextButton = screen.getByText('4');
     fireEvent.click(nextButton);
-    expect(mockRouter.asPath).toEqual('/?page=4');
+    expect(mockedRouter.push).toHaveBeenCalledWith(`/?page=4`);
   });
 });

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { togglePerson } from '../../../utils/slices/people-slice';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import PersonInList from '@components/person-in-list/person-in-list';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
