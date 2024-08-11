@@ -2,13 +2,12 @@ import { getPeople } from '@services/api';
 import { TPeopleReponse } from '@services/api-types';
 import Search from '@views/search/search';
 import { GetServerSidePropsContext } from 'next';
-import styles from '../App.module.scss'
+import styles from '../App.module.scss';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const page = Number(context.query['page']) || undefined;
   const searchString = context.query['searchString'] as string;
   const response: TPeopleReponse = await getPeople(searchString, page);
-  console.log(response);
   return {
     props: {
       searchParams: { page: page || null, searchString: searchString || null },

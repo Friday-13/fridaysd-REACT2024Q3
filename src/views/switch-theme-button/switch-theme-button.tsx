@@ -6,7 +6,12 @@ import { useContext } from 'react';
 function SwitchThemeButton() {
   const theme = useContext(ThemeContext);
   return (
-    <button onClick={theme.toggleTheme} className={getThemedClassName(theme, [])}>
+    <button
+      onClick={() => {
+        theme.toggleTheme();
+      }}
+      className={getThemedClassName(theme, [])}
+    >
       {theme.theme}
     </button>
   );
