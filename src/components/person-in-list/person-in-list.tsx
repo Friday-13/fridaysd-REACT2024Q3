@@ -1,46 +1,52 @@
+'use client';
+
 import { IPerson } from '@services/api-types';
-import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
-import { isPersonInState, togglePerson } from '../../utils/slices/people-slice';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { selectedPeopleSelector } from '../../store';
 import styles from './person-in-list.module.scss';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { isPersonInState, togglePerson } from '@utils/slices/people-slice';
+import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
+import { selectedPeopleSelector } from '../../store';
+import { useEffect, useState } from 'react';
 
 export default function PersonInList(props: { person: IPerson }) {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const selectedPeople = useAppSelector(selectedPeopleSelector);
   const [isSelected, setIsSelected] = useState<boolean>(isPersonInState(selectedPeople, props.person));
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     setIsSelected(isPersonInState(selectedPeople, props.person));
-  }, [selectedPeople]);
+  }, [selectedPeople, searchParams, router]);
 
   return (
-    <div className={styles.personInList}>
-      <label
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <input
-          type="checkbox"
-          checked={isSelected}
-          onChange={(e) => {
+    <div className={styles['person-in-list']}>
+      {
+        <label
+          aria-label={props.person.name}
+          onClick={(e) => {
             e.stopPropagation();
-            dispatch(togglePerson(props.person));
-            setIsSelected(e.target.checked);
           }}
-        />
-      </label>
+        >
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={(e) => {
+              e.stopPropagation();
+              dispatch(togglePerson(props.person));
+              setIsSelected(e.target.checked);
+            }}
+          />
+        </label>
+      }
       <div
-        className={styles.personInfo}
+        className={styles['person-info']}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
           e.stopPropagation();
           const id = props.person.url.split('/').slice(-2, -1);
-          navigate(`/person/${id}${location.search}`);
+          router.push(`/${id}` + '?' + searchParams);
         }}
       >
         <div>name: {props.person.name}</div>

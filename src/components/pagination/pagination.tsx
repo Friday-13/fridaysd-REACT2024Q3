@@ -1,6 +1,6 @@
-import { useSearchParams } from 'react-router-dom';
 import styles from './pagination.module.scss';
 import PaginationButton from './pagination-button';
+import { useSearchParams } from 'next/navigation';
 
 interface IPagination {
   nextPage?: number;
@@ -10,7 +10,7 @@ interface IPagination {
 }
 
 function Pagination(props: IPagination) {
-  const searchParams = useSearchParams()[0];
+  const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 
   return (

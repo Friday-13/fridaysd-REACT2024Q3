@@ -1,16 +1,10 @@
-@use '../../theme';
+@use '@styles/theme';
 
 .search-results {
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  &__list {
-    overflow-y: scroll;
-    height: 45vh;
-    scrollbar-width: thin;
-  }
 }
 
 .results-frame {

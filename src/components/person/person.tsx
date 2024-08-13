@@ -1,45 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { IPerson } from '../../services/api-types';
-import Loader from '../loader/loader';
-import { useGetPersonByIdQuery } from '@services/swapi';
-import { getThemedClassName, ThemeContext } from '../../context/theme-context';
+import { getPerson } from '@services/api';
+import ClosePersonButton from '@views/person/close-person-button';
 import styles from './person.module.scss';
 
-function Person() {
-  const params = useParams();
-  const [person, setPerson] = useState<IPerson | undefined>(undefined);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { data, error, isLoading, isFetching } = useGetPersonByIdQuery(params['id'] as string); // TODO: fix as string approach
-  const theme = useContext(ThemeContext);
-
-  useEffect(() => {
-    setPerson(data);
-  }, [data]);
-
-  useEffect(() => {
-    if (error) {
-      console.error(error);
-    }
-  }, [error]);
-
-  if (person === undefined || isLoading || isFetching) {
-    return (
-      <div className={[styles.person, styles.resultsFrame].join(' ')}>
-        <Loader />
-      </div>
-    );
-  }
-
+async function Person(props: { id: string }) {
+  const person = await getPerson(props.id);
   return (
-    <div className={[styles.person, styles.resultsFrame].join(' ')}>
-      <div
-        className={getThemedClassName(theme, [styles.close])}
-        onClick={() => {
-          navigate(`/${location.search}`);
-        }}
-      ></div>
+    <div className={[styles.person, styles['results-frame']].join(' ')}>
+      <ClosePersonButton />
       <h2>{person?.name}</h2>
       <ul>
         <li>Gender: {person.gender}</li>

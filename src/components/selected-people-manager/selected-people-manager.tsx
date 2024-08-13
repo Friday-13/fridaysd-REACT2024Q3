@@ -1,3 +1,5 @@
+'use client';
+
 import { useAppDispatch, useAppSelector } from '@hooks/redux-hooks';
 import { clear } from '../../utils/slices/people-slice';
 import { useEffect, useState } from 'react';
@@ -35,7 +37,6 @@ function SelectedPeopleManager() {
       <DropDownItem
         onClick={(e) => {
           e.stopPropagation();
-          console.log('Downloading...');
         }}
       >
         <DownloadFile fileName={`${selectedPeople.people.length}_people`} fileContent={csvContent}>

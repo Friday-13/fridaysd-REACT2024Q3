@@ -1,3 +1,5 @@
+'use client';
+
 import useLocalStorage from '@hooks/use-local-storage';
 import { createContext, PropsWithChildren, useEffect } from 'react';
 
@@ -10,7 +12,7 @@ export interface IThemeContext {
 export const ThemeContext = createContext<IThemeContext>({ theme: 'dark', toggleTheme: () => {} });
 
 export function ThemeProvider(props: PropsWithChildren) {
-  const [theme, setTheme, saveTheme] = useLocalStorage<TTheme>('theme', 'dark');
+  const [theme, setTheme, getTheme, saveTheme] = useLocalStorage<TTheme>('theme', 'light');
 
   const toggleTheme = () => {
     if (theme === 'light') {
@@ -19,6 +21,13 @@ export function ThemeProvider(props: PropsWithChildren) {
       setTheme('light');
     }
   };
+
+  useEffect(() => {
+    const savedTheme = getTheme();
+    if (savedTheme !== theme) {
+      setTheme(savedTheme);
+    }
+  }, []);
 
   useEffect(() => {
     saveTheme(theme);

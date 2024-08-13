@@ -16,7 +16,7 @@ function DropDownMenu(props: IDropDownProps) {
   }
 
   return (
-    <ul onClick={menuClickHandler} className={getThemedClassName(theme, [styles.dropDownMenu])}>
+    <ul onClick={menuClickHandler} className={getThemedClassName(theme, [styles['drop-down-menu']])}>
       {props.menuTitle}
       {isCollapased ? <></> : props.children}
     </ul>
