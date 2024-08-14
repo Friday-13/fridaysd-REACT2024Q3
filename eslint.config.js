@@ -6,6 +6,11 @@ import eslintConfigPrettier from "eslint-config-prettier";
 
 export default [
   { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
+  { languageOptions: { globals: globals.browser } },
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
+  eslintConfigPrettier,
   {
     rules: {
       "@typescript-eslint/no-unused-vars": [
@@ -13,11 +18,14 @@ export default [
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
       "@typescript-eslint/no-explicit-any": "error",
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-uses-react": "off",
+    },
+
+    settings: {
+      react: {
+        version: "detect",
+      },
     },
   },
-  { languageOptions: { globals: globals.browser } },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  eslintConfigPrettier,
 ];
