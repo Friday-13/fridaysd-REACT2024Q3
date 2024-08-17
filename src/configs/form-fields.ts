@@ -16,7 +16,7 @@ interface INumberInput extends IInput {
 }
 
 interface IEmailInput extends IInput {
-  type: "text";
+  type: "email";
 }
 
 interface IPasswordInput extends IInput {

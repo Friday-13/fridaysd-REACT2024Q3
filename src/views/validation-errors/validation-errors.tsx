@@ -1,4 +1,4 @@
-import { TFormErrorsState } from "../../utils/get-form-errors";
+import { TFormErrorsState } from "@utils/get-form-errors";
 
 function ValidationErrors(props: {
   errors: TFormErrorsState;

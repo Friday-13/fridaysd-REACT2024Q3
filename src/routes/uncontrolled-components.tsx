@@ -3,37 +3,8 @@ import formFields from "../configs/form-fields";
 import * as yup from "yup";
 import getFormErrors, { TFormErrorsState } from "../utils/get-form-errors";
 import ValidationErrors from "../views/validation-errors/validation-errors";
-
-const schema = yup
-  .object()
-  .shape({
-    userName: yup
-      .string()
-      .matches(/^[A-Z].*/, "Name shoul have first uppercased letter")
-      .required(),
-    userAge: yup.number().moreThan(-1, "Age shoul be non negative").required(),
-    userEmail: yup.string().email().required(),
-    userPassword: yup
-      .string()
-      .matches(/.*\d+.*/, "Should contain number")
-      .matches(/.*[A-Z]+.*/, "Should contain uppercased letter")
-      .matches(/.*[a-z]+.*/, "Should contain lowercased letter")
-      .matches(/.*\W+.*/, "Should contain special charater")
-      .required(),
-    userPasswordConfirm: yup
-      .string()
-      .oneOf([yup.ref("userPassword")], "<Passwords must match")
-      .required(),
-  })
-  .required();
-
-interface IReactHookForm {
-  userName: string;
-  userAge: number;
-  userEmail: string;
-  userPassword: string;
-  userPasswordConfirm: string;
-}
+import { useNavigate } from "react-router-dom";
+import schema from "@configs/yup-validation-schema";
 
 function UncontrolledComponentsForm() {
   const userNameRef = useRef<HTMLInputElement>(null);
@@ -42,6 +13,7 @@ function UncontrolledComponentsForm() {
   const userPasswordRef = useRef<HTMLInputElement>(null);
   const userPasswordConfirmRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<TFormErrorsState>({});
+  const navigate = useNavigate();
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -55,6 +27,7 @@ function UncontrolledComponentsForm() {
     try {
       await schema.validate(value, { abortEarly: false });
       setErrors({});
+      navigate("/");
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         setErrors(getFormErrors(err));
@@ -68,7 +41,7 @@ function UncontrolledComponentsForm() {
   return (
     <>
       <h2> Uncontrolled components form </h2>
-      <form onSubmit={onSubmit} action="">
+      <form onSubmit={onSubmit} noValidate={true}>
         <label htmlFor={userName.id}>{userName.label}</label>
         <input type={userName.type} id={userName.id} ref={userNameRef} />
         <ValidationErrors errors={errors} fieldKey="userName" />
