@@ -6,11 +6,11 @@ export interface IButtonLink extends PropsWithChildren {
 }
 
 function ButtonLink(props: IButtonLink) {
-  return( <Link to={props.to}>
-      <button>
-        {props.children}
-      </button>
-    </Link> )
+  return (
+    <Link to={props.to}>
+      <button>{props.children}</button>
+    </Link>
+  );
 }
 
 export default ButtonLink;

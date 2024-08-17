@@ -1,4 +1,4 @@
-import { FormEvent, useRef } from "react";
+import { useRef } from "react";
 import formFields from "../configs/form-fields";
 
 function UncontrolledComponentsForm() {

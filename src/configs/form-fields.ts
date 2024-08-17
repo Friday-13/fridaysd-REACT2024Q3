@@ -35,13 +35,13 @@ const formFields: IFormFields = {
   userName: {
     label: "Name",
     placeholder: "enter your name",
-    id: "user-name",
+    id: "userName",
     type: "text",
   },
   userAge: {
     label: "Age",
     placeholder: "18",
-    id: "user-age",
+    id: "userAge",
     type: "number",
   },
   userEmail: {
@@ -53,13 +53,13 @@ const formFields: IFormFields = {
   userPassword: {
     label: "Password",
     placeholder: "",
-    id: "password1",
+    id: "password",
     type: "password",
   },
   userPasswordConfirm: {
     label: "Confirm password",
     placeholder: "",
-    id: "password2",
+    id: "passwordConfirm",
     type: "password",
   },
 };
