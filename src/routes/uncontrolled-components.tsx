@@ -72,21 +72,38 @@ function UncontrolledComponentsForm() {
       <h2> Uncontrolled components form </h2>
       <form onSubmit={onSubmit} noValidate={true}>
         <label htmlFor={userName.id}>{userName.label}</label>
-        <input type={userName.type} id={userName.id} ref={userNameRef} />
+        <input
+          type={userName.type}
+          id={userName.id}
+          autoComplete="off"
+          ref={userNameRef}
+        />
+
         <ValidationErrors errors={getErrorMessages(errors, "userName")} />
 
         <label htmlFor={userAge.id}>{userAge.label}</label>
-        <input type={userAge.type} id={userAge.id} ref={userAgeRef} />
+        <input
+          type={userAge.type}
+          id={userAge.id}
+          autoComplete="off"
+          ref={userAgeRef}
+        />
         <ValidationErrors errors={getErrorMessages(errors, "userAge")} />
 
         <label htmlFor={userEmail.id}>{userEmail.label}</label>
-        <input type={userEmail.type} id={userEmail.id} ref={userEmailRef} />
+        <input
+          type={userEmail.type}
+          id={userEmail.id}
+          autoComplete="off"
+          ref={userEmailRef}
+        />
         <ValidationErrors errors={getErrorMessages(errors, "userEmail")} />
 
         <label htmlFor={userPassword.id}>{userPassword.label}</label>
         <input
           type={userPassword.type}
           id={userPassword.id}
+          autoComplete="off"
           ref={userPasswordRef}
         />
         <ValidationErrors errors={getErrorMessages(errors, "userPassword")} />
@@ -97,6 +114,7 @@ function UncontrolledComponentsForm() {
         <input
           type={userPasswordConfirm.type}
           id={userPasswordConfirm.id}
+          autoComplete="off"
           ref={userPasswordConfirmRef}
         />
         <ValidationErrors
@@ -120,17 +138,28 @@ function UncontrolledComponentsForm() {
         <ValidationErrors errors={getErrorMessages(errors, "userGender")} />
 
         <label htmlFor={acceptTAC.id}>{acceptTAC.label}</label>
-        <input type={acceptTAC.type} id={acceptTAC.id} ref={acceptTACRef} />
+        <input
+          type={acceptTAC.type}
+          id={acceptTAC.id}
+          autoComplete="off"
+          ref={acceptTACRef}
+        />
         <ValidationErrors errors={getErrorMessages(errors, "acceptTAC")} />
 
         <label htmlFor={userImage.id}>{userImage.label}</label>
-        <input type={userImage.type} id={userImage.id} ref={userImageRef} />
+        <input
+          type={userImage.type}
+          id={userImage.id}
+          autoComplete="off"
+          ref={userImageRef}
+        />
         <ValidationErrors errors={getErrorMessages(errors, "userImage")} />
 
         <label htmlFor={userCountrie.id}>{userCountrie.label}</label>
         <Autocomplete
           options={countries.value}
           id={userCountrie.id}
+          autoComplete="off"
           ref={userCountrieRef}
         />
         <ValidationErrors errors={getErrorMessages(errors, "userCountrie")} />

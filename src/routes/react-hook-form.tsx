@@ -49,11 +49,16 @@ function ReactHookForm() {
       <h2> React hook form </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor={userName.id}>{userName.label}</label>
-        <input type="text" {...register("userName")} />
+        <input type="text" autoComplete="off" {...register("userName")} />
         <ValidationErrors errors={[errors.userAge?.message]} />
 
         <label htmlFor={userAge.id}>{userAge.label}</label>
-        <input type={userAge.type} id={userAge.id} {...register("userAge")} />
+        <input
+          type={userAge.type}
+          id={userAge.id}
+          autoComplete="off"
+          {...register("userAge")}
+        />
         <ValidationErrors errors={[errors.userAge?.message]} />
 
         <label htmlFor={userEmail.id}>{userEmail.label}</label>
@@ -61,6 +66,7 @@ function ReactHookForm() {
           type={userEmail.type}
           formNoValidate
           placeholder={userEmail.placeholder}
+          autoComplete="off"
           id={userEmail.id}
           {...register("userEmail")}
         />
@@ -70,6 +76,7 @@ function ReactHookForm() {
         <input
           type={userPassword.type}
           id={userPassword.id}
+          autoComplete="off"
           {...register("userPassword")}
         />
         <ValidationErrors errors={[errors.userPassword?.message]} />
@@ -80,6 +87,7 @@ function ReactHookForm() {
         <input
           type={userPasswordConfirm.type}
           id={userPasswordConfirm.id}
+          autoComplete="off"
           {...register("userPasswordConfirm")}
         />
         <ValidationErrors errors={[errors.userPasswordConfirm?.message]} />
@@ -106,6 +114,7 @@ function ReactHookForm() {
         <input
           type={acceptTAC.type}
           id={acceptTAC.id}
+          autoComplete="off"
           {...register("acceptTAC")}
         />
         <ValidationErrors errors={[errors.acceptTAC?.message]} />
@@ -114,6 +123,7 @@ function ReactHookForm() {
         <input
           type={userImage.type}
           id={userImage.id}
+          autoComplete="off"
           {...register("userImage")}
         />
         <ValidationErrors errors={[errors.userImage?.message]} />
@@ -122,6 +132,7 @@ function ReactHookForm() {
         <Autocomplete
           options={countries.value}
           id={userCountrie.id}
+          autoComplete="off"
           {...register("userCountrie")}
         />
         <ValidationErrors errors={[errors.userCountrie?.message]} />
