@@ -33,6 +33,10 @@ interface ICheckboxInput extends IInput {
   type: "checkbox";
 }
 
+interface IFileInput extends IInput {
+  type: "file";
+}
+
 interface IGenderSelect extends ISelect {
   predefinedValues: Array<string>;
 }
@@ -45,6 +49,7 @@ interface IFormFields {
   userPasswordConfirm: IPasswordInput;
   userGender: IGenderSelect;
   acceptTAC: ICheckboxInput;
+  userImage: IFileInput;
 }
 
 const formFields: IFormFields = {
@@ -89,6 +94,12 @@ const formFields: IFormFields = {
     placeholder: "",
     id: "userPasswordConfirm",
     type: "checkbox",
+  },
+  userImage: {
+    label: "Photo",
+    placeholder: "",
+    id: "userImage",
+    type: "file",
   },
 };
 

@@ -27,8 +27,25 @@ const schema = yup
       .oneOf(formFields.userGender.predefinedValues),
     acceptTAC: yup
       .boolean()
-      .oneOf([true], 'Accept terms and conditions')
+      .oneOf([true], "Accept terms and conditions")
       .required(),
+    userImage: yup
+      .mixed<FileList>()
+      .required("Photo is required")
+      .test("fileExist", "Photo is requrid", (value) => {
+        return value.length !== 0;
+      })
+      .test("fileSize", "File size is to big (max 3Mb)", (value) => {
+        if (value.length === 0) return true;
+        return value && value[0].size <= 3 * 1024 * 1024;
+      })
+      .test("fileType", "Allowed file extensions: png, jpeg", (value) => {
+        if (value.length === 0) return true;
+        return (
+          value &&
+          (value[0].type === "image/jpeg" || value[0].type === "image/png")
+        );
+      }),
   })
   .required();
 export default schema;

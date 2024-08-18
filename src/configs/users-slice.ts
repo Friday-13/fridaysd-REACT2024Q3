@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import IRegistrationForm from "./registration-form-types";
+import { IUserInStore } from "./registration-form-types";
 
 export interface UsersState {
-  value: Array<IRegistrationForm>;
+  value: Array<IUserInStore>;
 }
 
 const initialState: UsersState = {
@@ -13,7 +13,7 @@ export const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<IRegistrationForm>) => {
+    addUser: (state, action: PayloadAction<IUserInStore>) => {
       state.value.push(action.payload);
     },
   },

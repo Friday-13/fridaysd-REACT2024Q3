@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import IRegistrationForm from "@configs/registration-form-types";
 import { useDispatch } from "react-redux";
 import { addUser } from "@configs/users-slice";
+import createUserFromRegistration from "@utils/create-user-from-registration";
 
 function ReactHookForm() {
   const {
@@ -20,9 +21,9 @@ function ReactHookForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onSubmit: SubmitHandler<IRegistrationForm> = (data) => {
-    console.log(data);
-    dispatch(addUser(data));
+  const onSubmit: SubmitHandler<IRegistrationForm> = async (data) => {
+    const user = await createUserFromRegistration(data);
+    dispatch(addUser(user));
     navigate("/");
   };
 
@@ -34,6 +35,7 @@ function ReactHookForm() {
     userPasswordConfirm,
     userGender,
     acceptTAC,
+    userImage,
   } = formFields;
 
   return (
@@ -94,15 +96,21 @@ function ReactHookForm() {
         </select>
         <p>{errors.userGender?.message}</p>
 
-        <label htmlFor={acceptTAC.id}>
-          {acceptTAC.label}
-        </label>
+        <label htmlFor={acceptTAC.id}>{acceptTAC.label}</label>
         <input
           type={acceptTAC.type}
           id={acceptTAC.id}
           {...register("acceptTAC")}
         />
         <p>{errors.acceptTAC?.message}</p>
+
+        <label htmlFor={userImage.id}>{userImage.label}</label>
+        <input
+          type={userImage.type}
+          id={userImage.id}
+          {...register("userImage")}
+        />
+        <p>{errors.userImage?.message}</p>
 
         <input type="submit" value={"Submit"} />
       </form>

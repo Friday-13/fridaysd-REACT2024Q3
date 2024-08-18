@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import schema from "@configs/yup-validation-schema";
 import { addUser } from "@configs/users-slice";
 import { useDispatch } from "react-redux";
+import createUserFromRegistration from "@utils/create-user-from-registration";
 
 function UncontrolledComponentsForm() {
   const userNameRef = useRef<HTMLInputElement>(null);
@@ -15,6 +16,7 @@ function UncontrolledComponentsForm() {
   const userPasswordRef = useRef<HTMLInputElement>(null);
   const userPasswordConfirmRef = useRef<HTMLInputElement>(null);
   const userGenderRef = useRef<HTMLSelectElement>(null);
+  const userImageRef = useRef<HTMLInputElement>(null);
   const acceptTACRef = useRef<HTMLInputElement>(null);
 
   const [errors, setErrors] = useState<TFormErrorsState>({});
@@ -31,11 +33,13 @@ function UncontrolledComponentsForm() {
       userPasswordConfirm: userPasswordConfirmRef.current?.value,
       userGender: userGenderRef.current?.value,
       acceptTAC: acceptTACRef.current?.checked,
+      userImage: userImageRef.current?.files,
     });
     try {
       await schema.validate(value, { abortEarly: false });
       setErrors({});
-      dispatch(addUser(value));
+      const user = await createUserFromRegistration(value);
+      dispatch(addUser(user));
       navigate("/");
     } catch (err) {
       if (err instanceof yup.ValidationError) {
@@ -52,6 +56,7 @@ function UncontrolledComponentsForm() {
     userPasswordConfirm,
     userGender,
     acceptTAC,
+    userImage,
   } = formFields;
 
   return (
@@ -107,6 +112,10 @@ function UncontrolledComponentsForm() {
         <label htmlFor={acceptTAC.id}>{acceptTAC.label}</label>
         <input type={acceptTAC.type} id={acceptTAC.id} ref={acceptTACRef} />
         <ValidationErrors errors={errors} fieldKey="acceptTAC" />
+
+        <label htmlFor={userImage.id}>{userImage.label}</label>
+        <input type={userImage.type} id={userImage.id} ref={userImageRef} />
+        <ValidationErrors errors={errors} fieldKey="userImage" />
 
         <input type="submit" value={"Submit"} />
       </form>
