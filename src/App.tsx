@@ -3,6 +3,8 @@ import "./App.css";
 import Root from "./routes/root";
 import UncontrolledComponentsForm from "./routes/uncontrolled-components";
 import ReactHookForm from "./routes/react-hook-form";
+import { Provider } from "react-redux";
+import { store } from "@configs/store";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +23,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
+    <Provider store={store}>
       <RouterProvider router={router} />
-    </>
+    </Provider>
   );
 }
 

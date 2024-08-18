@@ -2,27 +2,28 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import formFields from "../configs/form-fields";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "../configs/yup-validation-schema";
-
-interface IReactHookForm {
-  userName: string;
-  userAge: number;
-  userEmail: string;
-  userPassword: string;
-  userPasswordConfirm: string;
-}
+import { useNavigate } from "react-router-dom";
+import IRegistrationForm from "@configs/registration-form-types";
+import { useDispatch } from "react-redux";
+import { addUser } from "@configs/users-slice";
 
 function ReactHookForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IReactHookForm>({
+  } = useForm<IRegistrationForm>({
     resolver: yupResolver(schema),
     mode: "all",
   });
 
-  const onSubmit: SubmitHandler<IReactHookForm> = (data) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onSubmit: SubmitHandler<IRegistrationForm> = (data) => {
     console.log(data);
+    dispatch(addUser(data));
+    navigate("/");
   };
 
   const { userName, userAge, userEmail, userPassword, userPasswordConfirm } =

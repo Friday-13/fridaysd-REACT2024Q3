@@ -5,6 +5,8 @@ import getFormErrors, { TFormErrorsState } from "../utils/get-form-errors";
 import ValidationErrors from "../views/validation-errors/validation-errors";
 import { useNavigate } from "react-router-dom";
 import schema from "@configs/yup-validation-schema";
+import { addUser } from "@configs/users-slice";
+import { useDispatch } from "react-redux";
 
 function UncontrolledComponentsForm() {
   const userNameRef = useRef<HTMLInputElement>(null);
@@ -14,6 +16,7 @@ function UncontrolledComponentsForm() {
   const userPasswordConfirmRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState<TFormErrorsState>({});
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -27,6 +30,7 @@ function UncontrolledComponentsForm() {
     try {
       await schema.validate(value, { abortEarly: false });
       setErrors({});
+      dispatch(addUser(value));
       navigate("/");
     } catch (err) {
       if (err instanceof yup.ValidationError) {
