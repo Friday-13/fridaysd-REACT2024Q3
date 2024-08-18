@@ -1,18 +1,12 @@
-import { TFormErrorsState } from "@utils/get-form-errors";
-
-function ValidationErrors(props: {
-  errors: TFormErrorsState;
-  fieldKey: string;
-}) {
-  if (!props.errors[props.fieldKey]) {
-    return <p></p>;
-  }
+function ValidationErrors(props: { errors?: Array<string | undefined> }) {
   return (
-    <p>
-      {props.errors[props.fieldKey].map((err, index) => (
-        <li key={index}>{err}</li>
-      ))}
-    </p>
+    <div>
+      {props.errors?.map((err, index) => {
+        if (err) {
+          return <li key={index}>{err}</li>;
+        }
+      })}
+    </div>
   );
 }
 

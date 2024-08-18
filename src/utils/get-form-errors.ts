@@ -12,7 +12,6 @@ function getFormErrors(error: ValidationError) {
     } else {
       errors[key!] = [value];
     }
-    console.log(`${key}: ${value}`);
   });
   return errors;
 }

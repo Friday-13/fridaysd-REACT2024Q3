@@ -11,6 +11,7 @@ import createUserFromRegistration from "@utils/create-user-from-registration";
 import Autocomplete from "@components/autocomplete/autocomplete";
 import { useAppSelector } from "@configs/redux-hooks";
 import { countriesSelector } from "@configs/store";
+import getErrorMessages from "@utils/get-error-messages";
 
 function UncontrolledComponentsForm() {
   const userNameRef = useRef<HTMLInputElement>(null);
@@ -72,15 +73,15 @@ function UncontrolledComponentsForm() {
       <form onSubmit={onSubmit} noValidate={true}>
         <label htmlFor={userName.id}>{userName.label}</label>
         <input type={userName.type} id={userName.id} ref={userNameRef} />
-        <ValidationErrors errors={errors} fieldKey="userName" />
+        <ValidationErrors errors={getErrorMessages(errors, "userName")} />
 
         <label htmlFor={userAge.id}>{userAge.label}</label>
         <input type={userAge.type} id={userAge.id} ref={userAgeRef} />
-        <ValidationErrors errors={errors} fieldKey="userAge" />
+        <ValidationErrors errors={getErrorMessages(errors, "userAge")} />
 
         <label htmlFor={userEmail.id}>{userEmail.label}</label>
         <input type={userEmail.type} id={userEmail.id} ref={userEmailRef} />
-        <ValidationErrors errors={errors} fieldKey="userEmail" />
+        <ValidationErrors errors={getErrorMessages(errors, "userEmail")} />
 
         <label htmlFor={userPassword.id}>{userPassword.label}</label>
         <input
@@ -88,7 +89,7 @@ function UncontrolledComponentsForm() {
           id={userPassword.id}
           ref={userPasswordRef}
         />
-        <ValidationErrors errors={errors} fieldKey="userPassword" />
+        <ValidationErrors errors={getErrorMessages(errors, "userPassword")} />
 
         <label htmlFor={userPasswordConfirm.id}>
           {userPasswordConfirm.label}
@@ -98,7 +99,9 @@ function UncontrolledComponentsForm() {
           id={userPasswordConfirm.id}
           ref={userPasswordConfirmRef}
         />
-        <ValidationErrors errors={errors} fieldKey="userPasswordConfirm" />
+        <ValidationErrors
+          errors={getErrorMessages(errors, "userPasswordConfirm")}
+        />
 
         <select
           id={userGender.id}
@@ -114,15 +117,15 @@ function UncontrolledComponentsForm() {
             </option>
           ))}
         </select>
-        <ValidationErrors errors={errors} fieldKey="userGender" />
+        <ValidationErrors errors={getErrorMessages(errors, "userGender")} />
 
         <label htmlFor={acceptTAC.id}>{acceptTAC.label}</label>
         <input type={acceptTAC.type} id={acceptTAC.id} ref={acceptTACRef} />
-        <ValidationErrors errors={errors} fieldKey="acceptTAC" />
+        <ValidationErrors errors={getErrorMessages(errors, "acceptTAC")} />
 
         <label htmlFor={userImage.id}>{userImage.label}</label>
         <input type={userImage.type} id={userImage.id} ref={userImageRef} />
-        <ValidationErrors errors={errors} fieldKey="userImage" />
+        <ValidationErrors errors={getErrorMessages(errors, "userImage")} />
 
         <label htmlFor={userCountrie.id}>{userCountrie.label}</label>
         <Autocomplete
@@ -130,7 +133,7 @@ function UncontrolledComponentsForm() {
           id={userCountrie.id}
           ref={userCountrieRef}
         />
-        <ValidationErrors errors={errors} fieldKey="userCountrie" />
+        <ValidationErrors errors={getErrorMessages(errors, "userCountrie")} />
 
         <input type="submit" value={"Submit"} />
       </form>

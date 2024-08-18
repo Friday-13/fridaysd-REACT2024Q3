@@ -50,11 +50,11 @@ function ReactHookForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor={userName.id}>{userName.label}</label>
         <input type="text" {...register("userName")} />
-        <ValidationErrors errors={errors} fieldKey="userName" />
+        <ValidationErrors errors={[errors.userAge?.message]} />
 
         <label htmlFor={userAge.id}>{userAge.label}</label>
         <input type={userAge.type} id={userAge.id} {...register("userAge")} />
-        <p>{errors.userAge?.message}</p>
+        <ValidationErrors errors={[errors.userAge?.message]} />
 
         <label htmlFor={userEmail.id}>{userEmail.label}</label>
         <input
@@ -64,7 +64,7 @@ function ReactHookForm() {
           id={userEmail.id}
           {...register("userEmail")}
         />
-        <p>{errors.userEmail?.message}</p>
+        <ValidationErrors errors={[errors.userEmail?.message]} />
 
         <label htmlFor={userPassword.id}>{userPassword.label}</label>
         <input
@@ -72,7 +72,7 @@ function ReactHookForm() {
           id={userPassword.id}
           {...register("userPassword")}
         />
-        <p>{errors.userPassword?.message}</p>
+        <ValidationErrors errors={[errors.userPassword?.message]} />
 
         <label htmlFor={userPasswordConfirm.id}>
           {userPasswordConfirm.label}
@@ -82,7 +82,7 @@ function ReactHookForm() {
           id={userPasswordConfirm.id}
           {...register("userPasswordConfirm")}
         />
-        <p>{errors.userPasswordConfirm?.message}</p>
+        <ValidationErrors errors={[errors.userPasswordConfirm?.message]} />
 
         <label htmlFor={userGender.id}>{userGender.label}</label>
 
@@ -100,7 +100,7 @@ function ReactHookForm() {
             </option>
           ))}
         </select>
-        <p>{errors.userGender?.message}</p>
+        <ValidationErrors errors={[errors.userGender?.message]} />
 
         <label htmlFor={acceptTAC.id}>{acceptTAC.label}</label>
         <input
@@ -108,7 +108,7 @@ function ReactHookForm() {
           id={acceptTAC.id}
           {...register("acceptTAC")}
         />
-        <p>{errors.acceptTAC?.message}</p>
+        <ValidationErrors errors={[errors.acceptTAC?.message]} />
 
         <label htmlFor={userImage.id}>{userImage.label}</label>
         <input
@@ -116,7 +116,7 @@ function ReactHookForm() {
           id={userImage.id}
           {...register("userImage")}
         />
-        <p>{errors.userImage?.message}</p>
+        <ValidationErrors errors={[errors.userImage?.message]} />
 
         <label htmlFor={userCountrie.id}>{userCountrie.label}</label>
         <Autocomplete
@@ -124,7 +124,7 @@ function ReactHookForm() {
           id={userCountrie.id}
           {...register("userCountrie")}
         />
-        <p>{errors.userCountrie?.message}</p>
+        <ValidationErrors errors={[errors.userCountrie?.message]} />
 
         <input type="submit" value={"Submit"} />
       </form>
