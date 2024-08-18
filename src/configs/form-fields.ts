@@ -50,12 +50,13 @@ interface IFormFields {
   userGender: IGenderSelect;
   acceptTAC: ICheckboxInput;
   userImage: IFileInput;
+  userCountrie: ITextInput;
 }
 
 const formFields: IFormFields = {
   userName: {
     label: "Name",
-    placeholder: "enter your name",
+    placeholder: "Enter your name",
     id: "userName",
     type: "text",
   },
@@ -100,6 +101,12 @@ const formFields: IFormFields = {
     placeholder: "",
     id: "userImage",
     type: "file",
+  },
+  userCountrie: {
+    label: "Your countrie",
+    id: "userCountrie",
+    placeholder: "Select...",
+    type: "text",
   },
 };
 

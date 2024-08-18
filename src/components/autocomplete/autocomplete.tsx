@@ -1,8 +1,26 @@
-import { ChangeEventHandler, useState } from "react";
+import {
+  ChangeEventHandler,
+  DetailedHTMLProps,
+  forwardRef,
+  InputHTMLAttributes,
+  LegacyRef,
+  useState,
+} from "react";
 import OptionsList from "./options-list";
 import styles from "./autocomplete.module.scss";
 
-function Autocomplete(props: { options: Array<string> }) {
+interface IAutocomplete
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
+  options: Array<string>;
+}
+
+function AutocompleteComponent(
+  props: IAutocomplete,
+  ref?: LegacyRef<HTMLInputElement>,
+) {
   const [isOptionsVisible, setIsOptionsVisible] = useState<boolean>(false);
   const [filteredOptions, setFilteredOptions] = useState<Array<string>>(
     props.options,
@@ -26,15 +44,17 @@ function Autocomplete(props: { options: Array<string> }) {
     setValue(option);
     setIsOptionsVisible(false);
   };
+  const { options: _optopns, ...inputOptions } = props;
 
   return (
     <div className={styles.autocomplete}>
       <input
+        {...inputOptions}
+        ref={ref}
         type="text"
         onClick={() => setIsOptionsVisible(true)}
         value={value}
         onChange={filterOptions}
-        id="hehe"
       />
       <OptionsList
         options={filteredOptions}
@@ -45,4 +65,4 @@ function Autocomplete(props: { options: Array<string> }) {
   );
 }
 
-export default Autocomplete;
+export default forwardRef(AutocompleteComponent);

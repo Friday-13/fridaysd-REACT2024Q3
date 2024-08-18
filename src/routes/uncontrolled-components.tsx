@@ -8,6 +8,9 @@ import schema from "@configs/yup-validation-schema";
 import { addUser } from "@configs/users-slice";
 import { useDispatch } from "react-redux";
 import createUserFromRegistration from "@utils/create-user-from-registration";
+import Autocomplete from "@components/autocomplete/autocomplete";
+import { useAppSelector } from "@configs/redux-hooks";
+import { countriesSelector } from "@configs/store";
 
 function UncontrolledComponentsForm() {
   const userNameRef = useRef<HTMLInputElement>(null);
@@ -18,10 +21,12 @@ function UncontrolledComponentsForm() {
   const userGenderRef = useRef<HTMLSelectElement>(null);
   const userImageRef = useRef<HTMLInputElement>(null);
   const acceptTACRef = useRef<HTMLInputElement>(null);
+  const userCountrieRef = useRef<HTMLInputElement>(null);
 
   const [errors, setErrors] = useState<TFormErrorsState>({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const countries = useAppSelector(countriesSelector);
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -34,6 +39,7 @@ function UncontrolledComponentsForm() {
       userGender: userGenderRef.current?.value,
       acceptTAC: acceptTACRef.current?.checked,
       userImage: userImageRef.current?.files,
+      userCountrie: userCountrieRef.current?.value,
     });
     try {
       await schema.validate(value, { abortEarly: false });
@@ -57,6 +63,7 @@ function UncontrolledComponentsForm() {
     userGender,
     acceptTAC,
     userImage,
+    userCountrie,
   } = formFields;
 
   return (
@@ -116,6 +123,14 @@ function UncontrolledComponentsForm() {
         <label htmlFor={userImage.id}>{userImage.label}</label>
         <input type={userImage.type} id={userImage.id} ref={userImageRef} />
         <ValidationErrors errors={errors} fieldKey="userImage" />
+
+        <label htmlFor={userCountrie.id}>{userCountrie.label}</label>
+        <Autocomplete
+          options={countries.value}
+          id={userCountrie.id}
+          ref={userCountrieRef}
+        />
+        <ValidationErrors errors={errors} fieldKey="userCountrie" />
 
         <input type="submit" value={"Submit"} />
       </form>

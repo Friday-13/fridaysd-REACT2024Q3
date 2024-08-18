@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import formFields from "./form-fields";
+import listOfCountiers from "./list-of-countries";
 
 const schema = yup
   .object()
@@ -46,6 +47,10 @@ const schema = yup
           (value[0].type === "image/jpeg" || value[0].type === "image/png")
         );
       }),
+    userCountrie: yup
+      .string()
+      .oneOf(listOfCountiers, "Please, select valid countrie")
+      .required(),
   })
   .required();
 export default schema;

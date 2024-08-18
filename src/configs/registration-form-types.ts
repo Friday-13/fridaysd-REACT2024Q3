@@ -6,6 +6,7 @@ export interface IBaseUserInfo {
   userPasswordConfirm: string;
   userGender: string;
   acceptTAC: boolean;
+  userCountrie: string;
 }
 
 export default interface IRegistrationForm extends IBaseUserInfo {

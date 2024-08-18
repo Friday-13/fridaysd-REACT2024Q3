@@ -8,7 +8,9 @@ import { useDispatch } from "react-redux";
 import { addUser } from "@configs/users-slice";
 import createUserFromRegistration from "@utils/create-user-from-registration";
 import Autocomplete from "@components/autocomplete/autocomplete";
-import listOfCountiers from "@configs/list-of-countries";
+import { useAppSelector } from "@configs/redux-hooks";
+import { countriesSelector } from "@configs/store";
+import ValidationErrors from "@views/validation-errors/validation-errors";
 
 function ReactHookForm() {
   const {
@@ -22,6 +24,7 @@ function ReactHookForm() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const countries = useAppSelector(countriesSelector);
 
   const onSubmit: SubmitHandler<IRegistrationForm> = async (data) => {
     const user = await createUserFromRegistration(data);
@@ -38,6 +41,7 @@ function ReactHookForm() {
     userGender,
     acceptTAC,
     userImage,
+    userCountrie,
   } = formFields;
 
   return (
@@ -46,7 +50,7 @@ function ReactHookForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor={userName.id}>{userName.label}</label>
         <input type="text" {...register("userName")} />
-        <p>{errors.userName?.message}</p>
+        <ValidationErrors errors={errors} fieldKey="userName" />
 
         <label htmlFor={userAge.id}>{userAge.label}</label>
         <input type={userAge.type} id={userAge.id} {...register("userAge")} />
@@ -114,7 +118,13 @@ function ReactHookForm() {
         />
         <p>{errors.userImage?.message}</p>
 
-        <Autocomplete options={listOfCountiers} />
+        <label htmlFor={userCountrie.id}>{userCountrie.label}</label>
+        <Autocomplete
+          options={countries.value}
+          id={userCountrie.id}
+          {...register("userCountrie")}
+        />
+        <p>{errors.userCountrie?.message}</p>
 
         <input type="submit" value={"Submit"} />
       </form>
