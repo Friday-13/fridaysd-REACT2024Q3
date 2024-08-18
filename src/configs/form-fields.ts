@@ -29,6 +29,10 @@ interface IPasswordInput extends IInput {
   type: "password";
 }
 
+interface ICheckboxInput extends IInput {
+  type: "checkbox";
+}
+
 interface IGenderSelect extends ISelect {
   predefinedValues: Array<string>;
 }
@@ -40,6 +44,7 @@ interface IFormFields {
   userPassword: IPasswordInput;
   userPasswordConfirm: IPasswordInput;
   userGender: IGenderSelect;
+  acceptTAC: ICheckboxInput;
 }
 
 const formFields: IFormFields = {
@@ -78,6 +83,12 @@ const formFields: IFormFields = {
     id: "userGender",
     placeholder: "select gender",
     predefinedValues: ["male", "female"],
+  },
+  acceptTAC: {
+    label: "I agree to the Terms and Conditions",
+    placeholder: "",
+    id: "userPasswordConfirm",
+    type: "checkbox",
   },
 };
 

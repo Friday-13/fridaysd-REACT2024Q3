@@ -15,6 +15,8 @@ function UncontrolledComponentsForm() {
   const userPasswordRef = useRef<HTMLInputElement>(null);
   const userPasswordConfirmRef = useRef<HTMLInputElement>(null);
   const userGenderRef = useRef<HTMLSelectElement>(null);
+  const acceptTACRef = useRef<HTMLInputElement>(null);
+
   const [errors, setErrors] = useState<TFormErrorsState>({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,6 +30,7 @@ function UncontrolledComponentsForm() {
       userPassword: userPasswordRef.current?.value,
       userPasswordConfirm: userPasswordConfirmRef.current?.value,
       userGender: userGenderRef.current?.value,
+      acceptTAC: acceptTACRef.current?.checked,
     });
     try {
       await schema.validate(value, { abortEarly: false });
@@ -48,6 +51,7 @@ function UncontrolledComponentsForm() {
     userPassword,
     userPasswordConfirm,
     userGender,
+    acceptTAC,
   } = formFields;
 
   return (
@@ -99,6 +103,10 @@ function UncontrolledComponentsForm() {
           ))}
         </select>
         <ValidationErrors errors={errors} fieldKey="userGender" />
+
+        <label htmlFor={acceptTAC.id}>{acceptTAC.label}</label>
+        <input type={acceptTAC.type} id={acceptTAC.id} ref={acceptTACRef} />
+        <ValidationErrors errors={errors} fieldKey="acceptTAC" />
 
         <input type="submit" value={"Submit"} />
       </form>

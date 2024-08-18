@@ -5,4 +5,5 @@ export default interface IRegistrationForm {
   userPassword: string;
   userPasswordConfirm: string;
   userGender: string;
+  acceptTAC: boolean;
 }

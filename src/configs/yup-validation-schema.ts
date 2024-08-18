@@ -25,6 +25,10 @@ const schema = yup
       .string()
       .required()
       .oneOf(formFields.userGender.predefinedValues),
+    acceptTAC: yup
+      .boolean()
+      .oneOf([true], 'Accept terms and conditions')
+      .required(),
   })
   .required();
 export default schema;

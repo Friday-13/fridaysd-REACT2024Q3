@@ -33,6 +33,7 @@ function ReactHookForm() {
     userPassword,
     userPasswordConfirm,
     userGender,
+    acceptTAC,
   } = formFields;
 
   return (
@@ -92,6 +93,16 @@ function ReactHookForm() {
           ))}
         </select>
         <p>{errors.userGender?.message}</p>
+
+        <label htmlFor={acceptTAC.id}>
+          {acceptTAC.label}
+        </label>
+        <input
+          type={acceptTAC.type}
+          id={acceptTAC.id}
+          {...register("acceptTAC")}
+        />
+        <p>{errors.acceptTAC?.message}</p>
 
         <input type="submit" value={"Submit"} />
       </form>
