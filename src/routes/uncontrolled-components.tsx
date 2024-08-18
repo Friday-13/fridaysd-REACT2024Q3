@@ -14,6 +14,7 @@ function UncontrolledComponentsForm() {
   const userEmailRef = useRef<HTMLInputElement>(null);
   const userPasswordRef = useRef<HTMLInputElement>(null);
   const userPasswordConfirmRef = useRef<HTMLInputElement>(null);
+  const userGenderRef = useRef<HTMLSelectElement>(null);
   const [errors, setErrors] = useState<TFormErrorsState>({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function UncontrolledComponentsForm() {
       userEmail: userEmailRef.current?.value,
       userPassword: userPasswordRef.current?.value,
       userPasswordConfirm: userPasswordConfirmRef.current?.value,
+      userGender: userGenderRef.current?.value,
     });
     try {
       await schema.validate(value, { abortEarly: false });
@@ -39,8 +41,14 @@ function UncontrolledComponentsForm() {
     }
   };
 
-  const { userName, userAge, userEmail, userPassword, userPasswordConfirm } =
-    formFields;
+  const {
+    userName,
+    userAge,
+    userEmail,
+    userPassword,
+    userPasswordConfirm,
+    userGender,
+  } = formFields;
 
   return (
     <>
@@ -75,6 +83,22 @@ function UncontrolledComponentsForm() {
           ref={userPasswordConfirmRef}
         />
         <ValidationErrors errors={errors} fieldKey="userPasswordConfirm" />
+
+        <select
+          id={userGender.id}
+          ref={userGenderRef}
+          defaultValue={userGender.placeholder}
+        >
+          <option disabled value={userGender.placeholder}>
+            {userGender.placeholder}
+          </option>
+          {userGender.predefinedValues.map((value, index) => (
+            <option value={value} key={index}>
+              {value}
+            </option>
+          ))}
+        </select>
+        <ValidationErrors errors={errors} fieldKey="userGender" />
 
         <input type="submit" value={"Submit"} />
       </form>

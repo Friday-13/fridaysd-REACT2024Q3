@@ -77,8 +77,12 @@ function ReactHookForm() {
 
         <label htmlFor={userGender.id}>{userGender.label}</label>
 
-        <select id={userGender.id} {...register("userGender")}>
-          <option disabled selected>
+        <select
+          id={userGender.id}
+          defaultValue={userGender.placeholder}
+          {...register("userGender")}
+        >
+          <option disabled value={userGender.placeholder}>
             {userGender.placeholder}
           </option>
           {userGender.predefinedValues.map((value, index) => (
