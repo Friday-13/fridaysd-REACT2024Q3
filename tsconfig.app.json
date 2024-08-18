@@ -27,7 +27,15 @@
       "@components/*": ["./src/components/*"],
       "@configs/*": ["./src/configs/*"],
       "@styles/*": ["./src/styles/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "classnameTransform": "camelCaseOnly"
+        }
+      }
+    ]
   },
   "include": ["src"]
 }

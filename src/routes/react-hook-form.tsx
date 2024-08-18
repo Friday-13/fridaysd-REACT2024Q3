@@ -7,6 +7,8 @@ import IRegistrationForm from "@configs/registration-form-types";
 import { useDispatch } from "react-redux";
 import { addUser } from "@configs/users-slice";
 import createUserFromRegistration from "@utils/create-user-from-registration";
+import Autocomplete from "@components/autocomplete/autocomplete";
+import listOfCountiers from "@configs/list-of-countries";
 
 function ReactHookForm() {
   const {
@@ -111,6 +113,8 @@ function ReactHookForm() {
           {...register("userImage")}
         />
         <p>{errors.userImage?.message}</p>
+
+        <Autocomplete options={listOfCountiers} />
 
         <input type="submit" value={"Submit"} />
       </form>
