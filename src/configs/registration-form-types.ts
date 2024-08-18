@@ -4,4 +4,5 @@ export default interface IRegistrationForm {
   userEmail: string;
   userPassword: string;
   userPasswordConfirm: string;
+  userGender: string;
 }

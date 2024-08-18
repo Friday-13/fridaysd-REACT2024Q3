@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import formFields from "./form-fields";
 
 const schema = yup
   .object()
@@ -20,6 +21,10 @@ const schema = yup
       .string()
       .oneOf([yup.ref("userPassword")], "<Passwords must match")
       .required(),
+    userGender: yup
+      .string()
+      .required()
+      .oneOf(formFields.userGender.predefinedValues),
   })
   .required();
 export default schema;

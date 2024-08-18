@@ -26,8 +26,14 @@ function ReactHookForm() {
     navigate("/");
   };
 
-  const { userName, userAge, userEmail, userPassword, userPasswordConfirm } =
-    formFields;
+  const {
+    userName,
+    userAge,
+    userEmail,
+    userPassword,
+    userPasswordConfirm,
+    userGender,
+  } = formFields;
 
   return (
     <>
@@ -68,6 +74,20 @@ function ReactHookForm() {
           {...register("userPasswordConfirm")}
         />
         <p>{errors.userPasswordConfirm?.message}</p>
+
+        <label htmlFor={userGender.id}>{userGender.label}</label>
+
+        <select id={userGender.id} {...register("userGender")}>
+          <option disabled selected>
+            {userGender.placeholder}
+          </option>
+          {userGender.predefinedValues.map((value, index) => (
+            <option value={value} key={index}>
+              {value}
+            </option>
+          ))}
+        </select>
+        <p>{errors.userGender?.message}</p>
 
         <input type="submit" value={"Submit"} />
       </form>

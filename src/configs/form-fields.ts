@@ -7,6 +7,12 @@ interface IInput {
   type: HTMLInputTypeAttribute;
 }
 
+interface ISelect {
+  label: string;
+  id: string;
+  placeholder: string;
+}
+
 interface ITextInput extends IInput {
   type: "text";
 }
@@ -23,12 +29,17 @@ interface IPasswordInput extends IInput {
   type: "password";
 }
 
+interface IGenderSelect extends ISelect {
+  predefinedValues: Array<string>;
+}
+
 interface IFormFields {
   userName: ITextInput;
   userAge: INumberInput;
   userEmail: IEmailInput;
   userPassword: IPasswordInput;
   userPasswordConfirm: IPasswordInput;
+  userGender: IGenderSelect;
 }
 
 const formFields: IFormFields = {
@@ -53,14 +64,20 @@ const formFields: IFormFields = {
   userPassword: {
     label: "Password",
     placeholder: "",
-    id: "password",
+    id: "userPassword",
     type: "password",
   },
   userPasswordConfirm: {
     label: "Confirm password",
     placeholder: "",
-    id: "passwordConfirm",
+    id: "userPasswordConfirm",
     type: "password",
+  },
+  userGender: {
+    label: "Gender",
+    id: "userGender",
+    placeholder: "select gender",
+    predefinedValues: ["male", "female"],
   },
 };
 
