@@ -1,0 +1,173 @@
+import { FormEvent, useRef, useState } from "react";
+import formFields from "../configs/form-fields";
+import * as yup from "yup";
+import getFormErrors, { TFormErrorsState } from "../utils/get-form-errors";
+import ValidationErrors from "../views/validation-errors/validation-errors";
+import { useNavigate } from "react-router-dom";
+import schema from "@configs/yup-validation-schema";
+import { addUser } from "@configs/users-slice";
+import { useDispatch } from "react-redux";
+import createUserFromRegistration from "@utils/create-user-from-registration";
+import Autocomplete from "@components/autocomplete/autocomplete";
+import { useAppSelector } from "@configs/redux-hooks";
+import { countriesSelector } from "@configs/store";
+import getErrorMessages from "@utils/get-error-messages";
+
+function UncontrolledComponentsForm() {
+  const userNameRef = useRef<HTMLInputElement>(null);
+  const userAgeRef = useRef<HTMLInputElement>(null);
+  const userEmailRef = useRef<HTMLInputElement>(null);
+  const userPasswordRef = useRef<HTMLInputElement>(null);
+  const userPasswordConfirmRef = useRef<HTMLInputElement>(null);
+  const userGenderRef = useRef<HTMLSelectElement>(null);
+  const userImageRef = useRef<HTMLInputElement>(null);
+  const acceptTACRef = useRef<HTMLInputElement>(null);
+  const userCountrieRef = useRef<HTMLInputElement>(null);
+
+  const [errors, setErrors] = useState<TFormErrorsState>({});
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const countries = useAppSelector(countriesSelector);
+
+  const onSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    const value = schema.cast({
+      userName: userNameRef.current?.value,
+      userAge: Number(userAgeRef.current?.value),
+      userEmail: userEmailRef.current?.value,
+      userPassword: userPasswordRef.current?.value,
+      userPasswordConfirm: userPasswordConfirmRef.current?.value,
+      userGender: userGenderRef.current?.value,
+      acceptTAC: acceptTACRef.current?.checked,
+      userImage: userImageRef.current?.files,
+      userCountrie: userCountrieRef.current?.value,
+    });
+    try {
+      await schema.validate(value, { abortEarly: false });
+      setErrors({});
+      const user = await createUserFromRegistration(value);
+      dispatch(addUser(user));
+      navigate("/");
+    } catch (err) {
+      if (err instanceof yup.ValidationError) {
+        setErrors(getFormErrors(err));
+      }
+    }
+  };
+
+  const {
+    userName,
+    userAge,
+    userEmail,
+    userPassword,
+    userPasswordConfirm,
+    userGender,
+    acceptTAC,
+    userImage,
+    userCountrie,
+  } = formFields;
+
+  return (
+    <>
+      <h2> Uncontrolled components form </h2>
+      <form onSubmit={onSubmit} noValidate={true}>
+        <label htmlFor={userName.id}>{userName.label}</label>
+        <input
+          type={userName.type}
+          id={userName.id}
+          autoComplete="off"
+          ref={userNameRef}
+        />
+
+        <ValidationErrors errors={getErrorMessages(errors, "userName")} />
+
+        <label htmlFor={userAge.id}>{userAge.label}</label>
+        <input
+          type={userAge.type}
+          id={userAge.id}
+          autoComplete="off"
+          ref={userAgeRef}
+        />
+        <ValidationErrors errors={getErrorMessages(errors, "userAge")} />
+
+        <label htmlFor={userEmail.id}>{userEmail.label}</label>
+        <input
+          type={userEmail.type}
+          id={userEmail.id}
+          autoComplete="off"
+          ref={userEmailRef}
+        />
+        <ValidationErrors errors={getErrorMessages(errors, "userEmail")} />
+
+        <label htmlFor={userPassword.id}>{userPassword.label}</label>
+        <input
+          type={userPassword.type}
+          id={userPassword.id}
+          autoComplete="off"
+          ref={userPasswordRef}
+        />
+        <ValidationErrors errors={getErrorMessages(errors, "userPassword")} />
+
+        <label htmlFor={userPasswordConfirm.id}>
+          {userPasswordConfirm.label}
+        </label>
+        <input
+          type={userPasswordConfirm.type}
+          id={userPasswordConfirm.id}
+          autoComplete="off"
+          ref={userPasswordConfirmRef}
+        />
+        <ValidationErrors
+          errors={getErrorMessages(errors, "userPasswordConfirm")}
+        />
+
+        <select
+          id={userGender.id}
+          ref={userGenderRef}
+          defaultValue={userGender.placeholder}
+        >
+          <option disabled value={userGender.placeholder}>
+            {userGender.placeholder}
+          </option>
+          {userGender.predefinedValues.map((value, index) => (
+            <option value={value} key={index}>
+              {value}
+            </option>
+          ))}
+        </select>
+        <ValidationErrors errors={getErrorMessages(errors, "userGender")} />
+
+        <label htmlFor={acceptTAC.id}>{acceptTAC.label}</label>
+        <input
+          type={acceptTAC.type}
+          id={acceptTAC.id}
+          autoComplete="off"
+          ref={acceptTACRef}
+        />
+        <ValidationErrors errors={getErrorMessages(errors, "acceptTAC")} />
+
+        <label htmlFor={userImage.id}>{userImage.label}</label>
+        <input
+          type={userImage.type}
+          id={userImage.id}
+          autoComplete="off"
+          ref={userImageRef}
+        />
+        <ValidationErrors errors={getErrorMessages(errors, "userImage")} />
+
+        <label htmlFor={userCountrie.id}>{userCountrie.label}</label>
+        <Autocomplete
+          options={countries.value}
+          id={userCountrie.id}
+          autoComplete="off"
+          ref={userCountrieRef}
+        />
+        <ValidationErrors errors={getErrorMessages(errors, "userCountrie")} />
+
+        <input type="submit" value={"Submit"} />
+      </form>
+    </>
+  );
+}
+
+export default UncontrolledComponentsForm;
