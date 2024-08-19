@@ -50,7 +50,7 @@ function ReactHookForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor={userName.id}>{userName.label}</label>
         <input type="text" autoComplete="off" {...register("userName")} />
-        <ValidationErrors errors={[errors.userAge?.message]} />
+        <ValidationErrors errors={[errors.userName?.message]} />
 
         <label htmlFor={userAge.id}>{userAge.label}</label>
         <input
